@@ -1,7 +1,17 @@
+using System.Text.Json;
+using web_client.Models.Htmls;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    });
+
+builder.Services.Configure<CarouselDefaultsConfig>(
+    builder.Configuration.GetSection("CarouselDefaults"));
 
 var app = builder.Build();
 

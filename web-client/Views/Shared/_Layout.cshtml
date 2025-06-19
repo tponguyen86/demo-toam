@@ -1,16 +1,19 @@
 ﻿<!DOCTYPE html>
+@{
+    var page = ViewData["Page"] as PageModel;
+}
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - web_client</title>
+    <title>@(page?.Title)</title>
 
     <!-- Basic -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="WebSite" />
-    <meta name="description" content="Shop">
+    <meta name="keywords" content="@(page?.Keywords)" />
+    <meta name="description" content=">@(page?.Description)">
     <meta name="author" content="okler.net">
 
     <!-- Favicon -->
@@ -46,11 +49,10 @@
     <!-- Theme Custom CSS -->
     <link rel="stylesheet" href="~/css/custom.css">
 </head>
-<body data-plugin-page-transition>
-
+<body data-plugin-page-transition class="@(page?.BodyClassName)">
     <div class="body">
         <div class="notice-top-bar bg-primary" data-sticky-start-at="180">
-           @*  <button class="hamburguer-btn hamburguer-btn-light notice-top-bar-close m-0 active" data-set-active="false">
+            @*  <button class="hamburguer-btn hamburguer-btn-light notice-top-bar-close m-0 active" data-set-active="false">
                 <span class="close">
                     <span></span>
                     <span></span>
@@ -99,7 +101,7 @@
                                             <li class="nav-item d-none d-lg-inline-block">
                                                 <a href="#" class="text-decoration-none text-color-default text-color-hover-primary">Kiểm tra đơn hàng</a>
                                             </li>
-                                         
+
                                         </ul>
                                         <ul class="header-social-icons social-icons social-icons-clean social-icons-icon-gray">
                                             <li class="social-icons-facebook">
@@ -127,7 +129,7 @@
                                         <img alt="Porto" width="100" height="48" data-sticky-width="82" data-sticky-height="40" data-sticky-top="84" src="img/logo-default-slim.png">
                                     </a>
                                 </div>
-                                <div class="header-nav-features header-nav-features-no-border p-relative z-index-2 col col-lg-5 col-xl-6 px-0 ms-0">
+                                <div class="header-nav-features header-nav-features-no-border p-relative z-index-2 col col-lg-4 col-xl-6 px-0 ms-0">
                                     <div class="header-nav-feature ps-lg-5 pe-2 pe-lg-4 me-4 me-lg-0">
                                         <form role="search" action="page-search-results.html" method="get">
                                             <div class="search-with-select">
@@ -137,7 +139,7 @@
                                                 <div class="search-form-wrapper input-group">
                                                     <input class="form-control text-1" id="headerSearch" name="q" type="search" value="" placeholder="Từ khóa...">
                                                     <div class="search-form-select-wrapper">
-                                                        <div class="custom-select-1 d-none d-lg-block">
+                                                        @* <div class="custom-select-1 d-none d-lg-block">
                                                             <select name="category" class="form-control form-select">
                                                                 <option value="all" selected>Danh mục</option>
                                                                 <option value="fashion">Cảm biến</option>
@@ -146,7 +148,7 @@
                                                                 <option value="motors">Đồng hồ đo</option>
                                                                 <option value="features">Bộ điều khiển nhiệt độ</option>
                                                             </select>
-                                                        </div>
+                                                        </div> *@
                                                         <button class="btn" type="submit" aria-label="Search">
                                                             <i class="icons icon-magnifier header-nav-top-icon text-color-dark"></i>
                                                         </button>
@@ -156,7 +158,7 @@
                                         </form>
                                     </div>
                                 </div>
-                                <ul class="header-extra-info col-auto col-lg-3 col-xl-2 ps-2 ps-xl-0 ms-lg-3 d-none d-lg-block">
+                                <ul class="header-extra-info col-auto col-lg-5 col-xl-4 ps-2 ps-xl-0 ms-lg-5 d-none d-lg-block">
                                     <li class="d-none d-sm-inline-flex ms-0">
                                         <div class="header-extra-info-icon ms-lg-4">
                                             <i class="icons icon-phone text-3 text-color-dark position-relative top-1"></i>
@@ -167,18 +169,18 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <ul class="header-extra-info col-auto col-lg-3 col-xl-2 ps-2 ps-xl-0 ms-lg-3 d-none d-lg-block">
+                               @*  <ul class="header-extra-info col-auto col-lg-3 col-xl-2 ps-2 ps-xl-0 ms-lg-3 d-none d-lg-block">
                                     <li class="d-none d-sm-inline-flex ms-0">
                                         <div class="header-extra-info-icon ms-lg-4">
                                             <i class="icons icon-envelope text-3 text-color-dark position-relative top-1"></i>
                                         </div>
                                         <div class="header-extra-info-text">
                                             <label class="text-1 font-weight-semibold text-color-default">Email</label>
-                                            <strong class="text-4"><a href="tel:+1234567890" class="text-color-hover-primary text-decoration-none">support@gmail.com</a></strong>
+                                            <strong class="text-4"><a href="mailto:support@gmail.com" class="text-color-hover-primary text-decoration-none">support@gmail.com</a></strong>
                                         </div>
                                     </li>
-                                </ul>
-                              
+                                </ul> *@
+
                             </div>
                         </div>
                         <div class="header-column justify-content-end">
@@ -199,12 +201,12 @@
                                                         <a class="dropdown-item dropdown-toggle" asp-area="" asp-controller="Home" asp-action="Index">
                                                             Trang chủ
                                                         </a>
-                                                    </li> 
+                                                    </li>
                                                     <li class="dropdown">
                                                         <a class="dropdown-item dropdown-toggle" asp-area="" asp-controller="Home" asp-action="About">
                                                             Giới thiệu
                                                         </a>
-                                                    </li> 
+                                                    </li>
                                                     <li class="dropdown">
                                                         <a class="dropdown-item dropdown-toggle" asp-area="" asp-controller="Home" asp-action="Product">
                                                             Sản phẩm
@@ -219,29 +221,29 @@
                                                         <a class="dropdown-item dropdown-toggle" asp-area="" asp-controller="Home" asp-action="Document">
                                                             Tài liệu
                                                         </a>
-                                                    </li> 
+                                                    </li>
                                                     <li class="dropdown">
                                                         <a class="dropdown-item dropdown-toggle" asp-area="" asp-controller="Home" asp-action="Contact">
                                                             Liên hệ
                                                         </a>
                                                     </li>
-
-                                                    <li class="dropdown ms-lg-auto">
-                                                        <a href="#" class="header-nav-features-toggle" aria-label="">
-                                                            <img src="img/icons/icon-cart-big.svg" height="30" alt="" class="header-nav-top-icon-img">
-                                                            <span class="cart-info">
-                                                                <span class="cart-qty">1</span>
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                   
                                                 </ul>
                                             </nav>
                                         </div>
-                                        <button class="btn header-btn-collapse-nav" data-bs-toggle="collapse" data-bs-target=".header-nav-main nav">
-                                            <i class="fas fa-bars"></i>
-                                        </button>
+                                      
                                     </div>
+                                    <div class="feature-box feature-box-style-2 align-items-center ms-lg-4">
+                                        <div class="feature-box-icon d-none d-sm-inline-flex">
+                                            <img class="icon-animated" width="48" src="img/demos/cleaning-services/icons/phone.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-tertiary position-relative bottom-3'}" />
+                                        </div>
+                                        <div class="feature-box-info ps-2">
+                                            <p class="font-weight-semibold line-height-1 text-2 pb-0 mb-1">HOTLINE</p>
+                                            <a href="tel:+1234567890" class="text-color-tertiary text-color-hover-primary text-decoration-none font-weight-bold line-height-1 custom-font-size-1 pb-0">800-123-4567</a>
+                                        </div>
+                                    </div>
+                                    <button class="btn header-btn-collapse-nav" data-bs-toggle="collapse" data-bs-target=".header-nav-main nav">
+                                        <i class="fas fa-bars"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -250,10 +252,8 @@
             </div>
         </header>
 
-        <div role="main" class="main shop pt-4">
-            <div class="container">
-                @RenderBody()
-            </div>
+        <div role="main" class="main @(page?.BodyClassName)">
+            @RenderBody()
         </div>
 
         <footer id="footer" class="footer-texts-more-lighten">

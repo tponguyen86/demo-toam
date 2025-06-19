@@ -18,15 +18,47 @@ namespace web_client.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }
 
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+        public IActionResult Product()
+        {
+            return View();
+        }
+
+        public IActionResult ProductDetail()
+        {
+            return View();
+        }
+        public IActionResult Service()
+        {
+            return View();
+        }
+
+        public IActionResult ServiceDetail()
+        {
+            return View();
+        }
+        public IActionResult Blog()
+        {
+            return View();
+        }
+
+        public IActionResult BlogDetail()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

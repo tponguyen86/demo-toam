@@ -1,6 +1,6 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    var pageModel = new PageModel() { Title = "Chính sách", Description = "Mô ta seo chính sách", BodyClassName = "p-privacy", MainClassName = "" }; ;
 }
-<h1>@ViewData["Title"]</h1>
+<h1>@(pageModel?.Title)</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
