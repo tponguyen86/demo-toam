@@ -1,20 +1,29 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using web_client.IServices;
 using web_client.Models;
+using web_client.Models.Base;
+using web_client.Models.Htmls.Carousels;
 
 namespace web_client.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ILayoutService _layoutService;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, ILayoutService layoutService)
         {
             _logger = logger;
+            _layoutService = layoutService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
+            var bannerModel = await _layoutService.GetHomeBannerSliderAsync(cancellationToken);
+            ViewData["HomeBannerSliderDataModel"] = bannerModel;
             return View();
         }
 

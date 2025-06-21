@@ -1,0 +1,16 @@
+﻿@model SideBarIntroComponent
+@if (Model != null)
+{
+    if (Model.Title?.HasValueString() == true)
+    {
+        <h4 class="card-title mb-1 text-4 font-weight-semi-bold">@Model.Title</h4>
+    }
+    if (Model.Description?.HasValueString() == true)
+    {
+        <div>@Html.Raw(Model.Description)</div>
+    }
+    if (Model.Link != null && Model.Link?.Title?.HasValueString()==true)
+    {
+        <a href="@Model.Link?.Href" class="read-more text-color-primary font-weight-semibold text-2">@Model.Link.Title <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
+    }
+}

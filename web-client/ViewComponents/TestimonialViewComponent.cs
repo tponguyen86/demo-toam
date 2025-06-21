@@ -1,50 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using web_client.Helpers;
-using web_client.Models.Base;
-using web_client.Models.Htmls;
+using web_client.IServices;
+using web_client.Models.Htmls.Carousels;
+using web_client.Models.Response;
 namespace web_client.ViewComponents;
 
-public class TestimonialViewComponent : ViewComponent
+public class TestimonialViewComponent : CarouselViewComponent
 {
-    private readonly CarouselDefaultsConfig _defaults;
+    private readonly CarouselDefaultConfig _defaults;
     private readonly ILogger<TestimonialViewComponent> _logger;
-
-    public TestimonialViewComponent(IOptions<CarouselDefaultsConfig> defaults, ILogger<TestimonialViewComponent> logger)
+    //can set in contructor or load from database
+    private readonly ITestimonialService _testimonialService;
+    public TestimonialViewComponent(IOptions<CarouselDefaultConfig> defaults, ILogger<TestimonialViewComponent> logger, ITestimonialService testimonialService) : base(defaults, logger)
     {
         _defaults = defaults.Value;
         _logger = logger;
+        _testimonialService = testimonialService;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(ViewComponentRequestModel<CarouselModel> carouselRequest)
-    {
-        var carouselResponse = new CarouselModel { Option = new CarouselOptionModel() };
+    //public async Task<IViewComponentResult> InvokeAsync(ViewComponentRequestModel<CarouselSettingModel, List<TestimonialItemModel>> carouselRequest, CancellationToken cancellationToken)
+    //{
+    //    CarouselSettingModel carouselSetting = GetCarouselModel(carouselRequest);
+    //    ViewData["CarouselSettingModel"] = carouselSetting;
+    //    var testimonials = await _testimonialService.GetTestimonialsAsync(cancellationToken);
+    //    ViewData["CarouselDataModel"] = testimonials;
+    //    if (carouselRequest?.ViewName.HasValueString() == true)
+    //        return View(carouselRequest?.ViewName, testimonials);
 
-        // 1. Infer component name (e.g., "Testimonial" from "TestimonialViewComponent")
-        var componentName = GetType().Name.Replace("ViewComponent", "");
-
-        // 2. Try to load scoped defaults
-        if (_defaults.CarouselDefaults.TryGetValue(componentName, out var scopedDefaults))
-        {
-            carouselResponse.Option.Merge(scopedDefaults);
-        }
-        else
-        {
-            _logger.LogWarning("No scoped carousel defaults found for component: {Component}", componentName);
-        }
-
-        // 3. Apply per-instance overrides
-        if (carouselRequest?.ViewRequest?.Option != null)
-        {
-            carouselResponse.Option.Merge(carouselRequest.ViewRequest.Option);
-        }
+    //    return View(testimonials);
+    //}
 
 
-        ViewData["CarouselModel"] = carouselResponse;
-
-        if (carouselRequest?.ViewName.HasValueString() == true)
-            return View(carouselRequest?.ViewName);
-        
-        return View();
-    }
 }

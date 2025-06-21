@@ -7,4 +7,10 @@
     <RootNamespace>web_client</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Htmls\Blogs\" />
+    <Folder Include="Models\Htmls\Categories\" />
+    <Folder Include="Models\Request\" />
+  </ItemGroup>
+
 </Project>

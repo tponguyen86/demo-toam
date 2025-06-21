@@ -1,0 +1,32 @@
+﻿@model SideBarArticleComponent
+@if (Model != null)
+{
+    if (Model.Title?.HasValueString() == true)
+    {
+        <h4 class="card-title mb-1 text-4 font-weight-semi-bold">@Model.Title</h4>
+    }
+
+    if (Model.Links?.Any() == true)
+    {
+        <ul class="simple-post-list">
+            @foreach (var item in Model.Links)
+            {
+                <li>
+                    <div class="post-image">
+                        <div class="img-thumbnail img-thumbnail-no-borders d-block">
+                            <a href="@item.Href">
+                                <img src="@item.Media" width="50" height="50" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="post-info">
+                        <a href="@item.Href">@item.Title</a>
+                        <div class="post-meta">
+                            @item.CreatedAt
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+}

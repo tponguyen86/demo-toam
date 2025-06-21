@@ -1,0 +1,18 @@
+﻿@model SideBarCategoryComponent
+@if (Model != null)
+{
+    if (Model.Title?.HasValueString() == true)
+    {
+        <h4 class="card-title mb-1 text-4 font-weight-semi-bold">@Model.Title</h4>
+    }
+
+    if (Model.Links?.Any() == true)
+    {
+        <ul class="nav nav-list flex-column ">
+            @foreach (var item in Model.Links)
+            {
+                <li class="nav-item"><a class="nav-link" href="@item.Href">@item.Title</a></li>
+            }
+        </ul>
+    }
+}

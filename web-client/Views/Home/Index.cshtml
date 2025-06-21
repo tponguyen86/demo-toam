@@ -1,975 +1,177 @@
 ﻿@{
-    ViewData["Page"] = new PageModel() { Title = "Trang chủ", Description = "Mô ta seo trang chủ", BodyClassName = "p-index", MainClassName = "" };
+    ViewData["Page"] = new PageModel() { Title = "Trang chủ", Description = "Mô ta seo trang chủ", BodyClassName = "shop p-index", MainClassName = "" };
+
+    var bannerModel = ViewData["HomeBannerSliderDataModel"] as List<BaseCarouselItemModel>;
+    var testimonialModel = new List<BaseCarouselItemModel>();
 }
-<section class="section section-default border-0 bg-color-grey-700">
-    <div class="container">
-        <div class="row appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="500">
-            <div class="col">
-                <div class="owl-carousel owl-theme nav-inside nav-inside-edge nav-squared nav-with-transparency nav-dark nav-lg" data-plugin-options="{'items': 1, 'margin': 10, 'loop': false, 'nav': true, 'dots': false}">
-                    <div>
-                        <div class="img-thumbnail border-0 border-radius-0 p-0 d-block">
-                            <img src="https://img.hoplongtech.com/hoplong/logo-hang/banner-1/top-10-noi-lam-viec.jpg" class="img-fluid border-radius-0" alt="">
-                        </div>
-                    </div>
-                    <div>
-                        <div class="img-thumbnail border-0 border-radius-0 p-0 d-block">
-                            <img src="https://img.hoplongtech.com/hoplong/logo-hang/banner-1/hanyoung-nux-1.jpg" class="img-fluid border-radius-0" alt="">
-                        </div>
-                    </div>
-                    <div>
-                        <div class="img-thumbnail border-0 border-radius-0 p-0 d-block">
-                            <img src="https://img.hoplongtech.com/hoplong/logo-hang/banner-1/top500-vrn.jpg" class="img-fluid border-radius-0" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-<div class="row">
-    <div class="col">
-        <h4 class="font-weight-semibold text-4 mb-3">Danh mục nổi bật</h4>
-        <hr class="mt-0">
-        <div class="products row">
-            <div class="col">
-                <div class="owl-carousel owl-theme nav-style-1 nav-outside nav-outside nav-dark mb-0" data-plugin-options="{'loop': false, 'autoplay': false, 'items': 4, 'nav': true, 'dots': false, 'margin': 20, 'autoplayHoverPause': true, 'autoHeight': true, 'stagePadding': '75', 'navVerticalOffset': '50px'}">
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-
-                            <a href="/product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/logo-hang/banner-2-sp/bien-tan-se.png">
-
-                                </div>
-                            </a>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="/Product" class="text-color-dark text-color-hover-primary">Biến tần Schneider</a></h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-
-                            <a href="/product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/logo-hang/banner-2-sp/banner-2-nut-nhan.png">
-
-                                </div>
-                            </a>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="/Product" class="text-color-dark text-color-hover-primary">Nút nhấn</a></h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-
-                            <a href="/product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/logo-hang/banner-2-sp/banner-3-mcb.png">
-
-                                </div>
-                            </a>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="/Product" class="text-color-dark text-color-hover-primary">Cầu dao tự động</a></h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-                            <a href="/product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/se.png">
-
-                                </div>
-                            </a>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="/Product" class="text-color-dark text-color-hover-primary">Công tắc, ổ cắm  thông minh</a></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-
-                            <a href="/product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/logo-hang/banner-2-sp/bien-tan-se.png">
-
-                                </div>
-                            </a>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="/Product" class="text-color-dark text-color-hover-primary">Biến tần Schneider</a></h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-
-                            <a href="/product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/logo-hang/banner-2-sp/banner-2-nut-nhan.png">
-
-                                </div>
-                            </a>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="/Product" class="text-color-dark text-color-hover-primary">Nút nhấn</a></h3>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr class="my-5">
-
-
-<div class="row align-items-center">
-    <div class="col-sm-3">
-        <div class="pe-3 pe-sm-5 pb-3 pb-sm-0 border-right-light">
-            <div class="portfolio-item">
-                <a href="portfolio-single-wide-slider.html" aria-label="">
-                    <span class="thumb-info thumb-info-lighten thumb-info-no-borders border-radius-0">
-                        <span class="thumb-info-wrapper border-radius-0">
-                            <img src="https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png" class="img-fluid border-radius-0" alt="">
-                            <span class="thumb-info-title">
-                                <span class="thumb-info-inner">Liên hệ</span>
-                                <span class="thumb-info-type">Xem thêm</span>
-                            </span>
-                            <span class="thumb-info-action">
-                                <span class="thumb-info-action-icon bg-dark opacity-8"><i class="fas fa-plus"></i></span>
-                            </span>
-                        </span>
-                    </span>
-                </a>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-sm-9">
-
-        <div class="products row">
-            <div class="col">
-                <div class="owl-carousel owl-theme nav-style-1 nav-outside nav-outside nav-dark mb-0" data-plugin-options="{'loop': false, 'autoplay': false, 'items': 4, 'nav': true, 'dots': false, 'margin': 20, 'autoplayHoverPause': true, 'autoHeight': true, 'stagePadding': '75', 'navVerticalOffset': '50px'}">
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<hr class="my-5">
-
-<div class="row align-items-center">
-    <div class="col-sm-3">
-        <div class="pe-3 pe-sm-5 pb-3 pb-sm-0 border-right-light">
-            <div class="portfolio-item">
-                <a href="portfolio-single-wide-slider.html" aria-label="">
-                    <span class="thumb-info thumb-info-lighten thumb-info-no-borders border-radius-0">
-                        <span class="thumb-info-wrapper border-radius-0">
-                            <img src="https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png" class="img-fluid border-radius-0" alt="">
-                            <span class="thumb-info-title">
-                                <span class="thumb-info-inner">Liên hệ</span>
-                                <span class="thumb-info-type">Xem thêm</span>
-                            </span>
-                            <span class="thumb-info-action">
-                                <span class="thumb-info-action-icon bg-dark opacity-8"><i class="fas fa-plus"></i></span>
-                            </span>
-                        </span>
-                    </span>
-                </a>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-sm-9">
-
-        <div class="products row">
-            <div class="col">
-                <div class="owl-carousel owl-theme nav-style-1 nav-outside nav-outside nav-dark mb-0" data-plugin-options="{'loop': false, 'autoplay': false, 'items': 4, 'nav': true, 'dots': false, 'margin': 20, 'autoplayHoverPause': true, 'autoHeight': true, 'stagePadding': '75', 'navVerticalOffset': '50px'}">
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-
-<hr class="my-5">
-
-<div class="row align-items-center">
-    <div class="col-sm-3">
-        <div class="pe-3 pe-sm-5 pb-3 pb-sm-0 border-right-light">
-            <div class="portfolio-item">
-                <a href="portfolio-single-wide-slider.html" aria-label="">
-                    <span class="thumb-info thumb-info-lighten thumb-info-no-borders border-radius-0">
-                        <span class="thumb-info-wrapper border-radius-0">
-                            <img src="https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png" class="img-fluid border-radius-0" alt="">
-                            <span class="thumb-info-title">
-                                <span class="thumb-info-inner">Liên hệ</span>
-                                <span class="thumb-info-type">Xem thêm</span>
-                            </span>
-                            <span class="thumb-info-action">
-                                <span class="thumb-info-action-icon bg-dark opacity-8"><i class="fas fa-plus"></i></span>
-                            </span>
-                        </span>
-                    </span>
-                </a>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-sm-9">
-
-        <div class="products row">
-            <div class="col">
-                <div class="owl-carousel owl-theme nav-style-1 nav-outside nav-outside nav-dark mb-0" data-plugin-options="{'loop': false, 'autoplay': false, 'items': 4, 'nav': true, 'dots': false, 'margin': 20, 'autoplayHoverPause': true, 'autoHeight': true, 'stagePadding': '75', 'navVerticalOffset': '50px'}">
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-
-
-<hr class="my-5">
-
-<div class="row align-items-center">
-    <div class="col-sm-3">
-        <div class="pe-3 pe-sm-5 pb-3 pb-sm-0 border-right-light">
-            <div class="portfolio-item">
-                <a href="portfolio-single-wide-slider.html" aria-label="">
-                    <span class="thumb-info thumb-info-lighten thumb-info-no-borders border-radius-0">
-                        <span class="thumb-info-wrapper border-radius-0">
-                            <img src="https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png" class="img-fluid border-radius-0" alt="">
-                            <span class="thumb-info-title">
-                                <span class="thumb-info-inner">Liên hệ</span>
-                                <span class="thumb-info-type">Xem thêm</span>
-                            </span>
-                            <span class="thumb-info-action">
-                                <span class="thumb-info-action-icon bg-dark opacity-8"><i class="fas fa-plus"></i></span>
-                            </span>
-                        </span>
-                    </span>
-                </a>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-sm-9">
-
-        <div class="products row">
-            <div class="col">
-                <div class="owl-carousel owl-theme nav-style-1 nav-outside nav-outside nav-dark mb-0" data-plugin-options="{'loop': false, 'autoplay': false, 'items': 4, 'nav': true, 'dots': false, 'margin': 20, 'autoplayHoverPause': true, 'autoHeight': true, 'stagePadding': '75', 'navVerticalOffset': '50px'}">
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-                    <div class="product mb-0">
-                        <div class="product-thumb-info border-0 mb-3">
-
-                            <div class="product-thumb-info-badges-wrapper">
-                                @* <span class="badge badge-ecommerce text-bg-success">Mới</span> *@
-                                <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
-                            </div>
-
-                            <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                Chi tiết
-                            </a>
-                            <a href="shop-product-sidebar-left.html">
-                                <div class="product-thumb-info-image">
-                                    <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
-
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                            </div>
-                        </div>
-
-                        <p class="price text-5 mb-3">
-                            <span class="sale text-color-dark font-weight-semi-bold">Liên hệ</span>
-                        </p>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
 <div class="container">
-
     <div class="row">
-        <div class="col mb-4">
-            <hr class="my-5">
+        <div class="col">
+            @await Component.InvokeAsync("Carousel", new ViewComponentModel<CarouselSettingModel, List<BaseCarouselItemModel>>(new CarouselSettingModel
+       {
+           AppearAnimation = "fadeInDownShorter",
+           AppearAnimationDelay = 500,
+           Option = new CarouselSettingOptionModel
+           {
+               Items = 1,
+               Nav = true,
+               AnimateOut = "animateOut",
+               Dots = false,
+               Loop = true,
+           }
+       }, bannerModel))
+        </div>
+    </div>
+</div>
+
+<!-- danh mục sản phẩm-->
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+            <div class="my-0 lightbox appear-animation" data-appear-animation="fadeInUpShorter" data-plugin-options="{'delegate': 'a.lightbox-portfolio', 'type': 'image', 'gallery': {'enabled': true}}">
+                <div class="owl-carousel owl-theme" data-plugin-options="{'items': 4, 'margin': 35, 'loop': false}">
+
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        <div class="portfolio-item">
+                            <span class="thumb-info thumb-info-lighten thumb-info-no-borders thumb-info-bottom-info thumb-info-centered-icons border-radius-0">
+                                <span class="thumb-info-wrapper border-radius-0">
+
+                                    <img alt="" class="img-fluid border-radius-0" src="https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png" />
+                                    <span class="thumb-info-title">
+                                        <span class="thumb-info-inner line-height-1 font-weight-bold text-dark position-relative top-3">Biến tần Schneider</span>
+                                        <span class="thumb-info-type">Hàng Việt Nam, Nhật Bổn...</span>
+                                    </span>
+                                    <span class="thumb-info-action">
+                                        <a href="portfolio-single-wide-slider.html">
+                                            <span class="thumb-info-action-icon thumb-info-action-icon-primary"><i class="fas fa-link"></i></span>
+                                        </a>
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="row pb-3">
+</div>
+
+<!-- sản phẩm-->
+<div class="container">
+    @for (int i = 0; i < 3; i++)
+    {
+        <div class="card mb-4">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-sm-3  pe-0">
+                        <div class="card border-0 border-radius-0 bg-color-primary text-center h-100">
+                            <div class="card-body align-items-center p-0">
+                                <img class="img-fluid" src="https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png" alt="Card Image">
+                                <h4 class="card-title mt-3 text-4 font-weight-bold text-light">Biến tần</h4>
+
+                                @* <a href="#" class="btn btn-primary btn-modern">Liên hệ</a> *@
+                            </div>
+                            <div class="card-footer bg-color-grey text-1 text-uppercase">
+                                <a href="/" class="read-more text-color-primary font-weight-semibold text-3">Xem thêm<i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9 pt-2">
+                        <h4 class="mb-3">Biến tần</h4>
+                        <div class="products row">
+                            <div class="col">
+                                <div class="owl-carousel owl-theme show-nav-title nav-dark mb-0" data-plugin-options="{'loop': false, 'autoplay': false,'responsive': {'576': {'items': 1}, '768': {'items': 1}, '992': {'items': 3}, '1200': {'items': 4}}, 'nav': true, 'dots': false, 'margin': 20, 'autoplayHoverPause': true, 'autoHeight': true}">
+                                    @for (int j = 0; j < 5; j++)
+                                    {
+                                        <div class="product mb-0">
+                                            <div class="product-thumb-info border-0 mb-3">
+
+                                                @*  <div class="product-thumb-info-badges-wrapper">
+                                                    <span class="badge badge-ecommerce text-bg-success">Mới</span>
+                                                    <span class="badge badge-ecommerce text-bg-danger">Giảm 27%</span>
+                                                </div>
+ *@
+                                                <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
+                                                    Chi tiết
+                                                </a>
+                                                <a href="shop-product-sidebar-left.html">
+                                                    <div class="product-thumb-info-image">
+                                                        <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
+
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <div>
+                                                    @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
+                                                    <h3 class="text-3 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
+                                                </div>
+                                            </div>
+                                            <ul class="list list-icons list-icons-sm">
+                                                <li><i class="fas fa-caret-right"></i> Loại sản phẩm: Contactor</li>
+                                                <li><i class="fas fa-caret-right"></i> Số cực: 3P</li>
+                                                <li><i class="fas fa-caret-right"></i> Dòng tiếp điểm: 9A</li>
+                                                <li><i class="fas fa-caret-right"></i> Tiếp điểm phụ: 1NO+1NC</li>
+                                            </ul>
+                                            <p class="price text-5 mb-3">
+
+                                                <a href="#" class="btn btn-secondary text-decoration-none">Liên hệ</a>
+
+                                            </p>
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Tin mới nhất -->
+
+<div class="bg-color-grey-100">
+    <div class="container py-5">
+        <div class="row">
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="col-lg-4 mb-5 mb-lg-0">
+
+                    <article class="post">
+                        <div class="card rounded-3 border-0 bg-transparent box-shadow-10 box-shadow-1 box-shadow-1-hover anim-hover-translate-top-10px transition-3ms">
+                            <div class="p-relative rounded-3 overflow-hidden">
+                                <a href="blog-post.html" class="text-decoration-none">
+                                    <img class="card-img-top" src="https://img.hoplongtech.com/hoplong/uploads/bac-my-tang-toc-tu-dong-hoa-580-trieu-usd-do-vao-robot-trong-quy-i-2025-4.jpg" alt="Card Image">
+                                </a>
+                                <div class="card-body bg-light p-4">
+                                    <span class="badge badge-dark badge-sm rounded-pill text-uppercase me-1">Tự động hóa</span>
+                                    <h4 class="my-2"><a href="blog-post.html" class="text-decoration-none">Bắc Mỹ tăng tốc tự động hóa, 580 triệu USD đổ vào robot trong quý I/2025</a></h4>
+                                    <p class="card-text mb-1">Các doanh nghiệp Bắc Mỹ đã chi hơn 580 triệu USD để mua 9.064 robot công nghiệp trong quý I/2025, cho thấy tốc độ đầu tư vào tự động hóa vẫn duy trì ổn định và có xu hướng gia tăng giá trị. Số liệu này vừa được Hiệp hội Tự động hóa Bắc Mỹ (A3) công bố tại triển lãm Automate 2025, tại Detroit, Mỹ..</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<!-- Vì sao  chọn chúng tôi-->
+<div class="container">
+    <div class="row pt-5">
         <div class="col-lg-8">
             <h2 class="font-weight-normal text-7">Vì sao <strong class="font-weight-extra-bold">khách hàng</strong> chọn chúng tôi</h2>
             <p><span class="alternative-font">tên công ty</span> là nhà cung cấp thiết bị, giải pháp tự động hóa và tích hợp robot công nghiệp hàng đầu tại Việt Nam. Chúng tôi có hơn 200.000 sản phẩm được chỉ định là nhà phân phối của các thương hiệu: Schneider Electric, Autonics, Omron, Hanyoung, Patlite, LS, Delta, Siemens, Idec,...</p>
@@ -1003,7 +205,7 @@
                         </div>
                     </div>
 
-                  
+
 
                 </div>
                 <div class="col-sm-6">
@@ -1132,7 +334,7 @@
         </div>
     </div>
 
-    <hr class="solid my-5">
+    <hr class="solid my-3">
 
     <div class="row text-center pt-4">
         <div class="col">
@@ -1149,7 +351,7 @@
         </div>
     </div>
 
-    <div class="row text-center mt-5">
+    <div class="row text-center mt-1">
         <div class="owl-carousel owl-theme carousel-center-active-item" data-plugin-options="{'responsive': {'0': {'items': 1}, '476': {'items': 1}, '768': {'items': 5}, '992': {'items': 7}, '1200': {'items': 7}}, 'autoplay': true, 'autoplayTimeout': 3000, 'dots': false}">
             <div>
                 <img class="img-fluid" src="https://img.hoplongtech.com/hoplong/uploads/logo-web-02-1.png" alt="">
@@ -1217,8 +419,8 @@
 </div>
 
 <!-- new feature and  testimonial-->
-<section class="section section-custom-map appear-animation lazyload" data-appear-animation="fadeInUpShorter" data-src-bg="img/map.png" style="background-color: transparent; background-position: center 0; background-repeat: no-repeat;">
-    <section class="section section-default section-footer">
+<section class="section section-custom-map appear-animation lazyload mt-0 p-0" data-appear-animation="fadeInUpShorter" data-src-bg="img/map.png" style="background-color: transparent; background-position: center 0; background-repeat: no-repeat;">
+    <section class="section section-default section-footer py-1">
         <div class="container">
             <div class="row mt-5 appear-animation" data-appear-animation="fadeInUpShorter">
                 <div class="col-lg-6">
@@ -1337,9 +539,9 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    @await Component.InvokeAsync("Testimonial", new ViewComponentRequestModel<CarouselModel>(new CarouselModel
+                    @await Component.InvokeAsync("Testimonial", new ViewComponentModel<CarouselSettingModel, List<BaseCarouselItemModel>>(new CarouselSettingModel
                {
-                   Option = new CarouselOptionModel
+                   Option = new CarouselSettingOptionModel
                    {
                        Items = 1,
                        Nav = false
@@ -1351,12 +553,3 @@
         </div>
     </section>
 </section>
-
-@await Component.InvokeAsync("Testimonial", new ViewComponentRequestModel<CarouselModel>(new CarouselModel
-{
-    Option = new CarouselOptionModel
-    {
-        Items = 3,
-        Nav = false
-    }
-}))

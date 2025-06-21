@@ -1,6 +1,103 @@
 ﻿@{
-    var pageModel = new PageModel() { Title = "Tin tức", Description = "Mô ta seo tin tức", BodyClassName = "p-blog-detail", MainClassName = "" }; ;
+    var pageModel = new PageModel() { Title = "Chi tiết tin tức", Description = "Mô ta seo tin tức", BodyClassName = "p-blog-detail", MainClassName = "" }; ;
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
+    {
+        new BaseLinkModel("Trang chủ","/"),
+        new BaseLinkModel(pageModel.Title,"/Home/Blog"),
+        new BaseLinkModel(pageModel.Title,"/Home/Blog/BlogDetail"),
+    });
+    var sideBarCategoryModel = new SideBarCategoryComponent("Danh mục", new List<BaseLinkModel>()
+    {
+        new BaseLinkModel("Sự kiện","/Home/Blog"),
+        new BaseLinkModel("Hoạt động công ty","/Home/Blog"),
+        new BaseLinkModel("Tin tự động hóa","/Home/Blog"),
+        new BaseLinkModel("Khuyến mãi","/Home/Blog"),
+    });
+    var sideBarArticleModel = new SideBarArticleComponent("Bài viết nổi bật", new List<BaseMediaLinkContentModel>()
+    {
+        new BaseMediaLinkContentModel("Cách phân biệt tín hiệu PNP và NPN chính xác nhất","/Home/Blog/BlogDetail","https://img.hoplongtech.com/hoplong/news/phan-biet-pnp-va-npn.jpg"),
+        new BaseMediaLinkContentModel("Chi tiết cách cài đặt biến tần iG5A LS","/Home/Blog/BlogDetail","https://img.hoplongtech.com/hoplong/news/chi-tiet-cach-cai-dat-bien-tan-ig5a-ls.jpg"),
+        new BaseMediaLinkContentModel("Động cơ điện 1 chiều là gì? Nguyên lý hoạt động và ứng dụng","/Home/Blog/BlogDetail","https://img.hoplongtech.com/hoplong/news/dong-co-dien-1-chieu-la-gi-nguyen-ly-hoat-dong-va-ung-dung.jpg"),
+    });
 }
-<h1>@(pageModel?.Title)</h1>
+@(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
+<div class="container py-4">
 
-<p>Use this page to detail your site's privacy policy.</p>
+    <div class="row">
+        <div class="col-lg-3 order-lg-2">
+            <aside class="sidebar">
+                <div class="card card-border card-border-bottom bg-color-light mb-4">
+                    <div class="card-body p-3">
+                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarCategory.cshtml", sideBarCategoryModel))
+                    </div>
+                </div>
+
+                <div class="card card-border card-border-bottom bg-color-light mb-4">
+                    <div class="card-body p-3">
+                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarArticle.cshtml", sideBarArticleModel))
+                    </div>
+                </div>
+
+                <div class="card card-border card-border-bottom bg-color-light mb-4">
+                    <div class="card-body p-3">
+                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarIntro.cshtml", new SideBarIntroComponent("Giới thiệu", "Hợp Long là nhà cung cấp thiết bị, giải pháp tự động hóa và tích hợp robot công nghiệp hàng đầu tại Việt Nam. Chúng tôi có hơn 200.000 sản phẩm được chỉ định là nhà phân phối của các thương hiệu: Schneider Electric, Autonics, Omron, Hanyoung, Patlite, LS, Delta, Siemens, Idec,...", new BaseLinkModel("Tìm hiểu thêm", "#"))))
+                    </div>
+                </div>
+            </aside>
+        </div>
+        <div class="col-lg-9 order-lg-1">
+            <div class="blog-posts single-post">
+
+                <article class="post post-large blog-single-post border-0 m-0 p-0">
+                    <div class="post-image ms-0">
+                        <a href="blog-post.html">
+                            <img src="https://www.okler.net/previews/porto/12.1.0/img/blog/wide/blog-11.jpg" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="">
+                        </a>
+                    </div>
+
+                    <div class="post-date ms-0">
+                        <span class="day">10</span>
+                        <span class="month">Jan</span>
+                    </div>
+
+                    <div class="post-content ms-0">
+
+                        <h2 class="font-weight-semi-bold"><a href="blog-post.html">Ecovacs tạo nên cơn sốt với sự kiện ra mắt loạt sản phẩm làm sạch thông minh</a></h2>
+
+                        <div class="post-meta">
+                            <span><i class="far fa-user"></i> By <a href="#">Nguyễn Văn A</a> </span>
+                            <span><i class="far fa-folder"></i> <a href="#">Sự kiện</a></span>
+                        </div>
+                        <div class="ck-content" id="single-content" data-title="Mục lục">
+                            <p style="text-align:justify;"><meta charset="utf-8">Với thông điệp xuyên suốt “Cuộc sống thảnh thơi, chọn Ecovacs”, sự kiện không chỉ thu hút sự quan tâm của giới truyền thông mà còn tạo nên một cơn sốt trong cộng đồng yêu công nghệ. Hàng trăm khách hàng đã đến tham dự sự kiện để được trải nghiệm trực tiếp <a href="https://hoplongtech.com/tin-tuc/ecovacs-tao-nen-con-sot-voi-su-kien-ra-mat-loat-san-pham-lam-sach-thong-minh.html"><strong>các sản phẩm mới nhất của Ecovacs</strong></a>. &nbsp;<br>Bốn sản phẩm mới bao gồm DEEBOT N30 PRO OMNI, DEEBOT X8 PRO OMNI, DEEBOT T50 PRO OMNI và FLOOR ONE STRETCH S6 đã nhanh chóng chiếm trọn trái tim của người tiêu dùng Việt. nhờ sở hữu những tính năng hiện đại và công nghệ đột phá như công nghệ lau sàn OZMO Roller, hệ thống tránh vật cản thông minh AIVI 3D 3.0, trợ lý ảo AI YIKO-GPT 2.0, tính năng Live activity, khả năng tự động sạc và làm sạch của trạm sạc OMNI tất cả trong một, ...các sản phẩm này hứa hẹn sẽ mang đến trải nghiệm làm sạch hoàn toàn mới. &nbsp;</p><figure class="image"><img src="https://img.hoplongtech.com/hoplong/uploads/ecovacs-gay-sot-voi-4-san-pham-lam-sach-thong-minh-gia-mo-ban-cuc-soc-11.jpg" alt="Đại diện Ecovacs check in tại sự kiện “ Cuộc sống thảnh thơi, chọn Ecovacs”"><figcaption>Đại diện Ecovacs check in tại sự kiện “ Cuộc sống thảnh thơi, chọn Ecovacs”</figcaption></figure><figure class="image"><img src="https://img.hoplongtech.com/hoplong/uploads/ecovacs-gay-sot-voi-4-san-pham-lam-sach-thong-minh-gia-mo-ban-cuc-soc-9.jpg" alt="Anh em SChannel góp mặt tại sự kiện ra mắt và trải nghiệm sản phẩm của Ecovacs."><figcaption>Anh em SChannel góp mặt tại sự kiện ra mắt và trải nghiệm sản phẩm của Ecovacs.</figcaption></figure><figure class="image"><img src="https://img.hoplongtech.com/hoplong/uploads/ecovacs-gay-sot-voi-4-san-pham-lam-sach-thong-minh-gia-mo-ban-cuc-soc-10.jpg" alt="Viruss và Ngọc Kem nắm tay nhau đi tham dự sự kiện ra mắt và trải nghiệm sản phẩm của Ecovacs."><figcaption>Viruss và Ngọc Kem nắm tay nhau đi tham dự sự kiện ra mắt và trải nghiệm sản phẩm của Ecovacs.</figcaption></figure><p style="text-align:justify;">Chị Lan Anh, một khách hàng tham gia sự kiện, chia sẻ: “Tôi thực sự ấn tượng với tính năng gập phẳng 180 độ và lực hút 12000Pa của máy hút bụi lau nhà FLOOR ONE STRETCH S6. Tôi tin rằng sản phẩm này sẽ giúp tôi tiết kiệm rất nhiều thời gian cho việc dọn dẹp nhà cửa, trải nghiệm cảm giác lau nhà thư thái nhất. &nbsp;&nbsp;<br>Sự kiện ra mắt không chỉ đơn thuần là một buổi giới thiệu sản phẩm mà còn là một sân chơi để những người yêu công nghệ-nghiện sạch gặp gỡ, giao lưu và chia sẻ kinh nghiệm. Tại phiên talkshow các diễn giả hàng đầu trong lĩnh vực công nghệ đã mang đến những thông tin hữu ích về xu hướng phát triển của robot làm sạch và những lợi ích mà công nghệ này mang lại cho cuộc sống hiện đại. Sự kiện đã khép lại thành công tốt đẹp với lượng lớn phản hồi tích cực từ phía khách hàng. &nbsp;</p><figure class="image"><img src="https://img.hoplongtech.com/hoplong/uploads/ecovacs-gay-sot-voi-4-san-pham-lam-sach-thong-minh-gia-mo-ban-cuc-soc-8.jpg" alt="Tại phiên talkshow 5 vị khách mời đặc biệt đã chia sẻ nhiều thông tin bổ ích về xu hướng phát triển của công nghệ làm sạch."><figcaption>Tại phiên talkshow 5 vị khách mời đặc biệt đã chia sẻ nhiều thông tin bổ ích về xu hướng phát triển của công nghệ làm sạch.</figcaption></figure><p style="text-align:justify;">Sự thành công của sự kiện, Ecovacs một lần nữa khẳng định vị thế dẫn đầu của mình trong lĩnh vực robot làm sạch tại thị trường Việt Nam. Thương hiệu cam kết sẽ tiếp tục đầu tư vào nghiên cứu và phát triển để mang đến cho người tiêu dùng những sản phẩm chất lượng cao đáp ứng mọi nhu cầu và dịch vụ tốt nhất. &nbsp;</p><p style="text-align:justify;">Sự kiện ra mắt 4 sản phẩm làm sạch thông minh của Ecovacs đã đánh dấu một bước tiến mới trong ngành công nghiệp robot gia đình tại Việt Nam. Với những tính năng vượt trội và thiết kế hiện đại, các sản phẩm này hứa hẹn sẽ trở thành người bạn đồng hành đắc lực của mọi gia đình. &nbsp;</p>
+                        </div>
+                        <div class="post-block mt-5 post-share">
+                            <h4 class="mb-3">Share this Post</h4>
+
+                            <!-- Go to www.addtoany.com to customize -->
+                            <!-- AddToAny BEGIN -->
+                            <div class="a2a_kit a2a_kit_size_32 a2a_default_style" style="line-height: 32px;">
+                                <a class="a2a_dd" href="https://www.addtoany.com/share#url=https%3A%2F%2Fwww.okler.net%2Fpreviews%2Fporto%2F12.1.0%2Fblog-post-sidebar-right.html&amp;title=Post%20Right%20Sidebar%20%7C%20Porto%20-%20Multipurpose%20Website%20Template"><span class="a2a_svg a2a_s__default a2a_s_a2a" style="background-color: rgb(1, 102, 255);"><svg focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><g fill="#FFF"><path d="M14 7h4v18h-4z"></path><path d="M7 14h18v4H7z"></path></g></svg></span><span class="a2a_label a2a_localize" data-a2a-localize="inner,Share">Share</span></a>
+                                <a class="a2a_button_facebook" target="_blank" rel="nofollow noopener" href="/#facebook"><span class="a2a_svg a2a_s__default a2a_s_facebook" style="background-color: rgb(8, 102, 255);"><svg focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#fff" d="M28 16c0-6.627-5.373-12-12-12S4 9.373 4 16c0 5.628 3.875 10.35 9.101 11.647v-7.98h-2.474V16H13.1v-1.58c0-4.085 1.849-5.978 5.859-5.978.76 0 2.072.15 2.608.298v3.325c-.283-.03-.775-.045-1.386-.045-1.967 0-2.728.745-2.728 2.683V16h3.92l-.673 3.667h-3.247v8.245C23.395 27.195 28 22.135 28 16"></path></svg></span><span class="a2a_label">Facebook</span></a>
+                                <a class="a2a_button_x" target="_blank" rel="nofollow noopener" href="/#x"><span class="a2a_svg a2a_s__default a2a_s_x" style="background-color: rgb(26, 26, 26);"><svg focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#fff" d="M21.751 7h3.067l-6.7 7.658L26 25.078h-6.172l-4.833-6.32-5.531 6.32h-3.07l7.167-8.19L6 7h6.328l4.37 5.777L21.75 7Zm-1.076 16.242h1.7L11.404 8.74H9.58l11.094 14.503Z"></path></svg></span><span class="a2a_label">X</span></a>
+                                <a class="a2a_button_copy_link" target="_blank" rel="nofollow noopener" href="/#copy_link"><span class="a2a_svg a2a_s__default a2a_s_link" style="background-color: rgb(136, 137, 144);"><svg focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#fff" d="M7.591 21.177q0-.54.377-.917l2.804-2.804a1.24 1.24 0 0 1 .913-.378q.565 0 .97.43-.038.041-.255.25-.215.21-.29.29a3 3 0 0 0-.2.256 1.1 1.1 0 0 0-.177.344 1.4 1.4 0 0 0-.046.37q0 .54.377.918a1.25 1.25 0 0 0 .918.377q.19.001.373-.047.189-.056.345-.175.135-.09.256-.2.15-.14.29-.29c.14-.142.223-.23.25-.254q.445.42.445.984 0 .539-.377.916l-2.778 2.79a1.24 1.24 0 0 1-.917.364q-.54-.001-.917-.35l-1.982-1.97a1.22 1.22 0 0 1-.378-.9zm9.477-9.504q0-.54.377-.917l2.777-2.79a1.24 1.24 0 0 1 .913-.378q.525-.001.917.364l1.984 1.968q.38.378.38.903 0 .54-.38.917l-2.802 2.804a1.24 1.24 0 0 1-.916.364q-.565 0-.97-.418.038-.04.255-.25a8 8 0 0 0 .29-.29q.108-.12.2-.255.121-.156.176-.344.048-.181.047-.37 0-.538-.377-.914a1.25 1.25 0 0 0-.917-.377q-.205 0-.37.046-.172.046-.346.175a4 4 0 0 0-.256.2q-.08.076-.29.29l-.25.258q-.441-.417-.442-.983zM5.003 21.177q0 1.617 1.146 2.736l1.982 1.968c.745.75 1.658 1.12 2.736 1.12q1.63 0 2.75-1.143l2.777-2.79c.75-.747 1.12-1.66 1.12-2.737q.002-1.66-1.183-2.818l1.186-1.185q1.16 1.185 2.805 1.186 1.617 0 2.75-1.13l2.803-2.81q1.127-1.132 1.128-2.748 0-1.62-1.146-2.738L23.875 6.12Q22.758 4.999 21.139 5q-1.63 0-2.75 1.146l-2.777 2.79c-.75.747-1.12 1.66-1.12 2.737q-.002 1.658 1.183 2.817l-1.186 1.186q-1.16-1.186-2.805-1.186-1.617 0-2.75 1.132L6.13 18.426Q5 19.559 5 21.176z"></path></svg></span><span class="a2a_label">Copy Link</span></a>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <script async="" src="https://static.addtoany.com/menu/page.js"></script>
+                            <!-- AddToAny END -->
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </div>
+
+</div>

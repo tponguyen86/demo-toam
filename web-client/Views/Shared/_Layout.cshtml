@@ -126,7 +126,7 @@
                             <div class="header-row justify-content-between">
                                 <div class="header-logo z-index-2 col-lg-2 px-0">
                                     <a href="index.html">
-                                        <img alt="Porto" width="100" height="48" data-sticky-width="82" data-sticky-height="40" data-sticky-top="84" src="img/logo-default-slim.png">
+                                        <img alt="Porto" width="100" height="48" data-sticky-width="82" data-sticky-height="40" data-sticky-top="84" src="/img/logo-default-slim.png">
                                     </a>
                                 </div>
                                 <div class="header-nav-features header-nav-features-no-border p-relative z-index-2 col col-lg-4 col-xl-6 px-0 ms-0">
@@ -169,7 +169,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                               @*  <ul class="header-extra-info col-auto col-lg-3 col-xl-2 ps-2 ps-xl-0 ms-lg-3 d-none d-lg-block">
+                                @*  <ul class="header-extra-info col-auto col-lg-3 col-xl-2 ps-2 ps-xl-0 ms-lg-3 d-none d-lg-block">
                                     <li class="d-none d-sm-inline-flex ms-0">
                                         <div class="header-extra-info-icon ms-lg-4">
                                             <i class="icons icon-envelope text-3 text-color-dark position-relative top-1"></i>
@@ -230,11 +230,11 @@
                                                 </ul>
                                             </nav>
                                         </div>
-                                      
+
                                     </div>
                                     <div class="feature-box feature-box-style-2 align-items-center ms-lg-4">
                                         <div class="feature-box-icon d-none d-sm-inline-flex">
-                                            <img class="icon-animated" width="48" src="img/demos/cleaning-services/icons/phone.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-tertiary position-relative bottom-3'}" />
+                                            <img class="icon-animated" width="48" src="/img/demos/cleaning-services/icons/phone.svg" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-tertiary position-relative bottom-3'}" />
                                         </div>
                                         <div class="feature-box-info ps-2">
                                             <p class="font-weight-semibold line-height-1 text-2 pb-0 mb-1">HOTLINE</p>
@@ -255,30 +255,19 @@
         <div role="main" class="main @(page?.BodyClassName)">
             @RenderBody()
         </div>
-
         <footer id="footer" class="footer-texts-more-lighten">
-            <div class="container">
-                <div class="row py-4 my-5">
-                    <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
-                        <h5 class="text-4 text-color-light mb-3">THÔNG TIN LIÊN HỆ</h5>
-                        <ul class="list list-unstyled">
-                            <li class="pb-1 mb-2">
-                                <span class="d-block font-weight-normal line-height-1 text-color-light">ĐỊA CHỈ</span>
-                                123 Ho Chi minh Viet Nam
-                            </li>
-                            <li class="pb-1 mb-2">
-                                <span class="d-block font-weight-normal line-height-1 text-color-light">SỐ ĐIỆN THOẠI</span>
-                                <a href="tel:+1234567890"> (123) 456-7890</a>
-                            </li>
-                            <li class="pb-1 mb-2">
-                                <span class="d-block font-weight-normal line-height-1 text-color-light">EMAIL</span>
-                                <a href="mailto:mail@example.com">mail@example.com</a>
-                            </li>
-                            <li class="pb-1 mb-2">
-                                <span class="d-block font-weight-normal line-height-1 text-color-light">THỜI GIAN LÀM VIỆC </span>
-                                Thứ 2 - Chủ nhật / 9:00AM - 8:00PM
-                            </li>
-                        </ul>
+            <div class="container pb-lg-4 pt-3">
+                <div class="row pt-3">
+                    <div class="col-lg-4">
+                        <h4 class="text-4 text-color-light mb-3">VỀ CHÚNG TÔI</h4>
+
+                        <p class="mb-3">Porto - Expert Accounting Solutions Tailored to Your Needs—Ensuring Accuracy, Compliance, and Financial Peace of Mind.</p>
+
+                        <div class="d-flex align-items-center pt-2 pb-4">
+                            <p class="d-inline-block mb-0 font-weight-bold line-height-1"></p>
+                            <span class="font-weight-normal line-height-1 text-color-light">Theo dõi chúng tôi trên</span>
+                        </div>
+
                         <ul class="social-icons social-icons-clean-with-border social-icons-medium">
                             <li class="social-icons-instagram">
                                 <a href="http://www.instagram.com/" class="no-footer-css" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
@@ -291,73 +280,63 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
-                        <h5 class="text-4 text-color-light mb-3">DỊCH VỤ</h5>
-                        <ul class="list list-unstyled mb-0">
-                            <li class="mb-0"><a href="contact-us-1.html">Dịch vụ 1</a></li>
-                            <li class="mb-0"><a href="contact-us-1.html">Dịch vụ 2</a></li>
-                            <li class="mb-0"><a href="contact-us-1.html">Dịch vụ 3</a></li>
-                            <li class="mb-0"><a href="contact-us-1.html">Dịch vụ 4</a></li>
+                    <div class="col-sm-6 col-lg-3 pt-4 pt-lg-0">
+                        <h4 class="text-4 text-color-light mb-3">THÔNG TIN LIÊN HỆ</h4>
+                        <ul class="list list-icons list-icons-lg">
+                            <li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i><p class="m-0">234 Street Name, City Name</p></li>
+                            <li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i><p class="m-0"><a href="tel:8001234567">(800) 123-4567</a></p></li>
+                            <li class="mb-1"><i class="far fa-envelope text-color-primary"></i><p class="m-0"><a href="mailto:mail@example.com">mail@example.com</a></p></li>
+                        </ul>
+                      
+                    </div>
+                    <div class="col-sm-6 col-lg-2 pt-4 pt-lg-0">
+                        <h4 class="text-4 text-color-light mb-3">HỖ TRỢ</h4>
+                        <ul class="list list-unstyled">
+                            <li><a href="demo-accounting-1-services-details.html?colorPrimary=FFC8BD&amp;colorSecondary=FE4A23&amp;colorTertiary=010A44&amp;colorQuaternary=FEF2ED&amp;showStyleSwitcher=true&amp;hideStyleSwitcherAfterShow=true&amp;addImagesSuffix=true&amp;addURLParams=true&amp;showOnLoad=false" class="text-color-grey text-color-hover-primary">Accounting</a></li>
+                            <li><a href="demo-accounting-1-services-details.html?colorPrimary=FFC8BD&amp;colorSecondary=FE4A23&amp;colorTertiary=010A44&amp;colorQuaternary=FEF2ED&amp;showStyleSwitcher=true&amp;hideStyleSwitcherAfterShow=true&amp;addImagesSuffix=true&amp;addURLParams=true&amp;showOnLoad=false" class="text-color-grey text-color-hover-primary">Tax Planning</a></li>
+                            <li><a href="demo-accounting-1-services-details.html?colorPrimary=FFC8BD&amp;colorSecondary=FE4A23&amp;colorTertiary=010A44&amp;colorQuaternary=FEF2ED&amp;showStyleSwitcher=true&amp;hideStyleSwitcherAfterShow=true&amp;addImagesSuffix=true&amp;addURLParams=true&amp;showOnLoad=false" class="text-color-grey text-color-hover-primary">Business Advisory</a></li>
+                            <li><a href="demo-accounting-1-services-details.html?colorPrimary=FFC8BD&amp;colorSecondary=FE4A23&amp;colorTertiary=010A44&amp;colorQuaternary=FEF2ED&amp;showStyleSwitcher=true&amp;hideStyleSwitcherAfterShow=true&amp;addImagesSuffix=true&amp;addURLParams=true&amp;showOnLoad=false" class="text-color-grey text-color-hover-primary">Payroll Management</a></li>
+
+
                         </ul>
                     </div>
-                    <div class="col-md-6 col-lg-3 mb-5 mb-md-0">
-                        <h5 class="text-4 text-color-light mb-3">POPULAR TAGS</h5>
-                        <ul class="list list-unstyled list-inline mb-0">
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">jeans</a></li>
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">shoes</a></li>
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">bag</a></li>
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">bag</a></li>
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">shoes</a></li>
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">bag</a></li>
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">jeans</a></li>
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">shoes</a></li>
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">white</a></li>
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">black</a></li>
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">white</a></li>
-                            <li class="list-inline-item"><a href="#" class="badge badge-dark rounded border border-color-light-3 font-weight-normal text-2 p-2">shoes</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <h5 class="text-4 text-color-light mb-3">ĐĂNG KÝ NHAN THONG TIN MOI</h5>
-                        <p class="mb-2">Dang ky de nhan thong tin moi </p>
+                    <div class="col-lg-3 pt-4 pt-lg-0">
+                        <h4 class="text-4 text-color-light mb-3">ĐĂNG KÝ NHẬN TIN</h4>
+
                         <div class="alert alert-success d-none" id="newsletterSuccess">
                             <strong>Success!</strong> You've been added to our email list.
                         </div>
                         <div class="alert alert-danger d-none" id="newsletterError"></div>
-                        <form id="newsletterForm" class="form-style-5 opacity-10" action="php/newsletter-subscribe.php" method="POST">
+                        <form id="newsletterForm" action="php/newsletter-subscribe.php" method="POST" class="mb-0" novalidate="novalidate">
                             <div class="row">
                                 <div class="form-group col">
-                                    <input class="form-control" placeholder="` Address" name="newsletterEmail" id="newsletterEmail" type="text" />
+                                    <div class="position-relative">
+                                        <i class="icons icon-envelope text-color-grey bg-light text-3-5 position-absolute right-15 top-50pct transform3dy-n50"></i>
+                                        <input type="email" value="" placeholder="Enter your e-mail" class="form-control form-control-icon text-3 h-auto border-width-2 border-radius-2 border-color-grey-200 py-2" name="newsletterEmail" id="newsletterEmail">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col">
-                                    <button class="btn btn-primary btn-rounded btn-px-4 btn-py-2 font-weight-bold" type="submit">SUBSCRIBE</button>
-                                </div>
                             </div>
                         </form>
+
+                        <img class="img-fluid" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaIx9SeDfR-iQVBq_dCL4zSEfxWGT-_P1l-A&amp;s">
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <div class="footer-copyright footer-copyright-style-2 pt-4 pb-5">
-                    <div class="row align-items-center justify-content-md-between">
-                        <div class="col-12 col-md-auto text-center text-md-start mb-2 mb-md-0">
-                            <p class="mb-0">Porto Template © 2024. All Rights Reserved</p>
+            <div class="footer-copyright bg-transparent">
+                <div class="container">
+                    <div class="row footer-copyright footer-copyright-style-2 pt-2 pb-2">
+                        <div class="col-lg-12 text-center">
+                            <p class="text-3 mb-0 opacity-6">© 2024 hoplongtech.com All rights reserved. Mã số thuế: 0104509916 do Sở Kế Hoạch & Đầu Tư Hà Nội cấp lần đầu ngày 14/10/2010 </p>
                         </div>
-                        <div class="col-12 col-md-auto">
-                            <div class="payment-cc justify-content-center justify-content-md-end">
-                                <i class="fab fa-cc-visa"></i>
-                                <i class="fab fa-cc-paypal"></i>
-                                <i class="fab fa-cc-stripe"></i>
-                                <i class="fab fa-cc-mastercard"></i>
-                                <i class="fab fa-cc-apple-pay"></i>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </footer>
+
+
     </div>
 
     <a class="style-switcher-open-loader" href="#" data-base-path="" data-skin-src="" data-bs-toggle="tooltip" data-bs-animation="false" data-bs-placement="right" title="Style Switcher" aria-label="Style Switcher"><i class="fas fa-cogs"></i><div class="style-switcher-tooltip"><strong>Style Switcher</strong><p>Check out different color options and styles.</p></div></a>

@@ -1,0 +1,41 @@
+﻿@model BreadcrumbComponent
+@if (Model != null)
+{
+    <section class="page-header page-header-modern bg-color-grey page-header-md m-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 align-self-center p-static order-2 text-center">
+                    @if (Model.Title?.HasValueString() == true)
+                    {
+                        <h1 class="text-dark font-weight-bold text-8">@Model.Title</h1>
+                    }
+                    @if (Model.Description?.HasValueString() == true)
+                    {
+                        <span class="sub-title text-dark">@Model.Description</span>
+                    }
+                </div>
+                @if (Model.Links?.Any() == true)
+                {
+                    var count = Model.Links.Count;
+                    <div class="col-md-12 align-self-center order-1">
+                        <ul class="breadcrumb d-block text-center">
+
+                            @for (int i = 0; i < count; i++)
+                            {
+                                if (i + 1 == count)
+                                {
+                                    <li class="active">@Model.Links[i].Title</li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Model.Links[i].Href">@Model.Links[i].Title</a></li>
+                                }
+                            }
+
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}

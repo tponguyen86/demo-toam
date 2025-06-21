@@ -1,0 +1,18 @@
+﻿@model List<BaseCarouselItemModel>
+@{
+    var carouselSettingModel = ViewData["CarouselSettingModel"] as CarouselSettingModel;
+    // var option = "{'items': 1, 'margin': 10, 'loop': false, 'nav': true, 'dots': false}";
+}
+@if (Model?.Any() == true)
+{
+    <div class="z-index-1 appear-animation" data-appear-animation="@(carouselSettingModel?.AppearAnimation ?? "fadeInDownShorter")" data-appear-animation-delay="@(carouselSettingModel?.AppearAnimationDelay ?? 500)">
+        <div class="owl-carousel owl-theme full-width owl-loaded owl-drag owl-carousel-init m-0 mb-4" data-plugin-options="@Html.Raw(JsonHtmlHelper.ToJsonCamelCase(carouselSettingModel?.Option))">
+            @foreach (var item in Model)
+            {
+                <div>
+                    <img src="@item.Image?.Path" class="img-fluid" alt="@(item.Image?.Path??item.Title)" />
+                </div>
+            }
+        </div>
+    </div>
+}

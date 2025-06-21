@@ -1,5 +1,7 @@
 using System.Text.Json;
-using web_client.Models.Htmls;
+using web_client.IServices;
+using web_client.Models.Htmls.Carousels;
+using web_client.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +12,11 @@ builder.Services.AddControllersWithViews()
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     });
 
-builder.Services.Configure<CarouselDefaultsConfig>(
+builder.Services.Configure<CarouselDefaultConfig>(
     builder.Configuration.GetSection("CarouselDefaults"));
+
+builder.Services.AddScoped<ITestimonialService, TestimonialService>();
+builder.Services.AddScoped<ILayoutService, LayoutService>();
 
 var app = builder.Build();
 
