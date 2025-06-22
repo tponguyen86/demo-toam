@@ -1,0 +1,10 @@
+﻿@model DateTimeOffset?
+@if (Model.HasValue)
+{
+    <span class="js-time-ago" data-time="@Model.Value">@Model.Value</span>
+}
+else
+{
+    <span class="js-time-ago" data-time="@DateTime.Now">@DateTime.Now</span>
+}
+

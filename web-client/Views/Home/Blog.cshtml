@@ -1,45 +1,44 @@
 ﻿@{
     var pageModel = new PageModel() { Title = "Tin tức", Description = "Mô ta seo tin tức", BodyClassName = "p-blog", MainClassName = "" }; ;
-    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
     {
-        new BaseLinkModel("Trang chủ","/"),
-        new BaseLinkModel(pageModel.Title,"/Home/Blog"),
+        new BaseCategoryItemModel("Trang chủ","/"),
+        new BaseCategoryItemModel(pageModel.Title,"/Home/Blog"),
     });
-    var sideBarCategoryModel = new SideBarCategoryComponent("Danh mục", new List<BaseLinkModel>()
+    var sideBarCategoryModel = new CategoryTitleLinksComponent("Danh mục", new List<BaseCategoryItemModel>()
     {
-        new BaseLinkModel("Sự kiện","/Home/Blog"),
-        new BaseLinkModel("Hoạt động công ty","/Home/Blog"),
-        new BaseLinkModel("Tin tự động hóa","/Home/Blog"),
-        new BaseLinkModel("Khuyến mãi","/Home/Blog"),
+        new BaseCategoryItemModel(Guid.NewGuid(), "Sự kiện","/Home/Blog"),
+        new BaseCategoryItemModel(Guid.NewGuid(),"Hoạt động công ty","/Home/Blog"),
+        new BaseCategoryItemModel(Guid.NewGuid(),"Tin tự động hóa","/Home/Blog"),
+        new BaseCategoryItemModel(Guid.NewGuid(),"Khuyến mãi","/Home/Blog"),
     });
-    var sideBarArticleModel = new SideBarArticleComponent("Bài viết nổi bật", new List<BaseMediaLinkContentModel>()
+    var sideBarArticleModel = new ArticleTitleLinksComponent("Bài viết nổi bật", new List<BaseArticleItemModel>()
     {
-        new BaseMediaLinkContentModel("Cách phân biệt tín hiệu PNP và NPN chính xác nhất","/Home/Blog/BlogDetail","https://img.hoplongtech.com/hoplong/news/phan-biet-pnp-va-npn.jpg"),
-        new BaseMediaLinkContentModel("Chi tiết cách cài đặt biến tần iG5A LS","/Home/Blog/BlogDetail","https://img.hoplongtech.com/hoplong/news/chi-tiet-cach-cai-dat-bien-tan-ig5a-ls.jpg"),
-        new BaseMediaLinkContentModel("Động cơ điện 1 chiều là gì? Nguyên lý hoạt động và ứng dụng","/Home/Blog/BlogDetail","https://img.hoplongtech.com/hoplong/news/dong-co-dien-1-chieu-la-gi-nguyen-ly-hoat-dong-va-ung-dung.jpg"),
+        new BaseArticleItemModel(Guid.NewGuid(),"Cách phân biệt tín hiệu PNP và NPN chính xác nhất","/Home/BlogDetail","https://img.hoplongtech.com/hoplong/news/phan-biet-pnp-va-npn.jpg",CommonHelper.GetCurrent()),
+        new BaseArticleItemModel(Guid.NewGuid(),"Chi tiết cách cài đặt biến tần iG5A LS","/Home/BlogDetail","https://img.hoplongtech.com/hoplong/news/chi-tiet-cach-cai-dat-bien-tan-ig5a-ls.jpg",CommonHelper.GetCurrent()),
+        new BaseArticleItemModel(Guid.NewGuid(),"Động cơ điện 1 chiều là gì? Nguyên lý hoạt động và ứng dụng","/Home/BlogDetail","https://img.hoplongtech.com/hoplong/news/dong-co-dien-1-chieu-la-gi-nguyen-ly-hoat-dong-va-ung-dung.jpg",CommonHelper.GetCurrent()),
     });
 }
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
 <div class="container py-4">
-
     <div class="row">
         <div class="col-lg-3 order-lg-2">
             <aside class="sidebar">
                 <div class="card card-border card-border-bottom bg-color-light mb-4">
                     <div class="card-body p-3">
-                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarCategory.cshtml", sideBarCategoryModel))
+                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarCategoryTitleList.cshtml", sideBarCategoryModel))
                     </div>
                 </div>
 
                 <div class="card card-border card-border-bottom bg-color-light mb-4">
                     <div class="card-body p-3">
-                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarArticle.cshtml", sideBarArticleModel))
+                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarArticleTitleList.cshtml", sideBarArticleModel))
                     </div>
                 </div>
 
                 <div class="card card-border card-border-bottom bg-color-light mb-4">
                     <div class="card-body p-3">
-                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarIntro.cshtml", new SideBarIntroComponent("Giới thiệu", "Hợp Long là nhà cung cấp thiết bị, giải pháp tự động hóa và tích hợp robot công nghiệp hàng đầu tại Việt Nam. Chúng tôi có hơn 200.000 sản phẩm được chỉ định là nhà phân phối của các thương hiệu: Schneider Electric, Autonics, Omron, Hanyoung, Patlite, LS, Delta, Siemens, Idec,...", new BaseLinkModel("Tìm hiểu thêm", "#"))))
+                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarContentTitleLink.cshtml", new ContentTitleLinkComponent("Giới thiệu", "Hợp Long là nhà cung cấp thiết bị, giải pháp tự động hóa và tích hợp robot công nghiệp hàng đầu tại Việt Nam. Chúng tôi có hơn 200.000 sản phẩm được chỉ định là nhà phân phối của các thương hiệu: Schneider Electric, Autonics, Omron, Hanyoung, Patlite, LS, Delta, Siemens, Idec,...", new BaseCategoryItemModel("Tìm hiểu thêm", "#"))))
                     </div>
                 </div>
             </aside>
@@ -50,26 +49,19 @@
                     @for (int i = 0; i < 4; i++)
                     {
                         <div class="col-sm-6">
-                            <article class="post post-medium border-0 pb-0 mb-5">
-                                <div class="post-image">
-                                    <a href="blog-post.html">
-                                        <img src="https://img.hoplongtech.com/hoplong/uploads/ecovacs-va-tineco-cach-mang-hoa-viec-lam-sach-nha-cua-voi-4-sieu-pham-moi-6.jpg" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="" />
-                                    </a>
-                                </div>
-
-                                <div class="post-content">
-
-                                    <h2 class="font-weight-semibold text-5 line-height-6 mt-3 mb-2"><a href="blog-post.html">Ecovacs và Tineco "cách mạng hóa" việc làm sạch nhà cửa với ...</a></h2>
-                                    <p>Sự kiện ra mắt 4 sản phẩm làm sạch thông minh mới nhất của Ecovacs diễn ra vào ngày 15/10 vừa qua đã để lại dấu ấn sâu đậm trong lòng người tiêu dùng Việt.</p>
-
-                                    <div class="post-meta">
-                                        <span><i class="far fa-user"></i> <a href="#">Nguyễn Văn A</a> </span>
-                                        <span><i class="far fa-folder"></i> <a href="#">Sự kiện</a></span>
-                                        @* <span class="d-block mt-2"><a href="blog-post.html" class="btn btn-xs btn-light text-1 text-uppercase">Chi tiết</a></span> *@
-                                    </div>
-
-                                </div>
-                            </article>
+                            @(
+                                await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleMediaStyle2.cshtml", new ArticleTitleMediaComponent()
+                        {
+                            Id = Guid.NewGuid(),
+                            Title = "Ecovacs và Tineco cách mạng hóa việc làm sạch nhà cửa với " + i + 1,
+                            Description = "Sự kiện ra mắt 4 sản phẩm làm sạch thông minh mới nhất của Ecovacs diễn ra vào ngày 15/10 vừa qua đã để lại dấu ấn sâu đậm trong lòng người tiêu dùng Việt",
+                            CreatedAt = CommonHelper.GetCurrent(),
+                            Href = "/Home/BlogDetail",
+                            Media = "https://img.hoplongtech.com/hoplong/uploads/ecovacs-va-tineco-cach-mang-hoa-viec-lam-sach-nha-cua-voi-4-sieu-pham-moi-6.jpg",
+                            CreatedBy = new BaseMediaLinkModel("Nguyễn Văn A", "#"),
+                            Group = new BaseMediaLinkModel("Sự kiện", "/Home/Blog")
+                        })
+                                )
                         </div>
                     }
 

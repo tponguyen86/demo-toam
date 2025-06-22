@@ -2,14 +2,14 @@
 
 namespace web_client.Models.Htmls.Common;
 
-public class SideBarIntroComponent : BaseTitleModel
+public class ContentTitleLinkComponent : BaseTitleModel
 {
     public string Description { get; set; }
     public BaseLinkModel? Link { get; set; }
-    public SideBarIntroComponent()
+    public ContentTitleLinkComponent()
     {
     }
-    public SideBarIntroComponent(string title, string description, BaseLinkModel? link = null)
+    public ContentTitleLinkComponent(string title, string description, BaseLinkModel? link = null)
     {
         Title = title;
         Description = description;

@@ -4,3 +4,16 @@
 /*.products .owl-carousel .owl-item {
     border-right: 1px solid rgba(0, 0, 0, 0.06);
 }*/
+
+.ellipsis {
+    display: -webkit-box;
+    /*    max-width: 400px; */
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+    .ellipsis.ellipsis-line-clamp-1 {-webkit-line-clamp: 1;}
+    .ellipsis.ellipsis-line-clamp-2 {-webkit-line-clamp: 2;}
+    .ellipsis.ellipsis-line-clamp-3 {-webkit-line-clamp: 3;}
+    .ellipsis.ellipsis-line-clamp-4 {-webkit-line-clamp: 4;}

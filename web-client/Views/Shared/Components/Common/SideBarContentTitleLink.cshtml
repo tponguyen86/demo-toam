@@ -1,4 +1,4 @@
-﻿@model SideBarIntroComponent
+﻿@model ContentTitleLinkComponent
 @if (Model != null)
 {
     if (Model.Title?.HasValueString() == true)
@@ -11,6 +11,6 @@
     }
     if (Model.Link != null && Model.Link?.Title?.HasValueString()==true)
     {
-        <a href="@Model.Link?.Href" class="read-more text-color-primary font-weight-semibold text-2">@Model.Link.Title <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
+        <a href="@Model.Link?.Href" class="btn btn-arrow-effect-1 text-uppercase bg-transparent text-primary border-0 float-end">@Model.Link.Title <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
     }
 }

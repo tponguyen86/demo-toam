@@ -62,6 +62,16 @@ namespace web_client.Controllers
         public IActionResult BlogDetail()
         {
             return View();
+        }   
+        
+        public IActionResult PageDetail()
+        {
+            return View();
+        } 
+        
+        public IActionResult Contact()
+        {
+            return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

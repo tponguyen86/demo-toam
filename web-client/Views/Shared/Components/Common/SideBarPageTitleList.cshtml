@@ -1,4 +1,4 @@
-﻿@model SideBarCategoryComponent
+﻿@model ArticleTitleLinksComponent
 @if (Model != null)
 {
     if (Model.Title?.HasValueString() == true)
@@ -8,11 +8,13 @@
 
     if (Model.Links?.Any() == true)
     {
-        <ul class="nav nav-list flex-column ">
+        <ul class="nav nav-list nav-list-arrows nav-list-arrows-simple flex-column">
             @foreach (var item in Model.Links)
             {
                 <li class="nav-item"><a class="nav-link" href="@item.Href">@item.Title</a></li>
             }
         </ul>
+
+
     }
 }

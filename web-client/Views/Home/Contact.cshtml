@@ -1,6 +1,124 @@
 ﻿@{
     var pageModel = new PageModel() { Title = "Liên hệ", Description = "Mô ta seo liên hệ", BodyClassName = "p-contact", MainClassName = "" }; ;
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
+    {
+        new BaseCategoryItemModel("Trang chủ","/"),
+        new BaseCategoryItemModel(pageModel.Title,"/Home/Contact"),
+    });
+    breadcrumbModel.Description = "Kết nối với chúng tôi";
+    breadcrumbModel.Media = "https://www.okler.net/previews/porto/12.1.0/img/page-header/page-header-parallax.jpg";
 }
-<h1>@(pageModel?.Title)</h1>
+@(await Html.PartialAsync("~/Views/Shared/Components/Common/BreadcrumbMedia.cshtml", breadcrumbModel))
+<div class="container">
+    <div class="row py-5 appear-animation" data-appear-animation="fadeInUpShorter">
+        <div class="col-lg-7 pe-lg-5">
+            <h2 class="font-weight-normal line-height-1">Thông tin liên hệ</h2>
+            <p>Dựa trên những đầu tư nghiên cứu phát triển công nghệ bài bản trong nhiều năm qua và sự nhanh nhạy trong việc nắm bắt những xu hướng công nghệ mới, Hợp Long đã tập trung xây dựng các công nghệ lõi, nâng cao năng lực công nghệ và năng lực cạnh tranh cho công ty</p>
 
-<p>Use this page to detail your site's privacy policy.</p>
+            <div class="row pt-4">
+                <div class="col">
+                    <form class="contact-form form-style-3" action="php/contact-form.php" method="POST" novalidate="novalidate">
+                        <input type="hidden" value="Contact Form" name="subject" id="subject">
+                        <div class="row">
+                            <div class="form-group col-md-6 pe-md-2">
+                                <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control h-auto py-2" placeholder="Your Name..." name="name" id="name" required="">
+                            </div>
+                            <div class="form-group col-md-6 ps-md-2">
+                                <input type="text" value="" data-msg-required="Please enter your phone." maxlength="100" class="form-control h-auto py-2" placeholder="Your Phone..." name="phone" id="phone" required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control h-auto py-2" placeholder="Your Email Address..." name="email" id="email" required="">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col">
+                                <textarea maxlength="5000" data-msg-required="Please enter your message." rows="4" class="form-control" placeholder="Your Message..." name="message" id="message" required=""></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col text-center">
+                                <input type="submit" value="GỬI" class="btn btn-primary font-weight-semibold text-3 px-5 btn-py-2" data-loading-text="Loading...">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-5">
+            <h4 class="font-weight-normal line-height-1 mb-5"><strong class="font-weight-extra-bold">Địa chỉ</strong> tên công ty</h4>
+
+            <!-- Google Maps - Go to the bottom of the page to change settings and map location. -->
+            <div id="googlemaps" class="google-map small">
+                <img b-lj6fb2nhml="" class="img-fluid" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaIx9SeDfR-iQVBq_dCL4zSEfxWGT-_P1l-A&amp;s" style="width:100%;height:100% !important">
+            </div>
+
+            <ul class="list list-icons list-icons-style-3 mt-5">
+                <li><i class="fas fa-map-marker-alt"></i> <strong>Địa chỉ:</strong> Melbourne, 121 King St, Australia</li>
+                <li><i class="fas fa-phone"></i> <strong>Điện thoại:</strong> (123) 456-789</li>
+                <li><i class="far fa-envelope"></i> <strong>Email:</strong> <a href="mailto:mail@example.com">mail@example.com</a></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+
+        /*
+        Map Markers:
+        - Get an API Key: https://developers.google.com/maps/documentation/javascript/get-api-key
+        - Generate Map Id: https://console.cloud.google.com/google/maps-apis/studio/maps
+        - Use https://www.latlong.net/convert-address-to-lat-long.html to get Latitude and Longitude of a specific address
+        */
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+            ({key: "AIzaSyAZaHjy32TPVMxl1BgQRfulm2PKpbwCdR4", v: "weekly"});
+
+        async function initMap() {
+            const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
+                "marker",
+            );
+            const map = new Map(document.getElementById("googlemaps"), {
+                zoom: 14,
+                center: { lat: -37.817240, lng: 144.955820 },
+                mapId: "bacc27c8c034b32e",
+            });
+            const markers = [
+                {
+                    position: { lat: -37.817240, lng: 144.955820 },
+                    title: "Office 1<br>Melbourne, 121 King St, Australia<br>Phone: 123-456-1234",
+                }
+            ];
+
+            const infoWindow = new InfoWindow();
+
+            markers.forEach(({ position, title }, i) => {
+                const pin = new PinElement({
+                    background: "#e36159",
+                    borderColor: "#e36159",
+                    glyphColor: "#FFF",
+                });
+                const marker = new AdvancedMarkerElement({
+                    position,
+                    map,
+                    title: `${title}`,
+                    content: pin.element,
+                });
+
+                marker.addListener("click", ({ domEvent, latLng }) => {
+                    const { target } = domEvent;
+
+                    infoWindow.close();
+                    infoWindow.setContent(marker.title);
+                    infoWindow.open(marker.map, marker);
+                });
+            });
+
+        }
+
+        // initMap();
+
+    </script>
+}
+<!-- Google Maps -->

@@ -1,6 +1,33 @@
 ﻿@{
     var pageModel = new PageModel() { Title = "Dịch vụ", Description = "Mô ta seo dịch vụ", BodyClassName = "p-service", MainClassName = "" }; ;
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
+    {
+        new BaseCategoryItemModel("Trang chủ","/"),
+        new BaseCategoryItemModel(pageModel.Title,"/Home/Service"),
+    });
 }
-<h1>@(pageModel?.Title)</h1>
+@(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
+<div class="container py-4">
+    <div class="blog-posts">
+        <div class="row px-3">
+            @for (int i = 0; i < 6; i++)
+            {
+                <div class="col-lg-4 mb-5 mb-lg-0 mt-4">
+                    @(
+                        await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleMediaStyle3.cshtml", new ArticleTitleMediaComponent()
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Dịch vụ " + i + 1,
+                    Description = "Nội dung dịch vụ",
+                    CreatedAt = CommonHelper.GetCurrent(),
+                    Href = "/Home/ServiceDetail",
+                    Media = "https://img.hoplongtech.com/hoplong/uploads/bac-my-tang-toc-tu-dong-hoa-580-trieu-usd-do-vao-robot-trong-quy-i-2025-4.jpg"
+                })
+                        )
 
-<p>Use this page to detail your site's privacy policy.</p>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

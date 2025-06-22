@@ -1,6 +1,8 @@
-﻿namespace web_client.Models.Base;
+﻿using web_client.Models.Htmls.Base;
 
-public class BaseMediaLinkModel : BaseLinkModel
+namespace web_client.Models.Base;
+
+public class BaseMediaLinkModel : BaseCategoryItemModel
 {
     public string? Media { get; set; }
     public BaseMediaLinkModel() : base()

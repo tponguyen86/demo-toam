@@ -1,0 +1,30 @@
+﻿@model ArticleTitleMediaComponent
+@if (Model != null)
+{
+    <article class="post post-medium border-0 pb-0 mb-5">
+        <div class="post-image">
+            <a href="@Model.Href">
+                <img src="@Model.Media" alt="@Model.Title" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" />
+            </a>
+        </div>
+
+        <div class="post-content">
+
+            <h2 class="font-weight-semibold text-5 line-height-6 mt-3 mb-2"><a href="@Model.Href" class="text-decoration-none ellipsis ellipsis-line-clamp-2">@Model.Title</a></h2>
+            <p class="ellipsis ellipsis-line-clamp-3">@Model.Description</p>
+
+            <div class="post-meta">
+                @if (Model.CreatedBy != null && Model.CreatedBy?.Title?.HasValueString() == true)
+                {
+                    <span><i class="far fa-user"></i> <a href="@Model.CreatedBy.Href">@Model.CreatedBy.Title</a> </span>
+                }
+                @if (Model.Group != null && Model.Group?.Title?.HasValueString() == true)
+                {
+                    <span><i class="far fa-folder"></i> <a href="@Model.Group.Href">@Model.Group.Title</a></span>
+                }
+                @* <span class="d-block mt-2"><a href="@Model.Href" class="btn btn-xs btn-light text-1 text-uppercase">Chi tiết</a></span> *@
+            </div>
+
+        </div>
+    </article>
+}

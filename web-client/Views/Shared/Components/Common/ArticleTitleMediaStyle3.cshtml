@@ -1,0 +1,16 @@
+﻿@model ArticleTitleMediaComponent
+@if (Model != null)
+{
+    <article class="post post-medium border-0 pb-0 mb-5">
+        <div class="card card-background-image-hover border-0" style="background-image: url(@Model.Media);">
+            <div class="card-body text-center p-5">
+              @*   <i class="icon-layers icons text-color-primary text-10"></i> *@
+                <h4 class="card-title mt-2 mb-2 text-5 font-weight-bold ellipsis ellipsis-line-clamp-2">@Model.Title</h4>
+                <p class="card-text ellipsis ellipsis-line-clamp-3">@Model.Description</p>
+                <a href="@Model.Href" class="btn btn-dark btn-modern">Xem thêm</a>
+            </div>
+        </div>
+    </article>
+
+
+}
