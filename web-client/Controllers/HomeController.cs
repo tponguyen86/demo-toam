@@ -36,11 +36,14 @@ namespace web_client.Controllers
         {
             return View();
         }
+        public IActionResult ProductCategory()
+        {
+            return View();
+        }
         public IActionResult Product()
         {
             return View();
         }
-
         public IActionResult ProductDetail()
         {
             return View();

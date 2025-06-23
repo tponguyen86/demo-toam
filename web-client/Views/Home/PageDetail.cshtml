@@ -1,5 +1,6 @@
 ﻿@{
-    var pageModel = new PageModel() { Title = "Về chúng tôi", Description = "Mô ta seo trang", BodyClassName = "p-page-detail", MainClassName = "" }; ;
+    var pageModel = new PageModel() { Title = "Về chúng tôi", Description = "Mô ta seo trang", BodyClassName = "p-page-detail", MainClassName = "shop" }; ;
+    ViewData["Page"] = pageModel; 
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
     {
         new BaseCategoryItemModel("Trang chủ","/"),

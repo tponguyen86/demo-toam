@@ -15,14 +15,13 @@
                     <a class="nav-link" href="@item.Href">@item.Title</a>
                     @if (item.Children?.Any() == true)
                     {
-                        <ul>
+                        <ul style="display:none">
                             @foreach (var child in item.Children)
                             {
                                 <li class="nav-item"><a class="nav-link" href="@child.Href">@child.Title</a></li>
                             }
                         </ul>
                     }
-
                 </li>
             }
         </ul>

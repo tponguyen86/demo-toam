@@ -1,0 +1,56 @@
+﻿@model ProductTitleMediaComponent
+@if (Model != null)
+{
+    <div class="card bg-color-grey border-0">
+        <div class="card-body p-1">
+            <div class="product mb-0">
+                <div class="product-thumb-info border-0">
+                    <a href="@Model.Href" class="quick-view text-uppercase font-weight-semibold text-2">
+                        Chi tiết
+                    </a>
+                    <a href="@Model.Href">
+                        <div class="product-thumb-info-image">
+                            <img alt="@Model.Title" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg"/>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="d-flex justify-content-between p-2">
+                    <div>
+                        @if (Model.Group != null && Model.Group?.Title?.HasValueString() == true)
+                        {
+                            <a href="@Model.Group.Href" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1 ellipsis ellipsis-line-clamp-1">@Model.Group.Title</a>
+                        }
+                        <h3 class="text-3 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="@Model.Href" class="text-color-dark text-color-hover-primary  ellipsis ellipsis-line-clamp-2">@Model.Title</a></h3>
+                    </div>
+                </div>
+                @if (Model.DisplayPrice)
+                {
+                    <p class="price text-5 mb-0 px-2">
+                        @if (Model.DisplaySale)
+                        {
+                            <span class="sale text-color-dark font-weight-semi-bold">@Html.DisplayFor(m => Model.Sale)</span>
+                        }
+                        <span class="amount">@Html.DisplayFor(m => Model.Price)</span>
+                    </p>
+                }
+                @if (Model.Attributes?.Any() == true)
+                {
+                    <ul class="list list-icons list-icons-sm mb-0">
+                        @foreach (var item in Model.Attributes)
+                        {
+                            <li><i class="fas fa-caret-right"></i><span class="text-2 text-color-grey">@item.Label : @item.Title</span></li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+        <div class="card-footer bg-color-grey ">
+            @if (Model.DisplayContact)
+            {
+                <a href="/" class="btn btn-xs btn btn-secondary text-1 text-uppercase float-start"><i class="fas fa-phone position-relative"></i> Liên hệ</a>
+            }
+            <a href="@Model.Href" class="btn btn-xs btn-primary text-1 text-uppercase btn-arrow-effect-1 float-end"> Chi tiết <i class="fas fa-chevron-right"></i></a>
+        </div>
+    </div>
+}

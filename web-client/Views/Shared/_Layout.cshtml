@@ -208,7 +208,7 @@
                                                         </a>
                                                     </li>
                                                     <li class="dropdown">
-                                                        <a class="dropdown-item dropdown-toggle" asp-area="" asp-controller="Home" asp-action="Product">
+                                                        <a class="dropdown-item dropdown-toggle" asp-area="" asp-controller="Home" asp-action="ProductCategory">
                                                             Sản phẩm
                                                         </a>
                                                     </li>
@@ -252,7 +252,7 @@
             </div>
         </header>
 
-        <div role="main" class="main @(page?.BodyClassName)">
+        <div role="main" class="main @(page?.MainClassName)">
             @RenderBody()
         </div>
         <footer id="footer" class="footer-texts-more-lighten mt-0">

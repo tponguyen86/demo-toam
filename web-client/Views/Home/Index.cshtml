@@ -28,33 +28,23 @@
 <!-- danh mục sản phẩm-->
 <div class="container">
     <div class="row">
-        <div class="col">
-
-            <div class="my-0 lightbox appear-animation" data-appear-animation="fadeInUpShorter" data-plugin-options="{'delegate': 'a.lightbox-portfolio', 'type': 'image', 'gallery': {'enabled': true}}">
-                <div class="owl-carousel owl-theme" data-plugin-options="{'items': 4, 'margin': 35, 'loop': false}">
-
-                    @for (int i = 0; i < 5; i++)
-                    {
-                        <div class="portfolio-item">
-                            <span class="thumb-info thumb-info-lighten thumb-info-no-borders thumb-info-bottom-info thumb-info-centered-icons border-radius-0">
-                                <span class="thumb-info-wrapper border-radius-0">
-
-                                    <img alt="" class="img-fluid border-radius-0" src="https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png" />
-                                    <span class="thumb-info-title">
-                                        <span class="thumb-info-inner line-height-1 font-weight-bold text-dark position-relative top-3">Biến tần Schneider</span>
-                                        <span class="thumb-info-type">Hàng Việt Nam, Nhật Bổn...</span>
-                                    </span>
-                                    <span class="thumb-info-action">
-                                        <a href="portfolio-single-wide-slider.html">
-                                            <span class="thumb-info-action-icon thumb-info-action-icon-primary"><i class="fas fa-link"></i></span>
-                                        </a>
-                                    </span>
-                                </span>
-                            </span>
-                        </div>
-                    }
-                </div>
+        <div class="col categories">
+            <div class="owl-carousel owl-theme show-nav-hover" data-plugin-options="{'items': 4, 'margin': 20, 'loop': false,'nav': true, 'dots': false}">
+                @for (int i = 0; i < 5; i++)
+                {
+                    @(
+                        await Html.PartialAsync("~/Views/Shared/Components/Common/CategoryTitleMedia.cshtml", new CategoryTitleMediaComponent()
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Danh mục con  " + i + 1,
+                    Href = "/Home/Product",
+                    Media = "https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png",
+                    Group = new BaseMediaLinkModel("Biến tần", "/Home/Product"),
+                })
+                        )
+                }
             </div>
+
         </div>
     </div>
 
@@ -80,44 +70,35 @@
                     <div class="col-sm-9">
                         <div class="row products mt-3">
                             <div class="col">
-                                <h4><a href="#" class="btn btn-xl btn-link-effect-1 text-uppercase bg-transparent  text-primary bg-color-before-primary border-0  p-0 ">Biến tần</a></h4>
+                                <h4><a href="#" class="btn btn-xl btn-link-effect-1 text-uppercase bg-transparent  text-primary bg-color-before-primary border-0  p-0 ">Danh mục Cha</a></h4>
                                 <div class="owl-carousel owl-theme show-nav-title nav-dark mb-0" data-plugin-options="{'loop': false, 'autoplay': false,'responsive': {'576': {'items': 1}, '768': {'items': 1}, '992': {'items': 3}, '1200': {'items': 4}}, 'nav': true, 'dots': false, 'margin': 10, 'autoplayHoverPause': true, 'autoHeight': true}">
                                     @for (int j = 0; j < 5; j++)
                                     {
-                                        <div class="card bg-color-grey border-0">
-                                            <div class="card-body p-1">
-                                                <div class="product mb-0">
-                                                    <div class="product-thumb-info border-0">
-                                                        <a href="/Product" class="quick-view text-uppercase font-weight-semibold text-2">
-                                                            Chi tiết
-                                                        </a>
-                                                        <a href="shop-product-sidebar-left.html">
-                                                            <div class="product-thumb-info-image">
-                                                                <img alt="" class="img-fluid" src="https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg">
+                                        @(
+                                            await Html.PartialAsync("~/Views/Shared/Components/Common/ProductTitleMedia.cshtml", new ProductTitleMediaComponent()
+                                {
+                                    Id = Guid.NewGuid(),
+                                    Title = "Contactor LC1D09M7 Schneider  " + i + 1,
+                                    Price = i + 1,
+                                    Sale = i * 2 + 1,
+                                    Sku = "sku" + i + 1,
+                                    Href = "/Home/ProductDetail",
+                                    Media = "https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg",
+                                    Group = new BaseMediaLinkModel("Danh mục con", "/Home/Product"),
+                                    CreatedAt = CommonHelper.GetCurrent(),
+                                    DisplayContact = true,
+                                    DisplayPrice = false,
+                                    DisplaySale = true,
+                                    Attributes = new List<BaseAttributeItemModel>()
+                                {
+                                new BaseAttributeItemModel("Loại sản phẩm","Contactor","product-type"),
+                                new BaseAttributeItemModel("Số cực",i+"P","number"),
+                                new BaseAttributeItemModel("Dòng tiếp điểm",i+"9A","dong-tiep-dan"),
+                                new BaseAttributeItemModel("Tiếp điểm phụ","1NO+1NC","tiep-diem-phu"),
 
-                                                            </div>
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="d-flex justify-content-between p-2">
-                                                        <div>
-                                                            @* <a href="#" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">accessories</a> *@
-                                                            <h3 class="text-3 font-weight-medium font-alternative text-transform-none line-height-3 mb-0"><a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Contactor LC1D09M7 Schneider</a></h3>
-                                                        </div>
-                                                    </div>
-                                                    <ul class="list list-icons list-icons-sm mb-0">
-                                                        <li><i class="fas fa-caret-right"></i><span class="text-2 text-color-grey">Loại sản phẩm: Contactor</span></li>
-                                                        <li><i class="fas fa-caret-right"></i><span class="text-2 text-color-grey">Số cực: 3P</span></li>
-                                                        <li><i class="fas fa-caret-right"></i><span class="text-2 text-color-grey">Dòng tiếp điểm: 9A</span></li>
-                                                        <li><i class="fas fa-caret-right"></i><span class="text-2 text-color-grey">Tiếp điểm phụ: 1NO+1NC</span></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer bg-color-grey ">
-                                                <a href="/" class="btn btn-xs btn btn-secondary text-1 text-uppercase float-start"><i class="fas fa-phone position-relative"></i> Liên hệ</a>
-                                                <a href="/" class="btn btn-xs btn-primary text-1 text-uppercase btn-arrow-effect-1 float-end"> Chi tiết <i class="fas fa-chevron-right"></i></a>
-                                            </div>
-                                        </div>
+                                }
+                                })
+                                            )
                                     }
                                 </div>
                             </div>
@@ -146,11 +127,11 @@
                     Title = "Dịch vụ " + i + 1,
                     Description = "Nội dung dịch vụ",
                     CreatedAt = CommonHelper.GetCurrent(),
+
                     Href = "/Home/ServiceDetail",
                     Media = "https://img.hoplongtech.com/hoplong/uploads/bac-my-tang-toc-tu-dong-hoa-580-trieu-usd-do-vao-robot-trong-quy-i-2025-4.jpg"
                 })
                         )
-
                 </div>
             }
         </div>

@@ -1,5 +1,6 @@
 ﻿@{
-    var pageModel = new PageModel() { Title = "Sản phẩm", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product", MainClassName = "" }; ;
+    var pageModel = new PageModel() { Title = "Cảm biến", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product", MainClassName = "shop" }; ;
+    ViewData["Page"] = pageModel;
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
     {
         new BaseCategoryItemModel("Trang chủ","/"),
@@ -110,33 +111,114 @@
                         @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarCategoryTitleList.cshtml", sideBarCategoryModel))
                     </div>
                 </div>
+                <div class="card card-border card-border-bottom bg-color-light mb-4">
+                    <div class="card-body p-3">
+                        <h4 class="card-title mb-1 text-4 font-weight-semi-bold">Bộ lọc</h4>
+                        <form class="contact-form" action="php/contact-form.php" method="POST" novalidate="novalidate">
+
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label class="form-label required text-1 mb-0">Hãng sản xuất</label>
+                                    <select class="form-control" required="">
+                                        <option>Chọn hãng sản xuất</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label class="form-label required text-1 mb-0">Series</label>
+                                    <select class="form-control" required="">
+                                        <option>Chọn series</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label class="form-label required text-1 mb-0">Hình dáng</label>
+                                    <select class="form-control" required="">
+                                        <option>Chọn hình dáng</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label class="form-label required text-1 mb-0">Kích thước</label>
+                                    <select class="form-control" required="">
+                                        <option>Chọn kích thước</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label class="form-label required text-1 mb-0">Khoảng cách phát hiện</label>
+                                    <select class="form-control" required="">
+                                        <option>Chọn khoảng cách phát hiện</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label class="form-label required text-1 mb-0">Loại phát hiện</label>
+                                    <select class="form-control" required="">
+                                        <option>Chọn Loại phát hiện</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label class="form-label required text-1 mb-0">Chất liệu cảm biến</label>
+                                    <select class="form-control" required="">
+                                        <option>Chọn Chất liệu cảm biến</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label class="form-label required text-1 mb-0">Kết nối</label>
+                                    <select class="form-control" required="">
+                                        <option>Chọn Kết nối</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </aside>
         </div>
         <div class="col-lg-9 order-lg-2">
-            <div class="products">
-                <div class="row px-3">
-                    @for (int i = 0; i < 4; i++)
+            <div class="masonry-loader1 masonry-loader-showing1">
+                <div class="row products product-thumb-info-list">
+                    @for (int i = 0; i < 9; i++)
                     {
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 col-lg-4 mb-2">
                             @(
-                                await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleMediaStyle2.cshtml", new ArticleTitleMediaComponent()
+                                await Html.PartialAsync("~/Views/Shared/Components/Common/ProductTitleMedia.cshtml", new ProductTitleMediaComponent()
                         {
                             Id = Guid.NewGuid(),
-                            Title = "Ecovacs và Tineco cách mạng hóa việc làm sạch nhà cửa với " + i + 1,
-                            Description = "Sự kiện ra mắt 4 sản phẩm làm sạch thông minh mới nhất của Ecovacs diễn ra vào ngày 15/10 vừa qua đã để lại dấu ấn sâu đậm trong lòng người tiêu dùng Việt",
+                            Title = "Contactor LC1D09M7 Schneider  " + i + 1,
+                            Price = i + 1,
+                            Sale = i * 2 + 1,
+                            Sku = "sku" + i + 1,
+                            Href = "/Home/ProductDetail",
+                            Media = "https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg",
+                            Group = new BaseMediaLinkModel("Biến tần", "/Home/Product"),
                             CreatedAt = CommonHelper.GetCurrent(),
-                            Href = "/Home/BlogDetail",
-                            Media = "https://img.hoplongtech.com/hoplong/uploads/ecovacs-va-tineco-cach-mang-hoa-viec-lam-sach-nha-cua-voi-4-sieu-pham-moi-6.jpg",
-                            CreatedBy = new BaseMediaLinkModel("Nguyễn Văn A", "#"),
-                            Group = new BaseMediaLinkModel("Sự kiện", "/Home/Blog")
+                            DisplayContact = true,
+                            DisplayPrice = false,
+                            DisplaySale = true,
+                            Attributes = new List<BaseAttributeItemModel>()
+                        {
+                        new BaseAttributeItemModel("Loại sản phẩm","Contactor","product-type"),
+                        new BaseAttributeItemModel("Số cực",i+"P","number"),
+                        new BaseAttributeItemModel("Dòng tiếp điểm",i+"9A","dong-tiep-dan"),
+                        new BaseAttributeItemModel("Tiếp điểm phụ","1NO+1NC","tiep-diem-phu"),
+
+                        }
                         })
                                 )
                         </div>
                     }
-
-
                 </div>
-
                 <div class="row">
                     <div class="col">
                         <ul class="pagination float-end">
@@ -148,7 +230,6 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

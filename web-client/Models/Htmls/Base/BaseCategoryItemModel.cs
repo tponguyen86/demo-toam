@@ -2,7 +2,7 @@
 
 namespace web_client.Models.Htmls.Base;
 
-public class BaseCategoryItemModel : BaseLinkModel
+public class BaseCategoryItemModel : BaseMediaLinkModel
 {
     public Guid Id { get; set; }
     public List<BaseCategoryItemModel> Children { get; set; }

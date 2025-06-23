@@ -1,6 +1,7 @@
 ﻿@{
-    var pageModel = new PageModel() { Title = "Dịch vụ", Description = "Mô ta seo dịch vụ", BodyClassName = "p-service-detail", MainClassName = "" }; ;
-    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
+	var pageModel = new PageModel() { Title = "Dịch vụ", Description = "Mô ta seo dịch vụ", BodyClassName = "p-service-detail", MainClassName = "shop" }; ;
+	ViewData["Page"] = pageModel; 
+	var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
     {
         new BaseCategoryItemModel("Trang chủ","/"),
         new BaseCategoryItemModel(pageModel.Title,"/Home/Service"),
@@ -51,15 +52,15 @@
 							</div>
 
 							<div class="row">
-								<div class="col-lg-10">
+								<div class="col-lg-9">
 									<div class="overflow-hidden">
 										<p class="lead mb-0 appear-animation animated appear-animation-visible" data-appear-animation="maskUp" data-appear-animation-delay="200">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="alternative-font">metus.</span> pulvinar. Sociis natoque penatibus et magnis dis parturient montes.
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="alternative-font">metus.</span> pulvinar. Sociis natoque penatibus.
 										</p>
 									</div>
 								</div>
-								<div class="col-lg-2 appear-animation animated appear-animation-visible" data-appear-animation="fadeIn" data-appear-animation-delay="500">
-									<a href="#" class="btn btn-modern btn-dark mt-1">Liên hệ</a>
+								<div class="col-lg-3 appear-animation animated appear-animation-visible" data-appear-animation="fadeIn" data-appear-animation-delay="500">
+									<a class="btn btn-outline btn-rounded btn-primary btn-with-arrow text-hover-primary mb-5 mb-lg-2 appear-animation animated fadeInRightShorter appear-animation-visible" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="1100" href="#" style="animation-delay: 1100ms;">Liên hệ <span><i class="fas fa-chevron-right"></i></span></a>
 								</div>
 							</div>
 
