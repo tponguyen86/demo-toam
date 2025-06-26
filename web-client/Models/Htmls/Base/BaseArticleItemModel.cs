@@ -7,6 +7,7 @@ public class BaseArticleItemModel : BaseMediaLinkModel
     public Guid Id { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public BaseMediaLinkModel? CreatedBy { get; set; }
+    public string Description { get; set; }
 
     //category
     public BaseMediaLinkModel? Group { get; set; }

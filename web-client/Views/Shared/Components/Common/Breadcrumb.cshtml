@@ -21,13 +21,13 @@
                         <ul class="breadcrumb d-block text-md-end">
                             @for (int i = 0; i < count; i++)
                             {
-                                if (i + 1 == count)
+                                if (i + 1 == count && Model.LastIsSpan == true)
                                 {
                                     <li class="active">@Model.Links[i].Title</li>
                                 }
                                 else
                                 {
-                                    <li><a href="@Model.Links[i].Href">@Model.Links[i].Title</a></li>
+                                    <li><a class="text-color-default text-color-hover-primary text-decoration-none" href="@Model.Links[i].Href">@Model.Links[i].Title</a></li>
                                 }
                             }
                         </ul>

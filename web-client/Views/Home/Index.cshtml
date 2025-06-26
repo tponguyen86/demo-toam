@@ -39,7 +39,7 @@
                     Title = "Danh mục con  " + i + 1,
                     Href = "/Home/Product",
                     Media = "https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png",
-                    Group = new BaseMediaLinkModel("Biến tần", "/Home/Product"),
+                    Group = new BaseMediaLinkModel("Cảm biến", "/Home/ProductCategoryDetail"),
                 })
                         )
                 }
@@ -54,6 +54,39 @@
 <div class="container">
     @for (int i = 0; i < 3; i++)
     {
+        var productsModel = new ProductTitleLinksComponent();
+        productsModel.Title = "Danh muc cha" + i;
+        productsModel.Links = new List<BaseProductItemModel>
+        ();
+        for (int x = 0; x < 5; x++)
+        {
+            productsModel.Links.Add(new BaseProductItemModel()
+
+                    {
+                        Id = Guid.NewGuid(),
+                        Title = "Contactor LC1D09M7 Schneider  " + x + 1,
+                        Price = x + 1,
+                        Sale = x * 2 + 1,
+                        Sku = "sku" + x + 1,
+                        Href = "/Home/ProductDetail",
+                        Media = "https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg",
+                        Group = new BaseMediaLinkModel("Danh mục con", "/Home/Product"),
+                        CreatedAt = CommonHelper.GetCurrent(),
+                        DisplayContact = true,
+                        DisplayPrice = false,
+                        DisplaySale = true,
+                        Attributes = new List<BaseAttributeItemModel>
+                    ()
+    {
+    new BaseAttributeItemModel("Loại sản phẩm", "Contactor", "product-type"),
+    new BaseAttributeItemModel("Số cực", i + "P", "number"),
+    new BaseAttributeItemModel("Dòng tiếp điểm", i + "9A", "dong-tiep-dan"),
+    new BaseAttributeItemModel("Tiếp điểm phụ", "1NO+1NC", "tiep-diem-phu"),
+
+    }
+                    });
+        }
+
         <div class="card mb-4">
             <div class="card-body p-0">
                 <div class="row">
@@ -70,37 +103,7 @@
                     <div class="col-sm-9">
                         <div class="row products mt-3">
                             <div class="col">
-                                <h4><a href="#" class="btn btn-xl btn-link-effect-1 text-uppercase bg-transparent  text-primary bg-color-before-primary border-0  p-0 ">Danh mục Cha</a></h4>
-                                <div class="owl-carousel owl-theme show-nav-title nav-dark mb-0" data-plugin-options="{'loop': false, 'autoplay': false,'responsive': {'576': {'items': 1}, '768': {'items': 1}, '992': {'items': 3}, '1200': {'items': 4}}, 'nav': true, 'dots': false, 'margin': 10, 'autoplayHoverPause': true, 'autoHeight': true}">
-                                    @for (int j = 0; j < 5; j++)
-                                    {
-                                        @(
-                                            await Html.PartialAsync("~/Views/Shared/Components/Common/ProductTitleMedia.cshtml", new ProductTitleMediaComponent()
-                                {
-                                    Id = Guid.NewGuid(),
-                                    Title = "Contactor LC1D09M7 Schneider  " + i + 1,
-                                    Price = i + 1,
-                                    Sale = i * 2 + 1,
-                                    Sku = "sku" + i + 1,
-                                    Href = "/Home/ProductDetail",
-                                    Media = "https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg",
-                                    Group = new BaseMediaLinkModel("Danh mục con", "/Home/Product"),
-                                    CreatedAt = CommonHelper.GetCurrent(),
-                                    DisplayContact = true,
-                                    DisplayPrice = false,
-                                    DisplaySale = true,
-                                    Attributes = new List<BaseAttributeItemModel>()
-                                {
-                                new BaseAttributeItemModel("Loại sản phẩm","Contactor","product-type"),
-                                new BaseAttributeItemModel("Số cực",i+"P","number"),
-                                new BaseAttributeItemModel("Dòng tiếp điểm",i+"9A","dong-tiep-dan"),
-                                new BaseAttributeItemModel("Tiếp điểm phụ","1NO+1NC","tiep-diem-phu"),
-
-                                }
-                                })
-                                            )
-                                    }
-                                </div>
+                                @await Html.PartialAsync("~/Views/Shared/Components/Common/SliderProductTitleList.cshtml", productsModel)
                             </div>
                         </div>
                     </div>
@@ -113,15 +116,16 @@
 <!-- dịch vụ nổi bật -->
 
 <div class="bg-color-grey-100">
-    <div class="container pb-5 pt-4">
-        <h4>Dịch vụ nổi bật</h4>
-        <hr class="solid mt-3 mb-0">
-        <div class="row">
-            @for (int i = 0; i < 6; i++)
+    <div class="container py-5">
+        @{
+            var serviceModel = new ArticleTitleLinksComponent()
             {
-                <div class="col-lg-4 mb-5 mb-lg-0 mt-4">
-                    @(
-                        await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleMediaStyle3.cshtml", new ArticleTitleMediaComponent()
+                Title = "Dịch vụ nổi bật",
+                Links = new List<BaseArticleItemModel>()
+            };
+            for (int i = 0; i < 6; i++)
+            {
+                serviceModel.Links.Add(new BaseArticleItemModel()
                 {
                     Id = Guid.NewGuid(),
                     Title = "Dịch vụ " + i + 1,
@@ -130,10 +134,14 @@
 
                     Href = "/Home/ServiceDetail",
                     Media = "https://img.hoplongtech.com/hoplong/uploads/bac-my-tang-toc-tu-dong-hoa-580-trieu-usd-do-vao-robot-trong-quy-i-2025-4.jpg"
-                })
-                        )
-                </div>
+                });
             }
+        }
+        @await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleListStyle3.cshtml", serviceModel)
+        <div class="row mt-3">
+            <div class="col col text-center">
+                <a href="/Home/Service" class="btn btn-modern btn-rounded btn-primary btn-outline btn-arrow-effect-1">Tất cả dịch vụ<i class="fas fa-arrow-right ms-2"></i></a>
+            </div>
         </div>
     </div>
 </div>

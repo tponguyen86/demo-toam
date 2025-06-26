@@ -1,21 +1,20 @@
 ﻿@{
     var pageModel = new PageModel() { Title = "Liên hệ", Description = "Mô ta seo liên hệ", BodyClassName = "p-contact", MainClassName = "shop" }; ;
-    ViewData["Page"] = pageModel; 
-    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
+    ViewData["Page"] = pageModel;
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
-        new BaseCategoryItemModel("Trang chủ","/"),
-        new BaseCategoryItemModel(pageModel.Title,"/Home/Contact"),
+        new BaseLinkModel("Trang chủ","/"),
+        new BaseLinkModel(pageModel.Title,"/Home/Contact"),
     });
     breadcrumbModel.Description = "Kết nối với chúng tôi";
     breadcrumbModel.Media = "https://www.okler.net/previews/porto/12.1.0/img/page-header/page-header-parallax.jpg";
 }
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/BreadcrumbMedia.cshtml", breadcrumbModel))
 <div class="container">
-    <div class="row py-5 appear-animation" data-appear-animation="fadeInUpShorter">
+    <div class="row pb-5 appear-animation" data-appear-animation="fadeInUpShorter">
         <div class="col-lg-7 pe-lg-5">
-            <h2 class="font-weight-normal line-height-1">Thông tin liên hệ</h2>
-            <p>Dựa trên những đầu tư nghiên cứu phát triển công nghệ bài bản trong nhiều năm qua và sự nhanh nhạy trong việc nắm bắt những xu hướng công nghệ mới, Hợp Long đã tập trung xây dựng các công nghệ lõi, nâng cao năng lực công nghệ và năng lực cạnh tranh cho công ty</p>
-
+            @await Html.PartialAsync("~/Views/Shared/Components/Common/HeaderTitle.cshtml", new HeaderTitleComponent("Thông tin liên hệ",
+                     "Dựa trên những đầu tư nghiên cứu phát triển công nghệ bài bản trong nhiều năm qua và sự nhanh nhạy trong việc nắm bắt những xu hướng công nghệ mới, Hợp Long đã tập trung xây dựng các công nghệ lõi, nâng cao năng lực công nghệ và năng lực cạnh tranh cho công ty", true))
             <div class="row pt-4">
                 <div class="col">
                     <form class="contact-form form-style-3" action="php/contact-form.php" method="POST" novalidate="novalidate">

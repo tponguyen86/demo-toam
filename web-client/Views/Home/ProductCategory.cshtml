@@ -1,10 +1,10 @@
 ﻿@{
     var pageModel = new PageModel() { Title = "Danh mục sản phẩm", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product-category", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
-    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
-        new BaseCategoryItemModel("Trang chủ","/"),
-        new BaseCategoryItemModel(pageModel.Title,"/Home/ProductCatogory"),
+        new BaseLinkModel("Trang chủ","/"),
+        new BaseLinkModel(pageModel.Title,"/Home/ProductCatogory"),
     });
     var categoriesModel = new CategoryTitleLinksComponent("Danh mục", new List<BaseCategoryItemModel>
 {
@@ -120,6 +120,11 @@
                         Links = item.Children,
                     })
                                 )
+                            <div class="row">
+                                <div class="col col text-center">
+                                    <a href="/Home/ProductCategoryDetail" class="btn btn-modern btn-rounded btn-primary btn-outline btn-arrow-effect-1">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 }

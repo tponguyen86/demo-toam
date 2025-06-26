@@ -1,35 +1,10 @@
 ﻿@model CategoryTitleLinksComponent
 @if (Model != null)
 {
-    if (Model.Title?.HasValueString() == true)
-    {
-        <div class="feature-box">
-           <div class="feature-box-icon">
-                <i class="fas fa-check"></i>
-            </div>
-            <div class="feature-box-info">
-                <h4 class="mb-2 text-4 font-weight-semi-bold">@Model.Title</h4>
-                <div class="divider divider-small">
-                    <hr>
-                </div>
-               
-                <div data-plugin-readmore  data-plugin-options="{'buttonOpenLabel' : 'Hiển thị <i class=\' fas fa-chevron-down text-2 ms-1\'> </i>','buttonCloseLabel': 'Thu gọn <i class=\'fas fa-chevron-up text-2 ms-1\'></i>'}">
-                    <p>Dùng một nguồn cấp điện thường là thiết bị đo được kết nối với cảm biến để các cảm biến có thể hoạt động bình thường. &nbsp; &nbsp; &nbsp; &nbsp;<br>Đặt mô-đun cảm biến gần đối tượng thử nghiệm. Các phần tử cảm biến sẽ phát ra một từ trường nhỏ và xoay chiều. Từ trường có thể đi xuyên qua bề mặt của đối tượng mà không để lại ảnh hưởng nào. Quay trở lại cảm biến, tiếp nhận nhận thông qua phần tử cảm biến. Chuyển tín hiệu nhận về đến nơi xử lý tiếp theo trong cảm biến. &nbsp;&nbsp;</p>
-                    <p>Có nhiều loại cảm biến khác nhau với đặc tính riêng đáp ứng yêu cầu sử dụng trong nhiều trường hợp. &nbsp;<br>• &nbsp; &nbsp;Cảm biến hình ảnh: &nbsp; &nbsp; &nbsp;&nbsp;<br>Có tên gọi khác là cảm biến thị giác có thể phát hiện đối tượng cụ thể, màu sắc trong phạm vi nhất định. Tín hiệu sẽ được chuyển đổi thành hình ảnh đến hệ thống điều khiển để người dùng có thể quan sát và theo dõi. &nbsp;<br>• &nbsp; &nbsp;Cảm biến nhiệt độ: &nbsp; &nbsp; &nbsp;&nbsp;<br>Có thiết kế chủ yếu ở dạng một đầu dò nhiệt độ. Những thông số nhiệt sẽ được tiếp nhận, truyền tín hiệu đến thiết bị đo nhiệt. Nó được sử dụng để đo các đặc tính nhiệt độ của chất lỏng, khí, rắn trong các ngành môi trường, công nghiệp chế biến. &nbsp; &nbsp;<br>Một số loại cảm biến nhiệt độ gồm có: cảm biến nhiệt bán dẫn, nhiệt điện trở,nhiệt kế bức xạ, &nbsp;điện trở oxit kim loại,… &nbsp; &nbsp; &nbsp;&nbsp;<br>• &nbsp; &nbsp;Cảm biến quang điện: &nbsp; &nbsp; &nbsp;&nbsp;<br>Dùng để phát hiện các đối tượng, sự thay đổi trong trên bề mặt thông qua đặc tính quang học. Cấu tạo cơ bản gồm bộ phát (phát ánh sáng) và bộ thu (nhận ánh sáng). &nbsp;</p>
-                    <div class="readmore-button-wrapper d-none">
-                        <a href="#" class="text-decoration-none">
-                            Hiển thị
-                            <i class="fas fa-chevron-down"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-
+    @await Html.PartialAsync("~/Views/Shared/Components/Common/HeaderTitleStyle2.cshtml", new HeaderTitleComponent(Model.Title))
     if (Model.Links?.Any() == true)
     {
-        <div class="row portfolio-list mt-3">
+        <div class="row portfolio-list appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">
             @foreach (var item in Model.Links)
             {
                 <div class="col-sm-6 col-lg-3 mb-4">
@@ -43,7 +18,7 @@
                             @*   Group = new BaseMediaLinkModel(Model.Title, Model.Link?.Href), *@
         })
                         )
-                    
+
                 </div>
             }
         </div>

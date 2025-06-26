@@ -3,7 +3,7 @@ using web_client.Models.Htmls.Base;
 
 namespace web_client.Models.Htmls.Common;
 
-public class CategoryTitleLinksComponent : BaseTitleLinksComponent<BaseCategoryItemModel>
+public class CategoryTitleLinksComponent : TitleLinksComponent<BaseCategoryItemModel>
 {
     public BaseLinkModel? Link { get; set; }
     public CategoryTitleLinksComponent() : base()

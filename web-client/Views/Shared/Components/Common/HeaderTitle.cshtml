@@ -1,0 +1,26 @@
+﻿@model HeaderTitleComponent
+@if (Model != null)
+{
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="font-weight-normal line-height-1 mb-0 appear-animation animated appear-animation-visible maskUp" data-appear-animation="maskUp" style="animation-delay: 100ms;">@Model.Title</h2>
+            <div class="divider divider-small">
+                <hr>
+            </div>
+            @if (Model.ShowDescription)
+            {
+                <div data-plugin-readmore data-plugin-options="{'buttonOpenLabel' : 'Hiển thị <i class=\' fas fa-chevron-down text-2 ms-1\'> </i>','buttonCloseLabel': 'Thu gọn <i class=\'fas fa-chevron-up text-2 ms-1\'></i>'}">
+                    <div>
+                        @Model.Description
+                    </div>
+                    <div class="readmore-button-wrapper d-none text-center">
+                        <a href="#" class="text-decoration-none">
+                            Hiển thị
+                            <i class="fas fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

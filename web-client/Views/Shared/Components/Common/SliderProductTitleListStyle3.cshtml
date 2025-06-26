@@ -1,0 +1,40 @@
+﻿@model ProductTitleLinksComponent
+
+@if (Model != null)
+{
+    <div class="products row">
+        <div class="col">
+            @if (Model.Title?.HasValueString() == true)
+            {
+                <h3 class="font-weight-normal appear-animation animated appear-animation-visible maskUp mb-3">@Model.Title</h3>
+            }
+
+            @if (Model.Links?.Any() == true)
+            {
+                <div class="owl-carousel owl-theme show-nav-title nav-dark mb-0" data-plugin-options="{'loop': false, 'autoplay': false,'responsive': {'576': {'items': 1}, '768': {'items': 1}, '992': {'items': 5}, '1200': {'items': 4}}, 'nav': true, 'dots': false, 'margin': 10, 'autoplayHoverPause': true, 'autoHeight': true}">
+                    @foreach (var item in Model.Links)
+                    {
+                        @await Html.PartialAsync("~/Views/Shared/Components/Common/ProductTitleMedia.cshtml", new ProductTitleMediaComponent()
+       {
+           Id = Guid.NewGuid(),
+           Title = item.Title,
+           Price = item.Price,
+           Sale = item.Sale,
+           Sku = item.Sku,
+           Href = item.Href,
+           Media = item.Media,
+           Group = item.Group,
+           CreatedAt = item.CreatedAt,
+           DisplayContact = item.DisplayContact,
+           DisplayPrice = item.DisplayPrice,
+           DisplaySale = item.DisplaySale,
+           Attributes = item.Attributes
+       })
+                        ;
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+}

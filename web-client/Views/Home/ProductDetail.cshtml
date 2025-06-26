@@ -1,11 +1,14 @@
 ﻿@{
     var pageModel = new PageModel() { Title = "Sản phẩm", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product-detail", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
-    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
-        new BaseCategoryItemModel("Trang chủ","/"),
-        new BaseCategoryItemModel(pageModel.Title,"/Home/Product"),
+        new BaseLinkModel("Trang chủ","/"),
+        new BaseLinkModel("Sản phẩm","/Home/Product"),
+        new BaseLinkModel("Cảm biến","/Home/ProductCategory"),
+        new BaseLinkModel("Cảm biến tiệm cận","/Home/ProductCategoryDetail")
     });
+    breadcrumbModel.LastIsSpan = false;
     var sideBarCategoryModel = new CategoryTitleLinksComponent("Danh mục", new List<BaseCategoryItemModel>
 {
     new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến", "/category/cam-bien", new List<BaseCategoryItemModel>
@@ -101,137 +104,215 @@
     })
 });
 }
-@(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
+@* @(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel)) *@
+@(await Html.PartialAsync("~/Views/Shared/Components/Common/BreadcrumbStyle2.cshtml", breadcrumbModel))
 <div class="container py-4">
-    <div class="row">
-        <div class="col-lg-3 order-lg-1">
-            <aside class="sidebar">
-                <div class="card card-border card-border-bottom bg-color-light mb-4">
-                    <div class="card-body p-3">
-                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarCategoryTitleList.cshtml", sideBarCategoryModel))
-                    </div>
-                </div>
-                <div class="card card-border card-border-bottom bg-color-light mb-4">
-                    <div class="card-body p-3">
-                        <h4 class="card-title mb-1 text-4 font-weight-semi-bold">Bộ lọc</h4>
-                        <form class="contact-form" action="php/contact-form.php" method="POST" novalidate="novalidate">
-
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label class="form-label required text-1 mb-0">Hãng sản xuất</label>
-                                    <select class="form-control" required="">
-                                        <option>Chọn hãng sản xuất</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label class="form-label required text-1 mb-0">Series</label>
-                                    <select class="form-control" required="">
-                                        <option>Chọn series</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label class="form-label required text-1 mb-0">Hình dáng</label>
-                                    <select class="form-control" required="">
-                                        <option>Chọn hình dáng</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label class="form-label required text-1 mb-0">Kích thước</label>
-                                    <select class="form-control" required="">
-                                        <option>Chọn kích thước</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label class="form-label required text-1 mb-0">Khoảng cách phát hiện</label>
-                                    <select class="form-control" required="">
-                                        <option>Chọn khoảng cách phát hiện</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label class="form-label required text-1 mb-0">Loại phát hiện</label>
-                                    <select class="form-control" required="">
-                                        <option>Chọn Loại phát hiện</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label class="form-label required text-1 mb-0">Chất liệu cảm biến</label>
-                                    <select class="form-control" required="">
-                                        <option>Chọn Chất liệu cảm biến</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label class="form-label required text-1 mb-0">Kết nối</label>
-                                    <select class="form-control" required="">
-                                        <option>Chọn Kết nối</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </aside>
+   @*  <div class="row">
+        <div class="col">
+            <ul class="breadcrumb breadcrumb-style-2 d-block text-4 mb-4">
+                <li><a href="#" class="text-color-default text-color-hover-primary text-decoration-none">Trang chủ</a></li>
+                <li><a href="#" class="text-color-default text-color-hover-primary text-decoration-none">Cảm biến</a></li>
+                <li>Cảm biến tiệm cận</li>
+            </ul>
         </div>
-        <div class="col-lg-9 order-lg-2">
-            <div class="masonry-loader1 masonry-loader-showing1">
-                <div class="row products product-thumb-info-list">
-                    @for (int i = 0; i < 9; i++)
-                    {
-                        <div class="col-sm-6 col-lg-4 mb-2">
-                            @(
-                                await Html.PartialAsync("~/Views/Shared/Components/Common/ProductTitleMedia.cshtml", new ProductTitleMediaComponent()
-                        {
-                            Id = Guid.NewGuid(),
-                            Title = "Contactor LC1D09M7 Schneider  " + i + 1,
-                            Price = i + 1,
-                            Sale = i * 2 + 1,
-                            Sku = "sku" + i + 1,
-                            Href = "/Home/ProductDetail",
-                            Media = "https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg",
-                            Group = new BaseMediaLinkModel("Biến tần", "/Home/Product"),
-                            CreatedAt = CommonHelper.GetCurrent(),
-                            DisplayContact = true,
-                            DisplayPrice = false,
-                            DisplaySale = true,
-                            Attributes = new List<BaseAttributeItemModel>()
-                        {
-                        new BaseAttributeItemModel("Loại sản phẩm","Contactor","product-type"),
-                        new BaseAttributeItemModel("Số cực",i+"P","number"),
-                        new BaseAttributeItemModel("Dòng tiếp điểm",i+"9A","dong-tiep-dan"),
-                        new BaseAttributeItemModel("Tiếp điểm phụ","1NO+1NC","tiep-diem-phu"),
+    </div> *@
+    <div class="card border-radius-2 bg-color-light border-0 box-shadow-1 mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5 mb-5 mb-md-0">
 
-                        }
-                        })
-                                )
+                    <div class="thumb-gallery-wrapper lightbox" data-plugin-options="{'delegate': 'a.shop-gallery', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+                        <div class="thumb-gallery-detail owl-carousel owl-theme manual nav-inside nav-style-1 nav-dark mb-3">
+                            <div>
+                                <a href="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-1-600x600.jpg" class="shop-gallery" title=""><img alt="" class="img-fluid" src="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-1-600x600.jpg"></a>
+                            </div>
+                            <div>
+                                <a href="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-1-600x600.jpg" class="shop-gallery" title=""><img alt="" class="img-fluid" src="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-1-600x600.jpg"></a>
+                            </div>
+                            <div>
+                                <a href="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-1-600x600.jpg" class="shop-gallery" title=""><img alt="" class="img-fluid" src="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-3-600x600.jpg"></a>
+                            </div>
+                            <div>
+                                <a href="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-1-600x600.jpg" class="shop-gallery" title=""><img alt="" class="img-fluid" src="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-3-600x600.jpg"></a>
+                            </div>
+                            <div>
+                                <a href="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-1-600x600.jpg" class="shop-gallery" title=""><img alt="" class="img-fluid" src="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-3-600x600.jpg"></a>
+                            </div>
                         </div>
-                    }
+                        <div class="thumb-gallery-thumbs owl-carousel owl-theme manual thumb-gallery-thumbs">
+                            <div class="cur-pointer">
+                                <img alt="" class="img-fluid" src="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-1-600x600.jpg">
+                            </div>
+                            <div class="cur-pointer">
+                                <img alt="" class="img-fluid" src="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-1-600x600.jpg">
+                            </div>
+                            <div class="cur-pointer">
+                                <img alt="" class="img-fluid" src="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-3-600x600.jpg">
+                            </div>
+                            <div class="cur-pointer">
+                                <img alt="" class="img-fluid" src="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-3-600x600.jpg">
+                            </div>
+                            <div class="cur-pointer">
+                                <img alt="" class="img-fluid" src="https://www.portotheme.com/wordpress/porto/studio/wp-content/uploads/sites/90/2021/05/Apple-iPad-9th-3-600x600.jpg">
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <ul class="pagination float-end">
-                            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+
+                <div class="col-md-7">
+
+                    <div class="summary entry-summary position-relative">
+
+                        @* 	<div class="position-absolute top-0 right-0">
+					<div class="products-navigation d-flex">
+						<a href="#" class="prev text-decoration-none text-color-dark text-color-hover-primary border-color-hover-primary" data-bs-toggle="tooltip" data-bs-animation="false" data-bs-original-title="Red Ladies Handbag"><i class="fas fa-chevron-left"></i></a>
+						<a href="#" class="next text-decoration-none text-color-dark text-color-hover-primary border-color-hover-primary" data-bs-toggle="tooltip" data-bs-animation="false" data-bs-original-title="Green Ladies Handbag"><i class="fas fa-chevron-right"></i></a>
+					</div>
+				</div>
+ *@
+                        <h1 class="mb-0 font-weight-bold text-7">Cảm biến tiệm cận UP18S-8NA Hanyoung</h1>
+
+                        <div class="divider divider-small">
+                            <hr class="bg-color-grey-400">
+                        </div>
+                        <p class="price mb-3">
+                            <a href="/" class="btn btn-xs btn btn-secondary text-1 text-uppercase float-start"><i class="fas fa-phone position-relative"></i> Liên hệ</a>
+
+                        </p>
+                        @* <p class="price mb-3">
+					<span class="sale text-color-dark">$15,00</span>
+					<span class="amount">$22,00</span>
+				</p> *@
+
+                        <p class="text-3-5 mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus nibh sed elimttis adipiscing. Fusce in hendrerit purus. Lorem ipsum dolor sit amet.</p>
+
+                        <ul class="list list-unstyled text-2">
+                            <li class="mb-0">SKU: <strong class="text-color-dark">1234567890</strong></li>
+                            <li class="mb-0">Đường kính: <strong class="text-color-dark">18x18</strong></li>
+                            <li class="mb-0">Khoảng cách phát hiện: <strong class="text-color-dark">8mm</strong></li>
+                            <li class="mb-0">Kết nối: <strong class="text-color-dark">Loại cáp</strong></li>
+
                         </ul>
+
+
+                        <div class="d-flex align-items-center">
+                            <ul class="social-icons social-icons-medium social-icons-clean-with-border social-icons-clean-with-border-border-grey social-icons-clean-with-border-icon-dark me-3 mb-0">
+                                <!-- Facebook -->
+                                <li class="social-icons-facebook">
+                                    <a href="http://www.facebook.com/sharer.php?u=https://www.okler.net" target="_blank" data-bs-toggle="tooltip" data-bs-animation="false" data-bs-placement="top" title="Share On Facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <!-- Google+ -->
+                                <li class="social-icons-googleplus">
+                                    <a href="https://plus.google.com/share?url=https://www.okler.net" target="_blank" data-bs-toggle="tooltip" data-bs-animation="false" data-bs-placement="top" title="Share On Google+">
+                                        <i class="fab fa-google-plus-g"></i>
+                                    </a>
+                                </li>
+                                <!-- Twitter -->
+                                <li class="social-icons-x">
+                                    <a href="https://twitter.com/share?url=https://www.okler.net&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons" target="_blank" data-bs-toggle="tooltip" data-bs-animation="false" data-bs-placement="top" title="Share On Twitter">
+                                        <i class="fab fa-x-twitter"></i>
+                                    </a>
+                                </li>
+                                <!-- Email -->
+                                <li class="social-icons-email">
+                                    <a href="mailto:?Subject=Share This Page&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 https://www.okler.net" data-bs-toggle="tooltip" data-bs-animation="false" data-bs-placement="top" title="Share By Email">
+                                        <i class="far fa-envelope"></i>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col">
+                    <div id="description" class="tabs tabs-simple tabs-simple-full-width-line tabs-product tabs-dark mb-2">
+                        <ul class="nav nav-tabs justify-content-start">
+                            <li class="nav-item"><a class="nav-link active font-weight-bold text-3 text-uppercase py-2 px-3" href="#productDescription" data-bs-toggle="tab">Mô tả</a></li>
+                            <li class="nav-item"><a class="nav-link font-weight-bold text-3 text-uppercase py-2 px-3" href="#productInfo" data-bs-toggle="tab">Thuộc tính</a></li>
+                        </ul>
+                        <div class="tab-content p-0">
+                            <div class="tab-pane px-0 py-3 active" id="productDescription">
+                                <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, massa fringilla consequat blandit, mauris ligula porta nisi, non tristique enim sapien vel nisl. Suspendisse vestibulum lobortis dapibus. </p>
+                                <p class="m-0">Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, massa fringilla consequat blandit, mauris ligula porta nisi, non tristique enim sapien vel nisl. Suspendisse vestibulum lobortis dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
+                            </div>
+                            <div class="tab-pane px-0 py-3" id="productInfo">
+                                <table class="table table-striped m-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">
+                                                Size:
+                                            </th>
+                                            <td class="border-top-0">
+                                                Unique
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Colors
+                                            </th>
+                                            <td>
+                                                Red, Blue
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Material
+                                            </th>
+                                            <td>
+                                                100% Leather
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    @{
+        var productsModel = new ProductTitleLinksComponent();
+        productsModel.Title = "Sản phẩm cùng loại";
+        productsModel.Links = new List<BaseProductItemModel>
+        ();
+        for (int x = 0; x < 5; x++)
+        {
+            productsModel.Links.Add(new BaseProductItemModel()
+
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Contactor LC1D09M7 Schneider  " + x + 1,
+                    Price = x + 1,
+                    Sale = x * 2 + 1,
+                    Sku = "sku" + x + 1,
+                    Href = "/Home/ProductDetail",
+                    Media = "https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg",
+                    Group = new BaseMediaLinkModel("Danh mục con", "/Home/Product"),
+                    CreatedAt = CommonHelper.GetCurrent(),
+                    DisplayContact = true,
+                    DisplayPrice = false,
+                    DisplaySale = true,
+                });
+        }
+
+    }
+
+    <div class="card border-radius-2 bg-color-light border-0 box-shadow-1 mb-4">
+        <div class="card-body">
+            @await Html.PartialAsync("~/Views/Shared/Components/Common/SliderProductTitleListStyle3.cshtml", productsModel)
+        </div>
+    </div>
 </div>
+@section Scripts {
+    <script src="~/js/examples/examples.gallery.js"></script>
+}

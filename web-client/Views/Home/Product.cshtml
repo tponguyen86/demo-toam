@@ -1,10 +1,10 @@
 ﻿@{
     var pageModel = new PageModel() { Title = "Cảm biến", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
-    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
-        new BaseCategoryItemModel("Trang chủ","/"),
-        new BaseCategoryItemModel(pageModel.Title,"/Home/Product"),
+        new BaseLinkModel("Trang chủ","/"),
+        new BaseLinkModel(pageModel.Title,"/Home/Product"),
     });
     var sideBarCategoryModel = new CategoryTitleLinksComponent("Danh mục", new List<BaseCategoryItemModel>
 {

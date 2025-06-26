@@ -1,10 +1,10 @@
 ﻿@{
     var pageModel = new PageModel() { Title = "Về chúng tôi", Description = "Mô ta seo trang", BodyClassName = "p-page-detail", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel; 
-    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
-        new BaseCategoryItemModel("Trang chủ","/"),
-        new BaseCategoryItemModel("Về chúng tôi","/Home/PageDetail"),
+        new BaseLinkModel("Trang chủ","/"),
+        new BaseLinkModel("Về chúng tôi","/Home/PageDetail"),
     }); 
     var sideBarArticlePagesModel = new ArticleTitleLinksComponent("", new List<BaseArticleItemModel>()
     {
@@ -38,17 +38,8 @@
             <div class="blog-posts single-post">
 				<div class="card border-radius-0 bg-color-light border-0 box-shadow-1">
 					<div class="card-body">
-						@* <h4 class="card-title mb-1 text-4 font-weight-bold">Dịch vụ 11</h4> *@
+                        @await Html.PartialAsync("~/Views/Shared/Components/Common/HeaderTitle.cshtml", new HeaderTitleComponent("Về chúng tôi"))
 						<div class="pb-1">
-
-							<div class="row">
-								<div class="col">
-									<div class="overflow-hidden mb-3">
-										<h2 class="font-weight-bold text-8 mb-0 appear-animation animated appear-animation-visible" data-appear-animation="maskUp">Về chúng tôi</h2>
-									</div>
-								</div>
-							</div>
-
 							<div class="row pt-5">
 								<div class="col">
 

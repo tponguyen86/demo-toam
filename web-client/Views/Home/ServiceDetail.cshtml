@@ -1,12 +1,12 @@
 ﻿@{
-	var pageModel = new PageModel() { Title = "Dịch vụ", Description = "Mô ta seo dịch vụ", BodyClassName = "p-service-detail", MainClassName = "shop" }; ;
-	ViewData["Page"] = pageModel; 
-	var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
+    var pageModel = new PageModel() { Title = "Dịch vụ", Description = "Mô ta seo dịch vụ", BodyClassName = "p-service-detail", MainClassName = "shop" }; ;
+    ViewData["Page"] = pageModel;
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
-        new BaseCategoryItemModel("Trang chủ","/"),
-        new BaseCategoryItemModel(pageModel.Title,"/Home/Service"),
-        new BaseCategoryItemModel("Chi tiết","/Home/ServiceDetail"),
-    }); 
+        new BaseLinkModel("Trang chủ","/"),
+        new BaseLinkModel(pageModel.Title,"/Home/Service"),
+        new BaseLinkModel("Chi tiết","/Home/ServiceDetail"),
+    });
     var sideBarArticlePagesModel = new ArticleTitleLinksComponent("Dịch vụ", new List<BaseArticleItemModel>()
     {
         new BaseArticleItemModel(Guid.NewGuid(),"Dịch vụ 01","/Home/ServiceDetail","https://img.hoplongtech.com/hoplong/news/phan-biet-pnp-va-npn.jpg",CommonHelper.GetCurrent()),
@@ -36,104 +36,123 @@
             </aside>
         </div>
         <div class="col-lg-9 order-lg-2">
-			
-            <div class="blog-posts single-post">
-				<div class="card border-radius-0 bg-color-light border-0 box-shadow-1">
-					<div class="card-body">
-						@* <h4 class="card-title mb-1 text-4 font-weight-bold">Dịch vụ 11</h4> *@
-						<div class="pb-1">
 
-							<div class="row">
-								<div class="col">
-									<div class="overflow-hidden mb-3">
-										<h2 class="font-weight-bold text-8 mb-0 appear-animation animated appear-animation-visible" data-appear-animation="maskUp">Dịch vụ 11</h2>
-									</div>
-								</div>
-							</div>
+            <div class="blog-posts single-post mb-4">
+                <div class="card border-radius-0 bg-color-light border-0 box-shadow-1">
+                    <div class="card-body">
+                        @await Html.PartialAsync("~/Views/Shared/Components/Common/HeaderTitle.cshtml", new HeaderTitleComponent("Dịch vụ 11", "Có nhiều loại cảm biến khác nhau với đặc tính riêng đáp ứng yêu cầu sử dụng trong nhiều trường hợp. &nbsp;<br>• &nbsp; &nbsp;Cảm biến hình ảnh: &nbsp; &nbsp; &nbsp;&nbsp;<br>Có tên gọi khác là cảm biến thị giác có thể phát hiện đối tượng cụ thể, màu sắc trong phạm vi nhất định. Tín hiệu sẽ được chuyển đổi thành hình ảnh đến hệ thống điều khiển để người dùng có thể quan sát và theo dõi. &nbsp;<br>• &nbsp; &nbsp;Cảm biến nhiệt độ: &nbsp; &nbsp; &nbsp;&nbsp;<br>Có thiết kế chủ yếu ở dạng một đầu dò nhiệt độ. Những thông số nhiệt sẽ được tiếp nhận, truyền tín hiệu đến thiết bị đo nhiệt. Nó được sử dụng để đo các đặc tính nhiệt độ của chất lỏng, khí, rắn trong các ngành môi trường, công nghiệp chế biến. &nbsp; &nbsp;<br>Một số loại cảm biến nhiệt độ gồm có: cảm biến nhiệt bán dẫn, nhiệt điện trở,nhiệt kế bức xạ, &nbsp;điện trở oxit kim loại,… &nbsp; &nbsp; &nbsp;&nbsp;<br>• &nbsp; &nbsp;Cảm biến quang điện: &nbsp; &nbsp; &nbsp;&nbsp;<br>Dùng để phát hiện các đối tượng, sự thay đổi trong trên bề mặt thông qua đặc tính quang học. Cấu tạo cơ bản gồm bộ phát (phát ánh sáng) và bộ thu (nhận ánh sáng).", true))
+                        <div class="pb-1">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <div class="overflow-hidden">
+                                        <p class="lead mb-0 appear-animation animated appear-animation-visible" data-appear-animation="maskUp" data-appear-animation-delay="200">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="alternative-font">metus.</span> pulvinar. Sociis natoque penatibus.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 appear-animation animated appear-animation-visible" data-appear-animation="fadeIn" data-appear-animation-delay="500">
+                                    <a class="btn btn-outline btn-rounded btn-primary btn-with-arrow text-hover-primary mb-5 mb-lg-2 appear-animation animated fadeInRightShorter appear-animation-visible" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="1100" href="#" style="animation-delay: 1100ms;">Liên hệ <span><i class="fas fa-chevron-right"></i></span></a>
+                                </div>
+                            </div>
 
-							<div class="row">
-								<div class="col-lg-9">
-									<div class="overflow-hidden">
-										<p class="lead mb-0 appear-animation animated appear-animation-visible" data-appear-animation="maskUp" data-appear-animation-delay="200">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="alternative-font">metus.</span> pulvinar. Sociis natoque penatibus.
-										</p>
-									</div>
-								</div>
-								<div class="col-lg-3 appear-animation animated appear-animation-visible" data-appear-animation="fadeIn" data-appear-animation-delay="500">
-									<a class="btn btn-outline btn-rounded btn-primary btn-with-arrow text-hover-primary mb-5 mb-lg-2 appear-animation animated fadeInRightShorter appear-animation-visible" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="1100" href="#" style="animation-delay: 1100ms;">Liên hệ <span><i class="fas fa-chevron-right"></i></span></a>
-								</div>
-							</div>
+                            <hr class="solid mt-3 mb-3">
 
-							<hr class="solid mt-3 mb-3">
+                            <div class="row">
+                                <div class="featured-boxes featured-boxes-style-2">
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="700">
+                                            <div class="featured-box featured-box-effect-4">
+                                                <div class="box-content">
+                                                    <i class="icon-featured icon-screen-tablet icons text-color-primary bg-color-grey"></i>
+                                                    <h4 class="font-weight-bold">Mobile Apps</h4>
+                                                    <p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="900">
+                                            <div class="featured-box featured-box-effect-4">
+                                                <div class="box-content">
+                                                    <i class="icon-featured icon-layers icons text-color-light bg-color-primary"></i>
+                                                    <h4 class="font-weight-bold">Creative Websites</h4>
+                                                    <p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="1100">
+                                            <div class="featured-box featured-box-effect-4">
+                                                <div class="box-content">
+                                                    <i class="icon-featured icon-magnifier icons text-color-primary bg-color-grey"></i>
+                                                    <h4 class="font-weight-bold">SEO Optimization</h4>
+                                                    <p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="1500">
+                                            <div class="featured-box featured-box-effect-4">
+                                                <div class="box-content">
+                                                    <i class="icon-featured icon-screen-desktop icons text-color-light bg-color-primary"></i>
+                                                    <h4 class="font-weight-bold">Brand Solutions</h4>
+                                                    <p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="1300">
+                                            <div class="featured-box featured-box-effect-4">
+                                                <div class="box-content">
+                                                    <i class="icon-featured icon-doc icons text-color-primary bg-color-grey"></i>
+                                                    <h4 class="font-weight-bold">HTML5 / CSS3 / JS</h4>
+                                                    <p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="1100">
+                                            <div class="featured-box featured-box-effect-4">
+                                                <div class="box-content">
+                                                    <i class="icon-featured icon-menu icons text-color-light bg-color-primary"></i>
+                                                    <h4 class="font-weight-bold">Buttons</h4>
+                                                    <p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-							<div class="row">
-								<div class="featured-boxes featured-boxes-style-2">
-									<div class="row">
-										<div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="700">
-											<div class="featured-box featured-box-effect-4">
-												<div class="box-content">
-													<i class="icon-featured icon-screen-tablet icons text-color-primary bg-color-grey"></i>
-													<h4 class="font-weight-bold">Mobile Apps</h4>
-													<p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="900">
-											<div class="featured-box featured-box-effect-4">
-												<div class="box-content">
-													<i class="icon-featured icon-layers icons text-color-light bg-color-primary"></i>
-													<h4 class="font-weight-bold">Creative Websites</h4>
-													<p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="1100">
-											<div class="featured-box featured-box-effect-4">
-												<div class="box-content">
-													<i class="icon-featured icon-magnifier icons text-color-primary bg-color-grey"></i>
-													<h4 class="font-weight-bold">SEO Optimization</h4>
-													<p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="1500">
-											<div class="featured-box featured-box-effect-4">
-												<div class="box-content">
-													<i class="icon-featured icon-screen-desktop icons text-color-light bg-color-primary"></i>
-													<h4 class="font-weight-bold">Brand Solutions</h4>
-													<p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="1300">
-											<div class="featured-box featured-box-effect-4">
-												<div class="box-content">
-													<i class="icon-featured icon-doc icons text-color-primary bg-color-grey"></i>
-													<h4 class="font-weight-bold">HTML5 / CSS3 / JS</h4>
-													<p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-6 col-lg-4 appear-animation animated appear-animation-visible" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="1100">
-											<div class="featured-box featured-box-effect-4">
-												<div class="box-content">
-													<i class="icon-featured icon-menu icons text-color-light bg-color-primary"></i>
-													<h4 class="font-weight-bold">Buttons</h4>
-													<p class="px-3">Lorem ipsum dolor sit amt, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius.</p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-				
-
-			
+                    </div>
+                </div>
             </div>
+
+            <div class="card border-radius-2 bg-color-light border-0 box-shadow-1 mb-4">
+                <div class="card-body">
+                    <div class="article-relative">
+                        @{
+                            var blogRelativesModel = new ArticleTitleLinksComponent()
+            {
+                Title = "Dịch vụ khác",
+                Links = new List<BaseArticleItemModel>()
+            };
+                            for (int i = 0; i < 6; i++)
+                            {
+                                blogRelativesModel.Links.Add(new BaseArticleItemModel()
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Tối ưu hóa hệ thống tủ điện với điện trở xả nhôm GABR – Giải pháp độc quyền từ Hợp Long và GIGA Electric " + i + 1,
+                    Description = "Để xây dựng một hệ thống tủ điện hoạt động hiệu quả và bền bỉ, việc lựa chọn linh kiện chất lượng là yếu tố then chốt. Nắm bắt được nhu cầu này, Hợp Long tự hào là nhà phân phối độc quyền tại Việt Nam cho dòng sản phẩm điện trở xả nhôm GABR của thương hiệu GIGA Electric – một giải pháp tối ưu cho mọi ứng dụng công nghiệp hiện đại.",
+                    CreatedAt = CommonHelper.GetCurrent(),
+                    CreatedBy = new BaseMediaLinkModel("Nguyễn Văn A", "#"),
+                    Group = new BaseMediaLinkModel("Sự kiện", "/Home/Service"),
+                    Href = "/Home/ServiceDetail",
+                    Media = "https://img.hoplongtech.com/hoplong/uploads/dot-pha-cong-nghe-ai-va-canh-tay-robot-dang-thay-doi-tung-cong-doan-trong-san-xuat-nong-nghiep-hien-dai.jpg"
+                });
+                            }
+                        }
+                        @await Html.PartialAsync("~/Views/Shared/Components/Common/SliderArticleTitleListStyle3.cshtml", blogRelativesModel)
+                    </div>
+                </div>
+            </div>
+          
+      
         </div>
     </div>
 

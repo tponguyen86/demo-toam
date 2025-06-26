@@ -1,0 +1,29 @@
+﻿@model ArticleTitleLinksComponent
+@if (Model != null)
+{
+    if (Model.Title?.HasValueString() == true)
+    {
+        <h3 class="font-weight-normal appear-animation animated appear-animation-visible maskUp mb-3">@Model.Title</h3>
+    }
+
+    if (Model.Links?.Any() == true)
+    {
+        <div class="owl-carousel owl-theme show-nav-title nav-dark mb-0" data-plugin-options="{'loop': false, 'autoplay': false,'responsive': {'576': {'items': 1}, '768': {'items': 1}, '992': {'items': 2}, '1200': {'items': 2}}, 'nav': true, 'dots': false, 'margin': 25, 'autoplayHoverPause': true, 'autoHeight': true}">
+            @foreach (var item in Model.Links)
+            {
+                @await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleMediaStyle3.cshtml", new ArticleTitleMediaComponent()
+{
+    Id = Guid.NewGuid(),
+    Title = item.Title,
+    Href = item.Href,
+    Media = item.Media,
+    Group = item.Group,
+    CreatedAt = item.CreatedAt,
+    CreatedBy = item.CreatedBy,
+    Description = item.Description
+})
+                ;
+            }
+        </div>
+    }
+}

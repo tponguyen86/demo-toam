@@ -1,0 +1,27 @@
+﻿@model BreadcrumbComponent
+@if (Model.Links?.Any() == true)
+{
+    var count = Model.Links.Count;
+    <section class="page-header page-header-modern bg-color-grey page-header-md p-0 m-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb text-4 my-3 ps-3">
+                        @for (int i = 0; i < count; i++)
+                        {
+                            if (i + 1 == count && Model.LastIsSpan == true)
+                            {
+                                <li class="active">@Model.Links[i].Title</li>
+                            }
+                            else
+                            {
+                                <li><a class="text-color-default text-color-hover-primary text-decoration-none" href="@Model.Links[i].Href">@Model.Links[i].Title</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+}

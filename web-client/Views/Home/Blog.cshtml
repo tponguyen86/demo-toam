@@ -1,10 +1,10 @@
 ﻿@{
     var pageModel = new PageModel() { Title = "Tin tức", Description = "Mô ta seo tin tức", BodyClassName = "p-blog", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel; 
-    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
-        new BaseCategoryItemModel("Trang chủ","/"),
-        new BaseCategoryItemModel(pageModel.Title,"/Home/Blog"),
+        new BaseLinkModel("Trang chủ","/"),
+        new BaseLinkModel(pageModel.Title,"/Home/Blog"),
     });
     var sideBarCategoryModel = new CategoryTitleLinksComponent("Danh mục", new List<BaseCategoryItemModel>()
     {
@@ -20,7 +20,7 @@
         new BaseArticleItemModel(Guid.NewGuid(),"Động cơ điện 1 chiều là gì? Nguyên lý hoạt động và ứng dụng","/Home/BlogDetail","https://img.hoplongtech.com/hoplong/news/dong-co-dien-1-chieu-la-gi-nguyen-ly-hoat-dong-va-ung-dung.jpg",CommonHelper.GetCurrent()),
     });
 }
-@(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
+@(await Html.PartialAsync("~/Views/Shared/Components/Common/BreadcrumbStyle2.cshtml", breadcrumbModel))
 <div class="container py-4">
     <div class="row">
         <div class="col-lg-3 order-lg-2">
@@ -46,7 +46,8 @@
         </div>
         <div class="col-lg-9 order-lg-1">
             <div class="blog-posts">
-                <div class="row px-3">
+                @await Html.PartialAsync("~/Views/Shared/Components/Common/HeaderTitle.cshtml", new HeaderTitleComponent(pageModel.Title))
+                <div class="row">
                     @for (int i = 0; i < 4; i++)
                     {
                         <div class="col-sm-6">

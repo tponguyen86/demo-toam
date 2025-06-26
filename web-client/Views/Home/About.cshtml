@@ -1,11 +1,11 @@
 ﻿@{
     var pageModel = new PageModel() { Title = "Giới thiệu", Description = "Mô ta seo giới thiệu", BodyClassName = "p-about", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel; 
-    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>
        ()
     {
-    new BaseCategoryItemModel("Trang chủ","/"),
-    new BaseCategoryItemModel(pageModel.Title,"/Home/About"),
+    new BaseLinkModel("Trang chủ","/"),
+    new BaseLinkModel(pageModel.Title,"/Home/About"),
     });
     breadcrumbModel.Description = "Kết nối với chúng tôi";
     breadcrumbModel.Media = "https://www.okler.net/previews/porto/12.1.0/img/page-header/page-header-about-us.jpg";

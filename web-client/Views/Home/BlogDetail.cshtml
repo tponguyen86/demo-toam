@@ -1,11 +1,11 @@
 ﻿@{
     var pageModel = new PageModel() { Title = "Chi tiết tin tức", Description = "Mô ta seo tin tức", BodyClassName = "p-blog-detail", MainClassName = "shop" }; ;
-    ViewData["Page"] = pageModel; 
-    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseCategoryItemModel>()
+    ViewData["Page"] = pageModel;
+    var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
-        new BaseCategoryItemModel("Trang chủ","/"),
-        new BaseCategoryItemModel(pageModel.Title,"/Home/Blog"),
-        new BaseCategoryItemModel("Chi tiết","/Home/BlogDetail"),
+        new BaseLinkModel("Trang chủ","/"),
+        new BaseLinkModel(pageModel.Title,"/Home/Blog"),
+        new BaseLinkModel("Chi tiết","/Home/BlogDetail"),
     });
     var sideBarCategoryModel = new CategoryTitleLinksComponent("Danh mục", new List<BaseCategoryItemModel>()
     {
@@ -46,8 +46,7 @@
             </aside>
         </div>
         <div class="col-lg-9 order-lg-1">
-            <div class="blog-posts single-post">
-
+            <div class="blog-posts single-post mb-4">
                 <article class="post post-large blog-single-post border-0 m-0 p-0">
                     <div class="post-image ms-0">
                         <a href="blog-post.html">
@@ -95,9 +94,39 @@
 
                     </div>
                 </article>
-
             </div>
+
+            <div class="card border-radius-2 bg-color-light border-0 box-shadow-1 mb-4">
+                <div class="card-body">
+                    <div class="article-relative">
+                        @{
+                            var blogRelativesModel = new ArticleTitleLinksComponent()
+            {
+                Title = "Bài viết liên quan",
+                Links = new List<BaseArticleItemModel>()
+            };
+                            for (int i = 0; i < 6; i++)
+                            {
+                                blogRelativesModel.Links.Add(new BaseArticleItemModel()
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Tối ưu hóa hệ thống tủ điện với điện trở xả nhôm GABR – Giải pháp độc quyền từ Hợp Long và GIGA Electric " + i + 1,
+                    Description = "Để xây dựng một hệ thống tủ điện hoạt động hiệu quả và bền bỉ, việc lựa chọn linh kiện chất lượng là yếu tố then chốt. Nắm bắt được nhu cầu này, Hợp Long tự hào là nhà phân phối độc quyền tại Việt Nam cho dòng sản phẩm điện trở xả nhôm GABR của thương hiệu GIGA Electric – một giải pháp tối ưu cho mọi ứng dụng công nghiệp hiện đại.",
+                    CreatedAt = CommonHelper.GetCurrent(),
+                    CreatedBy = new BaseMediaLinkModel("Nguyễn Văn A", "#"),
+                    Group = new BaseMediaLinkModel("Sự kiện", "/Home/Blog"),
+                    Href = "/Home/BlogDetail",
+                    Media = "https://img.hoplongtech.com/hoplong/uploads/dot-pha-cong-nghe-ai-va-canh-tay-robot-dang-thay-doi-tung-cong-doan-trong-san-xuat-nong-nghiep-hien-dai.jpg"
+                });
+                            }
+                        }
+                        @await Html.PartialAsync("~/Views/Shared/Components/Common/SliderArticleTitleListStyle2.cshtml", blogRelativesModel)
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
+   
 </div>

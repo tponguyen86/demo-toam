@@ -2,7 +2,7 @@
 
 namespace web_client.Models.Htmls.Common;
 
-public class ArticleTitleLinksComponent : BaseTitleLinksComponent<BaseArticleItemModel>
+public class ArticleTitleLinksComponent : TitleLinksComponent<BaseArticleItemModel>
 {
     public ArticleTitleLinksComponent() : base()
     {

@@ -1,0 +1,36 @@
+﻿@model ProductTitleLinksComponent
+@if (Model != null)
+{
+    if (Model.Title?.HasValueString() == true)
+    {
+        <h3 class="text-center font-weight-normal text-6 mb-0 appear-animation animated appear-animation-visible maskUp">@Model.Title</h3>
+        <hr class="solid mt-3 mb-0" />
+    }
+
+    if (Model.Links?.Any() == true)
+    {
+        <div class="row products product-thumb-info-list">
+            @foreach (var item in Model.Links)
+            {
+                <div class="col-sm-6 col-lg-4 mb-2">
+                    @await Html.PartialAsync("~/Views/Shared/Components/Common/ProductTitleMedia.cshtml", new ProductTitleMediaComponent()
+   {
+       Id = Guid.NewGuid(),
+       Title = item.Title,
+       Price = item.Price,
+       Sale = item.Sale,
+       Sku = item.Sku,
+       Href = item.Href,
+       Media = item.Media,
+       Group = item.Group,
+       CreatedAt = item.CreatedAt,
+       DisplayContact = item.DisplayContact,
+       DisplayPrice = item.DisplayPrice,
+       DisplaySale = item.DisplaySale,
+       Attributes = item.Attributes
+   })
+                </div>
+            }
+        </div>
+    }
+}
