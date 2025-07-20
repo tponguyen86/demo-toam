@@ -1,0 +1,32 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
+using ToamManage.Infrastructure.Persistence.Models;
+using web_client.Models.Data.Contexts.Entities.Base;
+
+namespace web_client.Models.Data.Contexts.Entities;
+
+public class Product : BaseSeo
+{
+    public string Name { get; set; } = null!;
+    public string? Sku { get; set; }
+    //public string? Unit { get; set; }
+
+    public Guid GroupProductSetting { get; set; }
+    //BaseAttribute
+    [Column(TypeName = "jsonb")]
+    public JsonDocument? Attribute { get; set; }
+
+    public Guid ProductCategory { get; set; }
+    [Column(TypeName = "jsonb")]
+    public BaseFileModel Image { get; set; }
+
+    [Column(TypeName = "jsonb")]
+    public List<BaseFileModel>? Medias { get; set; }
+
+    public decimal? Price { get; set; }
+    public bool PriceHidden { get; set; }
+    public bool Featured { get; set; }
+
+    public string? ShortDescription { get; set; }
+    public string? Description { get; set; }
+}

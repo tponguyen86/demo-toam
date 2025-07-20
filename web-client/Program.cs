@@ -1,11 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using System.Text.Json;
 using web_client.IServices;
+using web_client.Models.Data.Contexts;
 using web_client.Models.Htmls.Carousels;
 using web_client.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+NpgsqlConnection.GlobalTypeMapper.EnableDynamicJson();
+builder.Services.AddDbContext<NetectManageContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddControllersWithViews()
     .AddJsonOptions(options =>
     {

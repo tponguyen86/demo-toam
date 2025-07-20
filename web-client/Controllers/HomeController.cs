@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using web_client.IServices;
 using web_client.Models;
 using web_client.Models.Base;
+using web_client.Models.Data.Contexts;
 using web_client.Models.Htmls.Carousels;
 
 namespace web_client.Controllers
@@ -12,16 +14,19 @@ namespace web_client.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ILayoutService _layoutService;
+        private readonly NetectManageContext _dbContext;
 
 
-        public HomeController(ILogger<HomeController> logger, ILayoutService layoutService)
+        public HomeController(ILogger<HomeController> logger, ILayoutService layoutService, NetectManageContext dbContext)
         {
             _logger = logger;
             _layoutService = layoutService;
+            _dbContext = dbContext;
         }
 
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
+            var products = await _dbContext.Products.ToListAsync(cancellationToken);
             var bannerModel = await _layoutService.GetHomeBannerSliderAsync(cancellationToken);
             ViewData["HomeBannerSliderDataModel"] = bannerModel;
             return View();
@@ -69,13 +74,13 @@ namespace web_client.Controllers
         public IActionResult BlogDetail()
         {
             return View();
-        }   
-        
+        }
+
         public IActionResult PageDetail()
         {
             return View();
-        } 
-        
+        }
+
         public IActionResult Contact()
         {
             return View();
