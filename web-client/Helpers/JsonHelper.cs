@@ -83,7 +83,15 @@ public static class JsonHelper
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-        return JsonSerializer.Deserialize<T>(stream.ToArray(), jsonSerializerOptions);
+
+        try
+        {
+            return JsonSerializer.Deserialize<T>(stream.ToArray(), jsonSerializerOptions);
+        }
+        catch
+        {
+            return default(T);
+        }
     }
     //Note: Call this for response
     public static T? DocumentToObject<T>(this JsonDocument source)

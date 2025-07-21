@@ -10,7 +10,7 @@ public static class DependencyInjection
         services.AddScoped<ITestimonialService, TestimonialService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ILookupService, LookupService>();
-
+        services.AddScoped<IProductCategoryService, ProductCategoryService>();
         services.AddScoped<ILayoutService, LayoutService>();
     }
 }

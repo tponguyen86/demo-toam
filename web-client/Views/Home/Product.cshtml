@@ -1,4 +1,5 @@
-﻿@{
+﻿@model BasePagingModel<ProductTitleMediaComponent>
+@{
     var pageModel = new PageModel() { Title = "Cảm biến", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
@@ -100,9 +101,10 @@
         new BaseCategoryItemModel(Guid.NewGuid(), "CP Cầu dao tự động", "/category/cp-cau-dao-tu-dong")
     })
 });
+    var paging = Model?.BuildPaging("/products?page={0}");
 }
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
-<div class="container py-4">
+<div class="container limit">
     <div class="row">
         <div class="col-lg-3 order-lg-1">
             <aside class="sidebar">
@@ -188,7 +190,7 @@
         <div class="col-lg-9 order-lg-2">
             <div class="masonry-loader1 masonry-loader-showing1">
                 <div class="row products product-thumb-info-list">
-                    @for (int i = 0; i < 9; i++)
+                    @*  @for (int i = 0; i < 9; i++)
                     {
                         <div class="col-sm-6 col-lg-4 mb-2">
                             @(
@@ -217,19 +219,17 @@
                         })
                                 )
                         </div>
-                    }
+                    } *@
+                    @if (Model?.Items?.Any() == true)
+                        foreach (var item in Model.Items)
+                        {
+                            <div class="col-sm-6 col-lg-4 mb-2">
+                                @await Html.PartialAsync("~/Views/Shared/Components/Common/ProductTitleMedia.cshtml", item)
+                            </div>
+                        }
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <ul class="pagination float-end">
-                            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
+
+                @await Html.PartialAsync("~/Views/Shared/Components/Common/Paging.cshtml", paging)
             </div>
         </div>
     </div>

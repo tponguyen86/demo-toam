@@ -103,10 +103,16 @@ public class LookupService : ILookupService
             else
             {
                 item.Value = $"{selected.Id}";
-                item.Key = $"{selected.Id}";
+                item.Key = $"{selected.PageKeyName}";
                 item.Label = selected.Name;
                 item.SetData(new
                 {
+                    Sort = selected.Sort ?? 0,
+                    selected.ParentId,
+                    selected.ShowHome,
+                    selected.GroupProductSetting,
+                    selected.ShowMenu,
+                    selected.PageKeyName,
                     selected.Status,
                 });
             }

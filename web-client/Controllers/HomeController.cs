@@ -2,8 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using web_client.Application.IServices;
+using web_client.Helpers;
 using web_client.Models;
 using web_client.Models.Data.Contexts;
+using web_client.Models.Htmls.Common;
+using web_client.Models.Request.Products;
 
 namespace web_client.Controllers
 {
@@ -45,20 +48,15 @@ namespace web_client.Controllers
         {
             return View();
         }
-        #region Product
 
-        #endregion
-        //public async Task<IActionResult> Product([FromServices] IProductAppService services, ProductPagingRequest request, CancellationToken cancellationToken)
-        //{
-        //    var resultProduct = await services.GetPagingAsync(request, cancellationToken);
-        //    var responseData = resultProduct.Data;
-        //    return View();
-        //}  
-        public async Task<IActionResult> Product(CancellationToken cancellationToken)
+        [Route("products")]
+        public async Task<IActionResult> Product([FromServices] IProductAppService services, ProductPagingRequest request, CancellationToken cancellationToken)
         {
-            //var resultProduct = await services.GetPagingAsync(request, cancellationToken);
-            //var responseData = resultProduct.Data;
-            return View();
+            var resultProduct = await services.GetPagingAsync(request, cancellationToken);
+            var responseData = resultProduct.Data;
+            var model = resultProduct.Data?.Items?.Select(x => new ProductTitleMediaComponent(x));
+            var response = responseData.GetPaging(model);
+            return View(response);
         }
         public IActionResult ProductDetail()
         {

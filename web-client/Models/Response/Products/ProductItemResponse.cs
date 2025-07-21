@@ -4,6 +4,7 @@ using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Base.Properties;
 using web_client.Models.Data.Contexts.Entities;
+using web_client.Models.Htmls.Common;
 using web_client.Models.Request.GroupProductSettings.Properties;
 using web_client.Models.Request.Products;
 using web_client.Models.Response.GroupProductSettings.Properties;
@@ -43,7 +44,7 @@ public class ProductItemResponse : BaseProduct
 
         GroupProductSetting = product.GroupProductSetting;
         if (GroupProductSetting.HasValueGuid()==true)
-            GroupProductSettingModel = new GroupProductSettingSelectModel(GroupProductSetting); ;
+            GroupProductSettingModel = new GroupProductSettingSelectModel(GroupProductSetting);
         
         if (product.Attribute != null)
         {

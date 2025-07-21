@@ -13,6 +13,8 @@ public class BaseAttributeResponse<TValueModel> : BaseAttribute
     public BaseAttributeResponse(BaseAttribute baseAttribute, Func<BaseAttributePropertyValue, TValueModel> converter)
     {
         if (baseAttribute == null) return;
+        if (baseAttribute.Properties == null) return;
+
         Properties = baseAttribute.Properties;
         PropertiesModel = new Dictionary<string, TValueModel>();
 

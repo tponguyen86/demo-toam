@@ -15,6 +15,8 @@ public class BaseProduct : BaseSeoModel
 
     public decimal? Price { get; set; }
     public bool PriceHidden { get; set; }
+    public decimal? Sale { get; set; }
+    public bool SaleHidden { get; set; } = true;
     public string? Status { get; set; }
 
 }

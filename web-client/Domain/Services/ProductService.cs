@@ -64,21 +64,23 @@ namespace web_client.Domain.Services
             var selectModels = new List<BaseSelectModel>();
             foreach (var item in response.Items)
             {
-
                 //if (item.ProductCategory.HasValueGuid() == true)
                 //{
                 //    item.ProductCategoryModel = new CategoryProductSelectModel(item.ProductCategory);
                 //    selectModels.Add(item.ProductCategoryModel);
                 //}
-                selectModels.Add(item.ProductCategoryModel);
+                if (item.ProductCategoryModel != null)
+                    selectModels.Add(item.ProductCategoryModel);
 
+                if (item.GroupProductSettingModel != null)
+                    selectModels.Add(item.GroupProductSettingModel);
                 //if (item.Status?.HasValueString() == true)
                 //{
                 //    item.StatusModel = new PredefineDataSelectModel(PredefineDataConst.Status.Group, item.Status);
                 //    selectModels.Add(item.StatusModel);
                 //}
-
-                selectModels.Add(item.StatusModel);
+                if (item.StatusModel != null)
+                    selectModels.Add(item.StatusModel);
 
                 if (item.CreatedByModel != null)
                     selectModels.Add(item.CreatedByModel);
