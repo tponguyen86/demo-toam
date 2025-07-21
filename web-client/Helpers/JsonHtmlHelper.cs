@@ -2,9 +2,10 @@
 
 namespace web_client.Helpers;
 
+
 public static class JsonHtmlHelper
 {
-    public static string ToJsonCamelCase(object obj)
+    public static string ToJsonCamelCase(object? obj)
     {
         if (obj == null) return string.Empty;
         var json = JsonSerializer.Serialize(obj, new JsonSerializerOptions
@@ -14,3 +15,4 @@ public static class JsonHtmlHelper
         return json.Replace("\"", "'");
     }
 }
+

@@ -17,7 +17,7 @@ public class TitleLinksComponent<TLink> : BaseTitleModel
 
 public class TitleLinksComponent : TitleLinksComponent<BaseLinkModel>
 {
-    public List<BaseLinkModel>? Links { get; set; }
+    public new List<BaseLinkModel>? Links { get; set; }
     public TitleLinksComponent():base()
     {
     }

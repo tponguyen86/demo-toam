@@ -129,5 +129,8 @@ public static class CommonHelper
     }
 
     public static bool HasValueGuid(this Guid? guid) => guid.HasValue && guid != Guid.Empty;
+    public static bool HasValueGuid(this Guid guid) => guid != Guid.Empty;
     public static bool HasValueString(this string? input) => !string.IsNullOrEmpty(input);
+    public static bool HasValueDate(this DateTimeOffset value) => value != DateTimeOffset.MinValue;
+    public static bool HasValueDate(this DateTimeOffset? value) => value.HasValue && value != DateTimeOffset.MinValue;
 }

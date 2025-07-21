@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using System.Text.Json;
-using web_client.IServices;
+using web_client.Application;
+using web_client.Domain;
 using web_client.Models.Data.Contexts;
 using web_client.Models.Htmls.Carousels;
-using web_client.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,10 +18,9 @@ builder.Services.AddControllersWithViews()
     });
 
 builder.Services.Configure<CarouselDefaultConfig>(
-    builder.Configuration.GetSection("CarouselDefaults"));
-
-builder.Services.AddScoped<ITestimonialService, TestimonialService>();
-builder.Services.AddScoped<ILayoutService, LayoutService>();
+builder.Configuration.GetSection("CarouselDefaults"));
+builder.Services.AddDomainService();
+builder.Services.AddApplicationService();
 
 var app = builder.Build();
 

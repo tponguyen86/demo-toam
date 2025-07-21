@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using web_client.Helpers;
 using web_client.Models.Htmls.Base;
 using web_client.Models.Htmls.Carousels;
 namespace web_client.ViewComponents;
@@ -21,7 +20,7 @@ public class CarouselViewComponent : ViewComponent
         var carouselSettingResponse = GetCarouselModel(carouselRequest);
         ViewData["CarouselSettingModel"] = carouselSettingResponse;
         //ViewData["CarouselDataModel"] = carouselRequest.GetData();
-        var responseData= carouselRequest.GetData();
+        var responseData = carouselRequest.GetData();
         if (!string.IsNullOrWhiteSpace(carouselRequest.ViewName))
             return View(carouselRequest.ViewName, responseData);
 

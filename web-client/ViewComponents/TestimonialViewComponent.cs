@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using web_client.Helpers;
-using web_client.IServices;
+﻿using Microsoft.Extensions.Options;
+using web_client.Domain.IServices;
 using web_client.Models.Htmls.Carousels;
-using web_client.Models.Response;
 namespace web_client.ViewComponents;
 
 public class TestimonialViewComponent : CarouselViewComponent

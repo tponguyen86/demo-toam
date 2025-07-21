@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using ToamManage.Infrastructure.Persistence.Models;
+using web_client.Models.Base;
 using web_client.Models.Data.Contexts.Entities.Base;
 
 namespace web_client.Models.Data.Contexts.Entities;

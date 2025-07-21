@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
-using ToamManage.Infrastructure.Persistence.Models;
+using web_client.Models.Base;
 using web_client.Models.Data.Contexts.Entities.Base;
 
 namespace web_client.Models.Data.Contexts.Entities;
@@ -17,8 +17,8 @@ public class Product : BaseSeo
     public JsonDocument? Attribute { get; set; }
 
     public Guid ProductCategory { get; set; }
-    [Column(TypeName = "jsonb")]
-    public BaseFileModel Image { get; set; }
+    //[Column(TypeName = "jsonb")]
+    //public BaseFileModel Image { get; set; }
 
     [Column(TypeName = "jsonb")]
     public List<BaseFileModel>? Medias { get; set; }

@@ -8,11 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Data\Models\ProductCategories\" />
-    <Folder Include="Models\Data\Models\Properties\" />
     <Folder Include="Models\Htmls\Blogs\" />
     <Folder Include="Models\Htmls\Categories\" />
-    <Folder Include="Models\Request\" />
   </ItemGroup>
 
   <ItemGroup>

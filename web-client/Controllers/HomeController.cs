@@ -1,27 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using web_client.IServices;
+using web_client.Application.IServices;
 using web_client.Models;
-using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
-using web_client.Models.Htmls.Carousels;
 
 namespace web_client.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ILayoutService _layoutService;
+        private readonly ILayoutAppService _layoutService;
         private readonly NetectManageContext _dbContext;
 
-
-        public HomeController(ILogger<HomeController> logger, ILayoutService layoutService, NetectManageContext dbContext)
+        public HomeController(ILogger<HomeController> logger, NetectManageContext dbContext, ILayoutAppService layoutService)
         {
             _logger = logger;
-            _layoutService = layoutService;
             _dbContext = dbContext;
+            _layoutService = layoutService;
         }
 
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
@@ -49,8 +45,19 @@ namespace web_client.Controllers
         {
             return View();
         }
-        public IActionResult Product()
+        #region Product
+
+        #endregion
+        //public async Task<IActionResult> Product([FromServices] IProductAppService services, ProductPagingRequest request, CancellationToken cancellationToken)
+        //{
+        //    var resultProduct = await services.GetPagingAsync(request, cancellationToken);
+        //    var responseData = resultProduct.Data;
+        //    return View();
+        //}  
+        public async Task<IActionResult> Product(CancellationToken cancellationToken)
         {
+            //var resultProduct = await services.GetPagingAsync(request, cancellationToken);
+            //var responseData = resultProduct.Data;
             return View();
         }
         public IActionResult ProductDetail()
