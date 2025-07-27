@@ -17,4 +17,6 @@ public class Category : BaseSeo
     public BaseFileModel? Banner { get; set; }
     public bool ShowHome { get; set; }
     public string? ShowType { get; set; }
+    //Phân biệt table ProductCategory
+    public string? Discriminator { get; set; }
 }

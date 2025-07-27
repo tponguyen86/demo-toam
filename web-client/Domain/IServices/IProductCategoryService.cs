@@ -6,6 +6,6 @@ namespace web_client.Domain.IServices;
 
 public interface IProductCategoryService
 {
-    Task<BaseProcess<BasePagingModel<ProductCategoryItemResponse>>> GetPagingAsync(FilterProductCategoryRequest request, CancellationToken cancellationToken);
+    Task<BaseProcess<List<ProductCategoryItemResponse>>> GetAllAsync(GetProductCategoryAllRequest request, CancellationToken cancellationToken);
     Task<BaseProcess<ProductCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken);
 }

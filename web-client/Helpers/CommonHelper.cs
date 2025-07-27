@@ -133,4 +133,13 @@ public static class CommonHelper
     public static bool HasValueString(this string? input) => !string.IsNullOrEmpty(input);
     public static bool HasValueDate(this DateTimeOffset value) => value != DateTimeOffset.MinValue;
     public static bool HasValueDate(this DateTimeOffset? value) => value.HasValue && value != DateTimeOffset.MinValue;
+
+    public static Guid GetGuid(this string source)
+    {
+        if (string.IsNullOrEmpty(source))
+            return Guid.Empty;
+        if (Guid.TryParse(source, out var result))
+            return result;
+        return Guid.Empty;
+    }
 }

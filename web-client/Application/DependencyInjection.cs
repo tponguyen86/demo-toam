@@ -11,6 +11,8 @@ public static class DependencyInjection
         services.AddScoped<IProductAppService, ProductAppService>();
         services.AddScoped<ITestimonialAppService, TestimonialAppService>();
         services.AddScoped<IProductCategoryAppService, ProductCategoryAppService>();
+        services.AddScoped<INewsCategoryAppService, NewsCategoryAppService>();
+        services.AddScoped<IServiceCategoryAppService, ServiceCategoryAppService>();
         services.AddScoped<ILookupAppService, LookupAppService>();
 
         services.AddScoped<ILayoutAppService, LayoutAppService>();

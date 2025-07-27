@@ -11,6 +11,8 @@ public static class DependencyInjection
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ILookupService, LookupService>();
         services.AddScoped<IProductCategoryService, ProductCategoryService>();
+        services.AddScoped<INewsCategoryService, NewsCategoryService>();
+        services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
         services.AddScoped<ILayoutService, LayoutService>();
     }
 }

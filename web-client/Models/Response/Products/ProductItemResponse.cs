@@ -16,7 +16,7 @@ public class ProductItemResponse : BaseProduct
     public Guid Id { get; set; }
     public Guid GroupProductSetting { get; set; }
     public GroupProductSettingSelectModel? GroupProductSettingModel { get; set; }
-    public CategoryProductSelectModel? ProductCategoryModel { get; set; }
+    public CategorySelectModel? ProductCategoryModel { get; set; }
     public BaseAttribute? Attribute { get; set; }
     public BaseAttributeResponse? AttributeModel { get; set; }
     public ProductItemResponse() { }
@@ -40,7 +40,7 @@ public class ProductItemResponse : BaseProduct
         PriceHidden = product.PriceHidden;
 
         ProductCategory = product.ProductCategory;
-        ProductCategoryModel = new CategoryProductSelectModel(ProductCategory);
+        ProductCategoryModel = new CategorySelectModel(ProductCategory);
 
         GroupProductSetting = product.GroupProductSetting;
         if (GroupProductSetting.HasValueGuid()==true)

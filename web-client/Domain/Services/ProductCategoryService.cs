@@ -6,6 +6,7 @@ using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
 using web_client.Models.Request.Categories.Products;
 using web_client.Models.Responses.Categories.Products;
+using web_client.Models.Responses.Categories.Services;
 
 namespace web_client.Domain.Services;
 
@@ -19,51 +20,65 @@ public class ProductCategoryService : IProductCategoryService
         _context = context;
         _lookup = lookup;
     }
-    public Task<BaseProcess<ProductCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
+
+    public async Task<BaseProcess<ProductCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var query = _context.ProductCategories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status != PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
+
+        var result = await query.FirstOrDefaultAsync(cancellationToken);
+        if (result == null)
+            return BaseProcess<ProductCategoryDetailResponse>.Success(null);
+
+        var response = new ProductCategoryDetailResponse(result);
+
+        //set look up
+        var selectModels = new List<BaseSelectModel>();
+        if (response.ParentIdModel != null)
+            selectModels.Add(response.ParentIdModel);
+
+        if (response.GroupProductSettingModel != null)
+            selectModels.Add(response.GroupProductSettingModel);
+
+        if (selectModels?.Any() == true)
+            await _lookup.GetLookUpAsync(selectModels, cancellationToken);
+
+        return BaseProcess<ProductCategoryDetailResponse>.Success(response);
     }
 
-    public async Task<BaseProcess<BasePagingModel<ProductCategoryItemResponse>>> GetPagingAsync(FilterProductCategoryRequest request, CancellationToken cancellationToken)
+    public async Task<BaseProcess<List<ProductCategoryItemResponse>>> GetAllAsync(GetProductCategoryAllRequest request, CancellationToken cancellationToken)
     {
-        var query = _context.ProductCategories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
-
-        if (request.HasKeySearch() == true)
-        {
-            var keySearch = request.GetKeySearch();
-            query = query.Where(x => EF.Functions.Unaccent(x.Name.ToLower()).Contains(keySearch));
-        }
+        var query = _context.ProductCategories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status != PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
 
         if (request.ParentIdHasValue())
         {
             query = query.Where(x => x.ParentId == request.ParentId);
         }
 
-        if (request?.HasStatus() == true)
-        {
-            query = query.Where(x => x.Status == request.Status);
-        }
-
-        if (request?.ShowHomeHasValue() == true)
+        if (request?.HasShowHome() == true)
         {
             query = query.Where(x => x.ShowHome == request.ShowHome);
         }
 
-        var page = request?.GetPage() ?? 1;
-        var pageSize = request?.GetPageSize() ?? 10;
+        if (request?.HasShowMenu() == true)
+        {
+            query = query.Where(x => x.ShowMenu == request.ShowMenu);
+        }
 
-        var pager = await query.OrderByDescending(x => x.CreatedAt).Paging(page, pageSize, cancellationToken);
+        if (request?.DiscriminatorHasValue() == true)
+        {
+            query = query.Where(x => x.Discriminator == request.Discriminator);
+        }
 
-        var resultItems = pager.Items.Select(x => new ProductCategoryItemResponse(x)).ToList();
+        var result = await query.OrderByDescending(x => x.CreatedAt).ToListAsync(cancellationToken);
 
-        var response = pager.GetPaging(resultItems);
+        var response = result.Select(x => new ProductCategoryItemResponse(x)).ToList();
 
-        if (response.Items?.Any() != true)
-            return BaseProcess<BasePagingModel<ProductCategoryItemResponse>>.Success(response);
+        if (response?.Any() != true)
+            return BaseProcess<List<ProductCategoryItemResponse>>.Success(response);
 
         //set look up
         var selectModels = new List<BaseSelectModel>();
-        foreach (var item in response.Items)
+        foreach (var item in response)
         {
             if (item.ParentIdModel != null)
                 selectModels.Add(item.ParentIdModel);
@@ -74,8 +89,7 @@ public class ProductCategoryService : IProductCategoryService
         if (selectModels?.Any() == true)
             await _lookup.GetLookUpAsync(selectModels, cancellationToken);
 
-
-        return BaseProcess<BasePagingModel<ProductCategoryItemResponse>>.Success(response);
+        return BaseProcess<List<ProductCategoryItemResponse>>.Success(response);
     }
 }
 

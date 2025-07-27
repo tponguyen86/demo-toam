@@ -85,7 +85,7 @@ public class LookupService : ILookupService
     }
     private async Task LookUpProductCategory(List<BaseSelectModel> request, CancellationToken cancellationToken)
     {
-        var keyValues = request?.Where(x => x is CategoryProductSelectModel).Select(x => x as CategoryProductSelectModel);
+        var keyValues = request?.Where(x => x is CategorySelectModel).Select(x => x as CategorySelectModel);
         if (keyValues?.Any() != true) return;
         var keys = keyValues.Select(x => x.GetKeyFilter())?.Distinct()?.ToList();
         if (keys?.Any() != true) return;
