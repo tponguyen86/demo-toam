@@ -4,7 +4,6 @@ using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
 using web_client.Models.Request.Categories.Services;
-using web_client.Models.Responses.Categories.News;
 using web_client.Models.Responses.Categories.Services;
 
 namespace web_client.Domain.Services;
@@ -84,7 +83,5 @@ public class ServiceCategoryService : IServiceCategoryService
 
         return BaseProcess<ServiceCategoryDetailResponse>.Success(response);
     }
-
-
 }
 

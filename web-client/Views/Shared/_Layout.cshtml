@@ -1,6 +1,24 @@
-﻿<!DOCTYPE html>
+﻿@using static web_client.Helpers.Shared.PredefineDataConst
+<!DOCTYPE html>
+@inject ILayoutAppService _layout
 @{
     var page = ViewData["Page"] as PageModel;
+    var layoutData = await _layout.GetSystemConfigurationsAsync(new GetAllSystemConfigurationRequest());
+
+    var slogan = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Slogan, "Khuyến mãi 30% tất cả các sản phẩm nhân dịp 27/7");
+    var slogan2 = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Slogan2, "Học đi đôi với hành động");
+    var phoneNumber = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.PhoneNumber, "0987654321");
+    var email = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Email, "support@gmail.com");
+    
+    var instagram = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Instagram, "https://www.instagram.com");
+    var facebook = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Facebook, "https://www.facebook.com");
+    var twitter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Twitter, "http://www.twitter.com");
+
+    var footerDescription = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.FooterDescription, "Mô tả Chân Trang");
+    var phoneNumberFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.PhoneNumberFooter, "0987654321");
+    var emailFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.EmailFooter, "support@gmail.com");
+    var address = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Address, "234 Street Name, City Name");
+
 }
 <html lang="en">
 <head>
@@ -61,7 +79,7 @@
             <div class="container">
                 <div class="row justify-content-center py-2">
                     <div class="col-9 col-md-12 text-center">
-                        <p class="text-color-light font-weight-semibold mb-0">Khuyến mãi <strong>40%</strong> nhân dịp lễ 30/4 <span class="opacity-6 text-1">* chỉ có trong dịp này.</span></p>
+                        <p class="text-color-light font-weight-semibold mb-0">@slogan</p>
                     </div>
                 </div>
             </div>
@@ -73,8 +91,8 @@
                         <div class="header-row justify-content-between">
                             <div class="header-column col-auto px-0">
                                 <div class="header-row">
-                                    <p class="font-weight-semibold text-1 mb-0 d-none d-sm-block d-md-none">Học nữa học mãi</p>
-                                    <p class="font-weight-semibold text-1 mb-0 d-none d-md-block">Học nữa học mãi</p>
+                                    <p class="font-weight-semibold text-1 mb-0 d-none d-sm-block d-md-none">@slogan2</p>
+                                    <p class="font-weight-semibold text-1 mb-0 d-none d-md-block">@slogan2</p>
                                 </div>
                             </div>
                             <div class="header-column justify-content-end col-auto px-0">
@@ -104,15 +122,16 @@
 
                                         </ul>
                                         <ul class="header-social-icons social-icons social-icons-clean social-icons-icon-gray">
-                                            <li class="social-icons-facebook">
-                                                <a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                            <li class="social-icons-instagram">
+                                                <a href="@instagram" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
                                             </li>
                                             <li class="social-icons-x">
-                                                <a href="http://www.x.com/" target="_blank" title="X"><i class="fab fa-x-twitter"></i></a>
+                                                <a href="@twitter" target="_blank" title="X"><i class="fab fa-x-twitter"></i></a>
                                             </li>
-                                            <li class="social-icons-linkedin">
-                                                <a href="http://www.linkedin.com/" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a>
+                                            <li class="social-icons-facebook">
+                                                <a href="@facebook" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                                             </li>
+
                                         </ul>
                                     </nav>
                                 </div>
@@ -161,11 +180,11 @@
                                 <ul class="header-extra-info col-auto col-lg-5 col-xl-4 ps-2 ps-xl-0 ms-lg-5 d-none d-lg-block">
                                     <li class="d-none d-sm-inline-flex ms-0">
                                         <div class="header-extra-info-icon ms-lg-4">
-                                            <i class="icons icon-phone text-3 text-color-dark position-relative top-1"></i>
+                                            <i class="icons icon-envelope text-3 text-color-dark position-relative top-1"></i>
                                         </div>
                                         <div class="header-extra-info-text">
-                                            <label class="text-1 font-weight-semibold text-color-default">HOTLINE</label>
-                                            <strong class="text-4"><a href="tel:+1234567890" class="text-color-hover-primary text-decoration-none">098 7654 321</a></strong>
+                                            <label class="text-1 font-weight-semibold text-color-default">Email</label>
+                                            <strong class="text-4"><a href="mailto:@email" class="text-color-hover-primary text-decoration-none">@email</a></strong>
                                         </div>
                                     </li>
                                 </ul>
@@ -238,7 +257,7 @@
                                         </div>
                                         <div class="feature-box-info ps-2">
                                             <p class="font-weight-semibold line-height-1 text-2 pb-0 mb-1">HOTLINE</p>
-                                            <a href="tel:+1234567890" class="text-color-tertiary text-color-hover-primary text-decoration-none font-weight-bold line-height-1 custom-font-size-1 pb-0">800-123-4567</a>
+                                            <a href="tel:@phoneNumber" class="text-color-tertiary text-color-hover-primary text-decoration-none font-weight-bold line-height-1 custom-font-size-1 pb-0">@phoneNumber</a>
                                         </div>
                                     </div>
                                     <button class="btn header-btn-collapse-nav" data-bs-toggle="collapse" data-bs-target=".header-nav-main nav">
@@ -260,8 +279,7 @@
                 <div class="row pt-3">
                     <div class="col-lg-4">
                         <h4 class="text-4 text-color-light mb-3">VỀ CHÚNG TÔI</h4>
-
-                        <p class="mb-3">Porto - Expert Accounting Solutions Tailored to Your Needs—Ensuring Accuracy, Compliance, and Financial Peace of Mind.</p>
+                        <p class="mb-3">@Html.Raw(footerDescription)</p>
 
                         <div class="d-flex align-items-center pt-2 pb-4">
                             <p class="d-inline-block mb-0 font-weight-bold line-height-1"></p>
@@ -270,24 +288,24 @@
 
                         <ul class="social-icons social-icons-clean-with-border social-icons-medium">
                             <li class="social-icons-instagram">
-                                <a href="http://www.instagram.com/" class="no-footer-css" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="@instagram" class="no-footer-css" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
                             </li>
                             <li class="social-icons-x mx-2">
-                                <a href="http://www.twitter.com/" class="no-footer-css" target="_blank" title="Twitter"><i class="fab fa-x-twitter"></i></a>
+                                <a href="@twitter" class="no-footer-css" target="_blank" title="Twitter"><i class="fab fa-x-twitter"></i></a>
                             </li>
                             <li class="social-icons-facebook">
-                                <a href="http://www.facebook.com/" class="no-footer-css" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="@facebook" class="no-footer-css" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-sm-6 col-lg-3 pt-4 pt-lg-0">
                         <h4 class="text-4 text-color-light mb-3">THÔNG TIN LIÊN HỆ</h4>
                         <ul class="list list-icons list-icons-lg">
-                            <li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i><p class="m-0">234 Street Name, City Name</p></li>
-                            <li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i><p class="m-0"><a href="tel:8001234567">(800) 123-4567</a></p></li>
-                            <li class="mb-1"><i class="far fa-envelope text-color-primary"></i><p class="m-0"><a href="mailto:mail@example.com">mail@example.com</a></p></li>
+                            <li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i><p class="m-0">@address</p></li>
+                            <li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i><p class="m-0"><a href="tel:@phoneNumberFooter">@phoneNumberFooter</a></p></li>
+                            <li class="mb-1"><i class="far fa-envelope text-color-primary"></i><p class="m-0"><a href="mailto:@emailFooter">@emailFooter</a></p></li>
                         </ul>
-                      
+
                     </div>
                     <div class="col-sm-6 col-lg-2 pt-4 pt-lg-0">
                         <h4 class="text-4 text-color-light mb-3">HỖ TRỢ</h4>

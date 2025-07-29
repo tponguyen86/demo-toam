@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ProductTitleMediaDetailComponent
+@{
     var pageModel = new PageModel() { Title = "Sản phẩm", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product-detail", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
@@ -107,7 +108,7 @@
 @* @(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel)) *@
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/BreadcrumbStyle2.cshtml", breadcrumbModel))
 <div class="container py-4">
-   @*  <div class="row">
+    @*  <div class="row">
         <div class="col">
             <ul class="breadcrumb breadcrumb-style-2 d-block text-4 mb-4">
                 <li><a href="#" class="text-color-default text-color-hover-primary text-decoration-none">Trang chủ</a></li>
@@ -171,24 +172,31 @@
 					</div>
 				</div>
  *@
-                        <h1 class="mb-0 font-weight-bold text-7">Cảm biến tiệm cận UP18S-8NA Hanyoung</h1>
+                        <h1 class="mb-0 font-weight-bold text-7">@Model.Title</h1>
 
                         <div class="divider divider-small">
                             <hr class="bg-color-grey-400">
                         </div>
+
                         <p class="price mb-3">
-                            <a href="/" class="btn btn-xs btn btn-secondary text-1 text-uppercase float-start"><i class="fas fa-phone position-relative"></i> Liên hệ</a>
-
+                            @if (Model.DisplaySale)
+                            {
+                                <span class="sale text-color-dark">@Html.DisplayFor(x => Model.Sale)</span>
+                            }
+                            @if (Model.DisplayPrice)
+                            {
+                                <span class="amount">@Html.DisplayFor(x => Model.Price)</span>
+                            }
+                            @if (Model.DisplayContact)
+                            {
+                                <a href="#" class="btn btn-xs btn btn-secondary text-1 text-uppercase float-start"><i class="fas fa-phone position-relative"></i> Liên hệ</a>
+                            }
                         </p>
-                        @* <p class="price mb-3">
-					<span class="sale text-color-dark">$15,00</span>
-					<span class="amount">$22,00</span>
-				</p> *@
 
-                        <p class="text-3-5 mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus nibh sed elimttis adipiscing. Fusce in hendrerit purus. Lorem ipsum dolor sit amet.</p>
+                        <p class="text-3-5 mb-3">@Model.ShortDescription</p>
 
                         <ul class="list list-unstyled text-2">
-                            <li class="mb-0">SKU: <strong class="text-color-dark">1234567890</strong></li>
+                            <li class="mb-0">SKU: <strong class="text-color-dark">@Model.Sku</strong></li>
                             <li class="mb-0">Đường kính: <strong class="text-color-dark">18x18</strong></li>
                             <li class="mb-0">Khoảng cách phát hiện: <strong class="text-color-dark">8mm</strong></li>
                             <li class="mb-0">Kết nối: <strong class="text-color-dark">Loại cáp</strong></li>
@@ -237,6 +245,8 @@
                         <ul class="nav nav-tabs justify-content-start">
                             <li class="nav-item"><a class="nav-link active font-weight-bold text-3 text-uppercase py-2 px-3" href="#productDescription" data-bs-toggle="tab">Mô tả</a></li>
                             <li class="nav-item"><a class="nav-link font-weight-bold text-3 text-uppercase py-2 px-3" href="#productInfo" data-bs-toggle="tab">Thuộc tính</a></li>
+                            <li class="nav-item"><a class="nav-link font-weight-bold text-3 text-uppercase py-2 px-3" href="#technicalInfo" data-bs-toggle="tab">Thông số kỹ thuật</a></li>
+                            <li class="nav-item"><a class="nav-link font-weight-bold text-3 text-uppercase py-2 px-3" href="#datasheetInfo" data-bs-toggle="tab">Tài liệu kỹ thuật</a></li>
                         </ul>
                         <div class="tab-content p-0">
                             <div class="tab-pane px-0 py-3 active" id="productDescription">

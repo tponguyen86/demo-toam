@@ -15,6 +15,10 @@
         public const string UserProfile = "user-profile";
         public const string UserProfileEdit = "user-profile-edit";
         public const string NotFound = "not-found";
+        public const string Service = "service";
+        public const string ServiceDetail = "service-detail";
+        public const string News = "news";
+        public const string NewsDetail = "news-detail";
 
         public static string GetRoute(string routeName)
         {
@@ -26,12 +30,16 @@
                 Register => "/register",
                 ResetPassword => "/reset-password",
                 ChangePassword => "/change-password",
-                Product => "/product",
-                ProductDetail => "/product/detail",
-                ProductCategory => "/product/category",
                 UserProfile => "/user/profile",
                 UserProfileEdit => "/user/profile/edit",
                 NotFound => "/not-found",
+                Product => "/san-pham",
+                ProductDetail => "/san-pham/{0}/chi-tiet",//page-key-name of product
+                ProductCategory => "/san-pham/{0}",//page-key-name of category,
+                Service => "/dich-vu",
+                ServiceDetail => "/dich-vu/{0}/chi-tiet",//page-key-name of service
+                News => "/tin-tuc",
+                NewsDetail => "/tin-tuc/{0}/chi-tiet",//page-key-name of service
                 _ => throw new ArgumentException($"Unknown route name: {routeName}")
             };
 

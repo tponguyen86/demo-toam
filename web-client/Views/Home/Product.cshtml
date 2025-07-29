@@ -190,36 +190,6 @@
         <div class="col-lg-9 order-lg-2">
             <div class="masonry-loader1 masonry-loader-showing1">
                 <div class="row products product-thumb-info-list">
-                    @*  @for (int i = 0; i < 9; i++)
-                    {
-                        <div class="col-sm-6 col-lg-4 mb-2">
-                            @(
-                                await Html.PartialAsync("~/Views/Shared/Components/Common/ProductTitleMedia.cshtml", new ProductTitleMediaComponent()
-                        {
-                            Id = Guid.NewGuid(),
-                            Title = "Contactor LC1D09M7 Schneider  " + i + 1,
-                            Price = i + 1,
-                            Sale = i * 2 + 1,
-                            Sku = "sku" + i + 1,
-                            Href = "/Home/ProductDetail",
-                            Media = "https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg",
-                            Group = new BaseMediaLinkModel("Biến tần", "/Home/Product"),
-                            CreatedAt = CommonHelper.GetCurrent(),
-                            DisplayContact = true,
-                            DisplayPrice = false,
-                            DisplaySale = true,
-                            Attributes = new List<BaseAttributeItemModel>()
-                        {
-                        new BaseAttributeItemModel("Loại sản phẩm","Contactor","product-type"),
-                        new BaseAttributeItemModel("Số cực",i+"P","number"),
-                        new BaseAttributeItemModel("Dòng tiếp điểm",i+"9A","dong-tiep-dan"),
-                        new BaseAttributeItemModel("Tiếp điểm phụ","1NO+1NC","tiep-diem-phu"),
-
-                        }
-                        })
-                                )
-                        </div>
-                    } *@
                     @if (Model?.Items?.Any() == true)
                         foreach (var item in Model.Items)
                         {

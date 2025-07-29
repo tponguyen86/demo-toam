@@ -19,14 +19,41 @@ namespace web_client.Domain.Services
             _context = context;
             _lookup = lookup;
         }
-        public Task<BaseProcess<ProductDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
+        public async Task<BaseProcess<ProductDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var result = await _context.Products.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active && (x.PageKeyName == request.Code || x.Id == request.Id)).FirstOrDefaultAsync(cancellationToken);
+
+            if (result == null)
+                return BaseProcess<ProductDetailResponse>.Success(null);
+
+            var response = new ProductDetailResponse(result);
+
+            //set look up
+            var selectModels = new List<BaseSelectModel>();
+            if (response.ProductCategoryModel != null)
+                selectModels.Add(response.ProductCategoryModel);
+
+            if (response.GroupProductSettingModel != null)
+                selectModels.Add(response.GroupProductSettingModel);
+
+            if (response.StatusModel != null)
+                selectModels.Add(response.StatusModel);
+
+            if (response.CreatedByModel != null)
+                selectModels.Add(response.CreatedByModel);
+
+            if (response.UpdatedByModel != null)
+                selectModels.Add(response.UpdatedByModel);
+
+            if (selectModels?.Any() == true)
+                await _lookup.GetLookUpAsync(selectModels, cancellationToken);
+
+            return BaseProcess<ProductDetailResponse>.Success(response);
         }
 
         public async Task<BaseProcess<BasePagingModel<ProductItemResponse>>> GetPagingAsync(ProductPagingRequest request, CancellationToken cancellationToken)
         {
-            var query = _context.Products.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete).AsQueryable();
+            var query = _context.Products.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).AsQueryable();
 
             if (request?.HasKeySearch() == true)
             {
@@ -64,21 +91,12 @@ namespace web_client.Domain.Services
             var selectModels = new List<BaseSelectModel>();
             foreach (var item in response.Items)
             {
-                //if (item.ProductCategory.HasValueGuid() == true)
-                //{
-                //    item.ProductCategoryModel = new CategoryProductSelectModel(item.ProductCategory);
-                //    selectModels.Add(item.ProductCategoryModel);
-                //}
                 if (item.ProductCategoryModel != null)
                     selectModels.Add(item.ProductCategoryModel);
 
                 if (item.GroupProductSettingModel != null)
                     selectModels.Add(item.GroupProductSettingModel);
-                //if (item.Status?.HasValueString() == true)
-                //{
-                //    item.StatusModel = new PredefineDataSelectModel(PredefineDataConst.Status.Group, item.Status);
-                //    selectModels.Add(item.StatusModel);
-                //}
+
                 if (item.StatusModel != null)
                     selectModels.Add(item.StatusModel);
 

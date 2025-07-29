@@ -4,6 +4,7 @@ using System.Diagnostics;
 using web_client.Application.IServices;
 using web_client.Helpers;
 using web_client.Models;
+using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
 using web_client.Models.Htmls.Common;
 using web_client.Models.Request.Products;
@@ -26,7 +27,7 @@ namespace web_client.Controllers
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             var products = await _dbContext.Products.ToListAsync(cancellationToken);
-            var bannerModel = await _layoutService.GetHomeBannerSliderAsync(cancellationToken);
+            var bannerModel = await _layoutService.GetHomeBannerSliderAsync();
             ViewData["HomeBannerSliderDataModel"] = bannerModel;
             return View();
         }
@@ -49,7 +50,7 @@ namespace web_client.Controllers
             return View();
         }
 
-        [Route("products")]
+        [Route("san-pham")]
         public async Task<IActionResult> Product([FromServices] IProductAppService services, ProductPagingRequest request, CancellationToken cancellationToken)
         {
             var resultProduct = await services.GetPagingAsync(request, cancellationToken);
@@ -58,9 +59,13 @@ namespace web_client.Controllers
             var response = responseData.GetPaging(model);
             return View(response);
         }
-        public IActionResult ProductDetail()
+        [Route("san-pham/{seoKey}/chi-tiet")]
+        public async Task<IActionResult> ProductDetail([FromServices] IProductAppService services, string seoKey, CancellationToken cancellationToken)
         {
-            return View();
+            var resultProduct = await services.GetDetailAsync(new BaseDetailRequestDto(seoKey), cancellationToken);
+            var responseData = resultProduct.Data;
+            var response = new ProductTitleMediaDetailComponent(responseData);
+            return View(response);
         }
         public IActionResult Service()
         {

@@ -7,6 +7,7 @@ namespace web_client.Models.Htmls.Common;
 
 public class ProductTitleMediaComponent : BaseProductItemModel
 {
+    public string ShortDescription { get; set; }
     public ProductTitleMediaComponent()
     {
     }
@@ -24,11 +25,12 @@ public class ProductTitleMediaComponent : BaseProductItemModel
         Price = productItem.Price;
         DisplayPrice = !productItem.PriceHidden;
         DisplayContact = productItem.PriceHidden;
+        ShortDescription = productItem.ShortDescription;
 
         Sale = productItem.Sale;
         DisplaySale = !productItem.SaleHidden;
 
-        Href = RouteConst.GetRoute(RouteConst.ProductDetail);
+        Href = string.Format(RouteConst.GetRoute(RouteConst.ProductDetail), productItem.PageKeyName);
         CreatedAt = productItem.CreatedAt;
 
         if (productItem.ProductCategoryModel != null)

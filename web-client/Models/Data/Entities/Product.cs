@@ -29,4 +29,6 @@ public class Product : BaseSeo
 
     public string? ShortDescription { get; set; }
     public string? Description { get; set; }
+    public string? Technical { get; set; }
+    public string? Datasheet { get; set; }
 }

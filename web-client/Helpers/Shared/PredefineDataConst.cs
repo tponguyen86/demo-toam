@@ -40,4 +40,33 @@ public class PredefineDataConst
             public const string Service = "a245a6e7-c072-4123-b57d-22edadeb657e";
         }
     }
+    
+    public class SystemConfigurationKeys
+    {
+        public const string Group = "LAYOUT-KEY-WEB";
+        public class Key
+        {
+            public const string ScriptSystem = "script-system";
+            public const string Geo = "geo";
+            public const string Tiktok = "tiktok";
+            public const string Robot = "robot";
+            public const string Sitemap = "sitemap";
+
+            public const string Slogan = "slogan";
+            public const string Slogan2 = "slogan-2";
+            public const string PhoneNumber = "phone-number";
+
+            public const string FooterDescription = "footer-description";
+            public const string Company = "company";
+            public const string Address = "address";
+
+            public const string Email = "email";
+            public const string EmailFooter = "email-footer";
+            public const string PhoneNumberFooter = "phone-number-footer";
+
+            public const string Facebook = "facebook";
+            public const string Instagram = "instagram";
+            public const string Twitter = "twitter";
+        }
+    }
 }
