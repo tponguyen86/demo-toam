@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using web_client.Domain.IServices;
-using web_client.Helpers;
 using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
 using web_client.Models.Request.Categories.Products;
 using web_client.Models.Responses.Categories.Products;
-using web_client.Models.Responses.Categories.Services;
 
 namespace web_client.Domain.Services;
 

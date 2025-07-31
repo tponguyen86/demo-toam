@@ -1,6 +1,6 @@
 ﻿using web_client.Models.Base;
 using web_client.Models.Request.Categories.Services;
-using web_client.Models.Responses.Categories.Services;
+using web_client.Models.Response.Categories.Services;
 
 namespace web_client.Domain.IServices;
 

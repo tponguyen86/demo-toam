@@ -13,7 +13,7 @@ public abstract class BaseSearchRequest
     public int Page { get; set; }
     public int PageSize { get; set; }
     //default is active for frontend
-    public string? Status { get; set; }=PredefineDataConst.Status.Key.Active;
+    public string? Status { get; set; } = PredefineDataConst.Status.Key.Active;
 
     public int GetPage()
     {

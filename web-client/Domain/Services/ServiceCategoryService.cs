@@ -4,7 +4,7 @@ using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
 using web_client.Models.Request.Categories.Services;
-using web_client.Models.Responses.Categories.Services;
+using web_client.Models.Response.Categories.Services;
 
 namespace web_client.Domain.Services;
 

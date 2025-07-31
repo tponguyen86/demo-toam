@@ -101,7 +101,6 @@
         new BaseCategoryItemModel(Guid.NewGuid(), "CP Cầu dao tự động", "/category/cp-cau-dao-tu-dong")
     })
 });
-    var paging = Model?.BuildPaging("/products?page={0}");
 }
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
 <div class="container limit">
@@ -199,7 +198,7 @@
                         }
                 </div>
 
-                @await Html.PartialAsync("~/Views/Shared/Components/Common/Paging.cshtml", paging)
+                @await Html.PartialAsync("~/Views/Shared/Components/Common/Paging.cshtml", ViewBag.paging as PagingComponent)
             </div>
         </div>
     </div>
