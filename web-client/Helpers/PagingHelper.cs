@@ -110,7 +110,6 @@ public static class PagingHelper
     {
         if (model == null || model.TotalCount <= 0)
             return null;
-        
         return BuildPaging(model.PageIndex, model.TotalPage, 5, urlFormat);
     }
 }

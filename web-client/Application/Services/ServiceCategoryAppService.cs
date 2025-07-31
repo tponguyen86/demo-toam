@@ -3,7 +3,7 @@ using web_client.Domain.IServices;
 using web_client.Helpers;
 using web_client.Models.Base;
 using web_client.Models.Request.Categories.Services;
-using web_client.Models.Responses.Categories.Services;
+using web_client.Models.Response.Categories.Services;
 using static web_client.Helpers.Shared.PredefineDataConst;
 
 namespace web_client.Application.Services;

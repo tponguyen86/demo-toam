@@ -1,10 +1,16 @@
-﻿using web_client.Models.Base;
+﻿using web_client.Models.Data.Contexts.Entities;
 
 namespace web_client.Models.Response.Pages;
 
 public class PageDetailResponse : PageItemResponse
 {
-    public BaseFileModel? Banner { get; set; }
-
-    public bool Configuration { get; set; }
+    public string Description { get; set; }
+    public PageDetailResponse():base()
+    {
+    }
+    public PageDetailResponse(Page item) : base(item)
+    {
+        if (item == null) return;
+        Description = item.Description;
+    }
 }

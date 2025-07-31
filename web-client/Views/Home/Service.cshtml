@@ -1,6 +1,7 @@
-﻿@{
+﻿@model BasePagingModel<ArticleTitleMediaComponent>
+@{
     var pageModel = new PageModel() { Title = "Dịch vụ", Description = "Mô ta seo dịch vụ", BodyClassName = "p-service", MainClassName = "shop" }; ;
-    ViewData["Page"] = pageModel; 
+    ViewData["Page"] = pageModel;
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
         new BaseLinkModel("Trang chủ","/"),
@@ -11,23 +12,13 @@
 <div class="container py-4">
     @await Html.PartialAsync("~/Views/Shared/Components/Common/HeaderTitle.cshtml", new HeaderTitleComponent(pageModel.Title))
     <div class="row blog-posts">
-        @for (int i = 0; i < 6; i++)
-        {
-            <div class="col-lg-4 mb-lg-0">
-                @(
-                    await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleMediaStyle3.cshtml", new ArticleTitleMediaComponent()
+        @if (Model?.Items?.Any() == true)
+            foreach (var item in Model.Items)
             {
-                Id = Guid.NewGuid(),
-                Title = "Dịch vụ " + i + 1,
-                Description = "Nội dung dịch vụ",
-                CreatedAt = CommonHelper.GetCurrent(),
-                Href = "/Home/ServiceDetail",
-                Media = "https://img.hoplongtech.com/hoplong/uploads/bac-my-tang-toc-tu-dong-hoa-580-trieu-usd-do-vao-robot-trong-quy-i-2025-4.jpg"
-            })
-                    )
-
-            </div>
-        }
+                <div class="col-lg-4 mb-lg-0">
+                    @await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleMediaStyle3.cshtml", item)
+                </div>
+            }
     </div>
-
+    @await Html.PartialAsync("~/Views/Shared/Components/Common/Paging.cshtml", ViewBag.paging as PagingComponent)
 </div>

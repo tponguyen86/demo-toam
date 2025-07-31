@@ -11,7 +11,7 @@
         <div class="post-content">
 
             <h2 class="font-weight-semibold text-5 line-height-6 mt-3 mb-2"><a href="@Model.Href" class="text-decoration-none ellipsis ellipsis-line-clamp-2">@Model.Title</a></h2>
-            <p class="ellipsis ellipsis-line-clamp-3">@Model.Description</p>
+            <p class="ellipsis ellipsis-line-clamp-3">@Model.ShortDescription</p>
 
             <div class="post-meta">
                 @if (Model.CreatedBy != null && Model.CreatedBy?.Title?.HasValueString() == true)

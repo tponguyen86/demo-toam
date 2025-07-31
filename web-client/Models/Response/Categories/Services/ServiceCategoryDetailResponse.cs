@@ -1,6 +1,6 @@
 ﻿using web_client.Models.Data.Contexts.Entities;
 
-namespace web_client.Models.Responses.Categories.Services;
+namespace web_client.Models.Response.Categories.Services;
 
 public class ServiceCategoryDetailResponse : ServiceCategoryItemResponse
 {
