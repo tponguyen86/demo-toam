@@ -1,4 +1,5 @@
-﻿@{
+﻿@model BasePagingModel<ArticleTitleMediaComponent>
+@{
     var pageModel = new PageModel() { Title = "Tin tức", Description = "Mô ta seo tin tức", BodyClassName = "p-blog", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel; 
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
@@ -48,39 +49,15 @@
             <div class="blog-posts">
                 @await Html.PartialAsync("~/Views/Shared/Components/Common/HeaderTitle.cshtml", new HeaderTitleComponent(pageModel.Title))
                 <div class="row">
-                    @for (int i = 0; i < 4; i++)
-                    {
-                        <div class="col-sm-6">
-                            @(
-                                await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleMediaStyle2.cshtml", new ArticleTitleMediaComponent()
+                    @if (Model?.Items?.Any() == true)
+                        foreach (var item in Model.Items)
                         {
-                            Id = Guid.NewGuid(),
-                            Title = "Ecovacs và Tineco cách mạng hóa việc làm sạch nhà cửa với " + i + 1,
-                            ShortDescription = "Sự kiện ra mắt 4 sản phẩm làm sạch thông minh mới nhất của Ecovacs diễn ra vào ngày 15/10 vừa qua đã để lại dấu ấn sâu đậm trong lòng người tiêu dùng Việt",
-                            CreatedAt = CommonHelper.GetCurrent(),
-                            Href = "/Home/BlogDetail",
-                            Media = "https://img.hoplongtech.com/hoplong/uploads/ecovacs-va-tineco-cach-mang-hoa-viec-lam-sach-nha-cua-voi-4-sieu-pham-moi-6.jpg",
-                            CreatedBy = new BaseMediaLinkModel("Nguyễn Văn A", "#"),
-                            Group = new BaseMediaLinkModel("Sự kiện", "/Home/Blog")
-                        })
-                                )
-                        </div>
-                    }
-
-
+                            <div class="col-lg-4 mb-lg-0">
+                                @await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleMediaStyle2.cshtml", item)
+                            </div>
+                        }
                 </div>
-
-                <div class="row">
-                    <div class="col">
-                        <ul class="pagination float-end">
-                            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
+                @await Html.PartialAsync("~/Views/Shared/Components/Common/Paging.cshtml", ViewBag.paging as PagingComponent)
 
             </div>
         </div>

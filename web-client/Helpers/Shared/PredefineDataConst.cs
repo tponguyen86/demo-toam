@@ -67,6 +67,8 @@ public class PredefineDataConst
             public const string Facebook = "facebook";
             public const string Instagram = "instagram";
             public const string Twitter = "twitter";
+
+            public const string SidebarAboutus = "sidebar-about-us";
         }
     }
 }

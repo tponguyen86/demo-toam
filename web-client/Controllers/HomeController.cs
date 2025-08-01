@@ -8,7 +8,9 @@ using web_client.Helpers.Shared;
 using web_client.Models;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
+using web_client.Models.Htmls.Base;
 using web_client.Models.Htmls.Common;
+using web_client.Models.Request.News;
 using web_client.Models.Request.Products;
 using web_client.Models.Request.Services;
 
@@ -96,6 +98,7 @@ namespace web_client.Controllers
             ViewBag.paging = response?.BuildPaging($"{RouteConst.GetRoute(RouteConst.Service)}?page={0}");
             return View(response);
         }
+
         [Route("dich-vu/{seoKey}/chi-tiet")]
         public async Task<IActionResult> ServiceDetail([FromServices] IServiceAppService services, string seoKey, CancellationToken cancellationToken)
         {
@@ -116,18 +119,69 @@ namespace web_client.Controllers
                 Title = responseData.Name,
                 Content = responseData.Content
             };
+            return View(response);
+        }
+
+        [Route("tin-tuc")]
+        public async Task<IActionResult> Blog([FromServices] INewsAppService services, NewsPagingRequest request, CancellationToken cancellationToken)
+        {
+            request.Category = PredefineDataConst.CategoryParentId.Key.News.GetGuid();
+            var result = await services.GetPagingAsync(request, cancellationToken);
+            var responseData = result.Data;
+            var model = responseData?.Items?.Select(x => new ArticleTitleMediaComponent()
+            {
+                CreatedAt = x.CreatedAt,
+                CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
+                ShortDescription = x.ShortDescription,
+                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
+                Href = string.Format(RouteConst.GetRoute(RouteConst.NewsDetail), x.PageKeyName),
+                Media = x?.Image?.Path,
+                Id = x.Id,
+                Title = x.Name,
+            });
+            var response = responseData.GetPaging(model);
+            ViewBag.paging = response?.BuildPaging($"{RouteConst.GetRoute(RouteConst.News)}?page={0}");
+            return View(response);
+        }
+
+        [Route("tin-tuc/{seoKey}/chi-tiet")]
+        public async Task<IActionResult> BlogDetail([FromServices] INewsAppService services, string seoKey, CancellationToken cancellationToken)
+        {
+            var result = await services.GetDetailAsync(new BaseDetailRequestDto(seoKey), cancellationToken);
+            if (result.HasError)
+                return RedirectToAction("Blog");
+
+            var responseData = result.Data;
+            var response = new ArticleTitleMediaDetailComponent()
+            {
+                CreatedAt = responseData.CreatedAt,
+                CreatedBy = new BaseMediaLinkModel($"{responseData.CreatedByModel?.Label}", $"{responseData.CreatedByModel?.Key}"),
+                ShortDescription = responseData.ShortDescription,
+                Group = new BaseMediaLinkModel($"{responseData.ParentIdModel?.Label}", $"{responseData.ParentIdModel?.Key}"),
+                Href = string.Format(RouteConst.GetRoute(RouteConst.NewsDetail), responseData.PageKeyName),
+                Media = responseData?.Image?.Path,
+                Id = responseData.Id,
+                Title = responseData.Name,
+                Content = responseData.Content
+            };
+
+            //relative
+            var resultRelative = await services.GetRelativeAsync(response.Id, cancellationToken);
+            ViewBag.relative = resultRelative?.Data?.Select(x => new BaseArticleItemModel()
+            {
+                CreatedAt = x.CreatedAt,
+                CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
+                ShortDescription = x.ShortDescription,
+                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
+                Href = string.Format(RouteConst.GetRoute(RouteConst.NewsDetail), x.PageKeyName),
+                Media = x?.Image?.Path,
+                Id = x.Id,
+                Title = x.Name,
+            });
 
             return View(response);
         }
-        public IActionResult Blog()
-        {
-            return View();
-        }
 
-        public IActionResult BlogDetail()
-        {
-            return View();
-        }
 
         public IActionResult PageDetail()
         {

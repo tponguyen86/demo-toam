@@ -2,8 +2,7 @@
 
 namespace web_client.Models.Htmls.Carousels;
 
-public class BaseCarouselItemModel
+public class BaseCarouselItemModel : BaseTitleModel
 {
-    public string? Title { get; set; }
     public BaseFileModel? Image { get; set; }
 }

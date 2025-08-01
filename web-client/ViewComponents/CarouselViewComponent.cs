@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using web_client.Helpers.Shared;
 using web_client.Models.Htmls.Base;
 using web_client.Models.Htmls.Carousels;
 namespace web_client.ViewComponents;
@@ -17,8 +18,9 @@ public class CarouselViewComponent : ViewComponent
     public async Task<IViewComponentResult> InvokeAsync(
        ViewComponentModel<CarouselSettingModel, List<BaseCarouselItemModel>> carouselRequest)
     {
-        var carouselSettingResponse = GetCarouselModel(carouselRequest);
-        ViewData["CarouselSettingModel"] = carouselSettingResponse;
+       
+        var settingResponse = GetSettingModel(carouselRequest);
+        ViewData[ViewComponentConst.ViewBagKey.Key.CarouselSettingModel] = settingResponse;
         //ViewData["CarouselDataModel"] = carouselRequest.GetData();
         var responseData = carouselRequest.GetData();
         if (!string.IsNullOrWhiteSpace(carouselRequest.ViewName))
@@ -64,10 +66,10 @@ public class CarouselViewComponent : ViewComponent
     //    return carouselSetting;
     //}
 
-    protected CarouselSettingModel GetCarouselModel<TData>(ViewComponentModel<CarouselSettingModel, TData> carouselRequest) where TData : class
+    protected CarouselSettingModel GetSettingModel<TData>(ViewComponentModel<CarouselSettingModel, TData> request) where TData : class
     {
-        var carouselSetting = new CarouselSettingModel { Option = new CarouselSettingOptionModel() };
-        carouselSetting.Merge(carouselRequest.ViewSettingRequest);
+        var setting = new CarouselSettingModel { Option = new CarouselSettingOptionModel() };
+        setting.Merge(request.ViewSettingRequest);
 
         // 1. Infer component name (e.g., "Carousel" from "CarouselViewComponent")
         var componentName = GetType().Name.Replace("ViewComponent", "");
@@ -75,7 +77,7 @@ public class CarouselViewComponent : ViewComponent
         // 2. Try to load scoped defaults
         if (_defaults.Setting.TryGetValue(componentName, out var scopedDefaults))
         {
-            carouselSetting.Option.Merge(scopedDefaults);
+            setting.Option.Merge(scopedDefaults);
         }
         else
         {
@@ -83,12 +85,12 @@ public class CarouselViewComponent : ViewComponent
         }
 
         // 3. Apply per-instance overrides
-        if (carouselRequest?.ViewSettingRequest?.Option != null)
+        if (request?.ViewSettingRequest?.Option != null)
         {
-            carouselSetting.Option.Merge(carouselRequest.ViewSettingRequest.Option);
+            setting.Option.Merge(request.ViewSettingRequest.Option);
         }
 
-        return carouselSetting;
+        return setting;
     }
 
 }

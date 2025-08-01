@@ -1,5 +1,45 @@
-﻿@model ArticleTitleMediaDetailComponent
+﻿@using static web_client.Helpers.Shared.PredefineDataConst
+@model ArticleTitleMediaDetailComponent
+@inject ILayoutAppService _layout
+@inject IServiceAppService _service
 @{
+    var layoutData = await _layout.GetSystemConfigurationsAsync(new GetAllSystemConfigurationRequest());
+    var aboutUs = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.SidebarAboutus, "Mô tả giới thiệu ngắn gọn...");
+
+    var serviceAllResponse = await _service.GetAllAsync(CancellationToken.None);
+    var sideBarArticlePagesModel = new ArticleTitleLinksComponent()
+            {
+                Title = "Dịch vụ",
+                Links = serviceAllResponse?.Data?.Select(x => new BaseArticleItemModel()
+                {
+                    CreatedAt = x.CreatedAt,
+                    CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
+                    ShortDescription = x.ShortDescription,
+                    Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
+                    Href = string.Format(RouteConst.GetRoute(RouteConst.ServiceDetail), x.PageKeyName),
+                    Media = x?.Image?.Path,
+                    Id = x.Id,
+                    Title = x.Name,
+                }).ToList()
+            };
+
+    var relativeResponse = await _service.GetRelativeAsync(Model.Id, CancellationToken.None);
+    var relativeModel = new ArticleTitleLinksComponent()
+            {
+                Title = "Dịch vụ khác",
+                Links = relativeResponse?.Data?.Select(x => new BaseArticleItemModel()
+                {
+                    CreatedAt = x.CreatedAt,
+                    CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
+                    ShortDescription = x.ShortDescription,
+                    Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
+                    Href = string.Format(RouteConst.GetRoute(RouteConst.ServiceDetail), x.PageKeyName),
+                    Media = x?.Image?.Path,
+                    Id = x.Id,
+                    Title = x.Name,
+                }).ToList()
+            };
+
     var pageModel = new PageModel() { Title = "Dịch vụ", Description = "Mô ta seo dịch vụ", BodyClassName = "p-service-detail", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
@@ -7,15 +47,6 @@
         new BaseLinkModel("Trang chủ","/"),
         new BaseLinkModel(pageModel.Title,"/Home/Service"),
         new BaseLinkModel("Chi tiết","/Home/ServiceDetail"),
-    });
-    var sideBarArticlePagesModel = new ArticleTitleLinksComponent("Dịch vụ", new List<BaseArticleItemModel>()
-    {
-        new BaseArticleItemModel(Guid.NewGuid(),"Dịch vụ 01","/Home/ServiceDetail","https://img.hoplongtech.com/hoplong/news/phan-biet-pnp-va-npn.jpg",CommonHelper.GetCurrent()),
-        new BaseArticleItemModel(Guid.NewGuid(),"Dịch vụ 11","/Home/ServiceDetail","https://img.hoplongtech.com/hoplong/news/chi-tiet-cach-cai-dat-bien-tan-ig5a-ls.jpg",CommonHelper.GetCurrent()),
-        new BaseArticleItemModel(Guid.NewGuid(),"Dịch vụ 21","/Home/ServiceDetail","https://img.hoplongtech.com/hoplong/news/chi-tiet-cach-cai-dat-bien-tan-ig5a-ls.jpg",CommonHelper.GetCurrent()),
-        new BaseArticleItemModel(Guid.NewGuid(),"Dịch vụ 31","/Home/ServiceDetail","https://img.hoplongtech.com/hoplong/news/chi-tiet-cach-cai-dat-bien-tan-ig5a-ls.jpg",CommonHelper.GetCurrent()),
-        new BaseArticleItemModel(Guid.NewGuid(),"Dịch vụ 41","/Home/ServiceDetail","https://img.hoplongtech.com/hoplong/news/chi-tiet-cach-cai-dat-bien-tan-ig5a-ls.jpg",CommonHelper.GetCurrent()),
-        new BaseArticleItemModel(Guid.NewGuid(),"Dịch vụ 51","/Home/ServiceDetail","https://img.hoplongtech.com/hoplong/news/chi-tiet-cach-cai-dat-bien-tan-ig5a-ls.jpg",CommonHelper.GetCurrent()),
     });
 }
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
@@ -29,11 +60,14 @@
                         @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarPageTitleList.cshtml", sideBarArticlePagesModel))
                     </div>
                 </div>
-                <div class="card card-border card-border-bottom bg-color-light mb-4">
-                    <div class="card-body p-3">
-                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarContentTitleLink.cshtml", new ContentTitleLinkComponent("Giới thiệu", "Hợp Long là nhà cung cấp thiết bị, giải pháp tự động hóa và tích hợp robot công nghiệp hàng đầu tại Việt Nam. Chúng tôi có hơn 200.000 sản phẩm được chỉ định là nhà phân phối của các thương hiệu: Schneider Electric, Autonics, Omron, Hanyoung, Patlite, LS, Delta, Siemens, Idec,...", new BaseCategoryItemModel("Tìm hiểu thêm", "#"))))
+                @if (aboutUs?.HasValueString() == true)
+                {
+                    <div class="card card-border card-border-bottom bg-color-light mb-4">
+                        <div class="card-body p-3">
+                            @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarContentTitleLink.cshtml", new ContentTitleLinkComponent("Giới thiệu", aboutUs, new BaseCategoryItemModel("Tìm hiểu thêm", "#"))))
+                        </div>
                     </div>
-                </div>
+                }
             </aside>
         </div>
         <div class="col-lg-9 order-lg-2">
@@ -43,7 +77,8 @@
                     <div class="card-body">
                         @await Html.PartialAsync("~/Views/Shared/Components/Common/HeaderTitle.cshtml", new HeaderTitleComponent(Model?.Title, Model?.ShortDescription, true))
                         <div class="pb-1">
-                            <div class="row">
+                            @Html.Raw(Model?.Content)
+                            @*  <div class="row">
                                 <div class="col-lg-9">
                                     <div class="overflow-hidden">
                                         <p class="lead mb-0 appear-animation animated appear-animation-visible" data-appear-animation="maskUp" data-appear-animation-delay="200">
@@ -117,7 +152,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> *@
                         </div>
 
                     </div>
@@ -127,33 +162,12 @@
             <div class="card border-radius-2 bg-color-light border-0 box-shadow-1 mb-4">
                 <div class="card-body">
                     <div class="article-relative">
-                        @{
-                            var blogRelativesModel = new ArticleTitleLinksComponent()
-            {
-                Title = "Dịch vụ khác",
-                Links = new List<BaseArticleItemModel>()
-            };
-                            for (int i = 0; i < 6; i++)
-                            {
-                                blogRelativesModel.Links.Add(new BaseArticleItemModel()
-                {
-                    Id = Guid.NewGuid(),
-                    Title = "Tối ưu hóa hệ thống tủ điện với điện trở xả nhôm GABR – Giải pháp độc quyền từ Hợp Long và GIGA Electric " + i + 1,
-                    ShortDescription = "Để xây dựng một hệ thống tủ điện hoạt động hiệu quả và bền bỉ, việc lựa chọn linh kiện chất lượng là yếu tố then chốt. Nắm bắt được nhu cầu này, Hợp Long tự hào là nhà phân phối độc quyền tại Việt Nam cho dòng sản phẩm điện trở xả nhôm GABR của thương hiệu GIGA Electric – một giải pháp tối ưu cho mọi ứng dụng công nghiệp hiện đại.",
-                    CreatedAt = CommonHelper.GetCurrent(),
-                    CreatedBy = new BaseMediaLinkModel("Nguyễn Văn A", "#"),
-                    Group = new BaseMediaLinkModel("Sự kiện", "/Home/Service"),
-                    Href = "/Home/ServiceDetail",
-                    Media = "https://img.hoplongtech.com/hoplong/uploads/dot-pha-cong-nghe-ai-va-canh-tay-robot-dang-thay-doi-tung-cong-doan-trong-san-xuat-nong-nghiep-hien-dai.jpg"
-                });
-                            }
-                        }
-                        @await Html.PartialAsync("~/Views/Shared/Components/Common/SliderArticleTitleListStyle3.cshtml", blogRelativesModel)
+                        @await Html.PartialAsync("~/Views/Shared/Components/Common/SliderArticleTitleListStyle3.cshtml", relativeModel)
                     </div>
                 </div>
             </div>
-          
-      
+
+
         </div>
     </div>
 

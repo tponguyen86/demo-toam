@@ -1,8 +1,9 @@
-﻿using web_client.Models.Htmls.Carousels;
+﻿namespace web_client.Models.Htmls.Base;
 
-namespace web_client.Models.Htmls.Base;
-
-public class BaseDefaultConfig
+public class BaseDefaultConfig: BaseDefaultConfig<object>
 {
-    public Dictionary<string, object> Setting { get; set; } = new();
+}
+public class BaseDefaultConfig<TValue>
+{
+    public Dictionary<string, TValue> Setting { get; set; } = new();
 }

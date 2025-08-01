@@ -108,5 +108,37 @@ namespace web_client.Domain.Services
 
             return BaseProcess<BasePagingModel<NewsItemResponse>>.Success(response);
         }
+
+        public async Task<BaseProcess<List<NewsItemResponse>>> GetRelativeAsync(Guid newsId, CancellationToken cancellationToken)
+        {
+            var query = _context.CategoryDetails.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active && x.Id != newsId).AsQueryable();
+
+            var resultItems = await query.OrderBy(r => Guid.NewGuid()).Take(5).ToListAsync(cancellationToken);
+            var response = resultItems.Select(x => new NewsItemResponse(x)).ToList();
+
+            if (response?.Any() != true)
+                return BaseProcess<List<NewsItemResponse>>.Success(response);
+
+            //set look up
+            var selectModels = new List<BaseSelectModel>();
+            foreach (var item in response)
+            {
+                if (item.ParentIdModel != null)
+                    selectModels.Add(item.ParentIdModel);
+
+                if (item.StatusModel != null)
+                    selectModels.Add(item.StatusModel);
+
+                if (item.CreatedByModel != null)
+                    selectModels.Add(item.CreatedByModel);
+
+                if (item.UpdatedByModel != null)
+                    selectModels.Add(item.UpdatedByModel);
+            }
+            if (selectModels?.Any() == true)
+                await _lookup.GetLookUpAsync(selectModels, cancellationToken);
+
+            return BaseProcess<List<NewsItemResponse>>.Success(response);
+        }
     }
 }

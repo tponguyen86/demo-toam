@@ -26,7 +26,17 @@ public class ServiceAppService : IServiceAppService
         var result = await _service.GetPagingAsync(request, cancellationToken);
         return new BaseProcess<IEnumerable<ServiceItemResponse>>(result?.Data?.Items, result?.Errors);
     }
+    public async Task<BaseProcess<IEnumerable<ServiceItemResponse>>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        var request = new ServicePagingRequest();
+        request.PageSize = 30;
+        var result = await _service.GetPagingAsync(request, cancellationToken);
+        return new BaseProcess<IEnumerable<ServiceItemResponse>>(result?.Data?.Items, result?.Errors);
+    }
 
     public Task<BaseProcess<BasePagingModel<ServiceItemResponse>>> GetPagingAsync(ServicePagingRequest request, CancellationToken cancellationToken)
     => _service.GetPagingAsync(request, cancellationToken);
+
+    public Task<BaseProcess<List<ServiceItemResponse>>> GetRelativeAsync(Guid serviceId, CancellationToken cancellationToken)
+    => _service.GetRelativeAsync(serviceId, cancellationToken);
 }

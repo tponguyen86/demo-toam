@@ -29,4 +29,7 @@ public class NewsAppService : INewsAppService
 
     public Task<BaseProcess<BasePagingModel<NewsItemResponse>>> GetPagingAsync(NewsPagingRequest request, CancellationToken cancellationToken)
     => _service.GetPagingAsync(request, cancellationToken);
+
+    public Task<BaseProcess<List<NewsItemResponse>>> GetRelativeAsync(Guid serviceId, CancellationToken cancellationToken)
+   => _service.GetRelativeAsync(serviceId, cancellationToken);
 }

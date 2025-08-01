@@ -1,6 +1,7 @@
-﻿@model List<BaseCarouselItemModel>
+﻿
+@model List<BaseCarouselItemModel>
 @{
-    var carouselSettingModel = ViewData["CarouselSettingModel"] as CarouselSettingModel;
+    var carouselSettingModel = ViewData[ViewComponentConst.ViewBagKey.Key.CarouselSettingModel] as CarouselSettingModel;
     // var option = "{'items': 1, 'margin': 10, 'loop': false, 'nav': true, 'dots': false}";
 }
 @if (Model?.Any() == true)
