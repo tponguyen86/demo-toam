@@ -1,7 +1,30 @@
-﻿@{
+﻿@using web_client.Models.Request.Pages.PageConfigurations.Values
+@inject IPageAppService _pageService
+@inject IProductCategoryAppService _productCategoryAppService
+@{
     ViewData["Page"] = new PageModel() { Title = "Trang chủ", Description = "Mô ta seo trang chủ", BodyClassName = "shop p-index", MainClassName = "" };
 
-    var bannerModel = ViewData["HomeBannerSliderDataModel"] as List<BaseCarouselItemModel>;
+    var pageId = PredefineDataConst.PageId.Key.TrangChu.GetGuid();
+    var pageConfigs = (await _pageService.GetConfigByPageAsync(pageId))?.Data;
+    //1. banner slider
+    var carouselSliderCF = pageConfigs?.FirstOrDefault(x => x.Name == PredefineDataConst.PageConfigurationName.Key.CarouselSlider);
+    var bannerModel = carouselSliderCF?.Value?.DocumentToObject<List<PCCarouselSliderValueModel>>(null)?.Select(x => new BaseCarouselItemModel()
+            {
+                Title = x.Title,
+                Image = x.Image
+            }).ToList();
+    //2. category feature
+    var productCategoryResponse = await _productCategoryAppService.GetByShowHomeAsync();
+    var productCategoryModel = productCategoryResponse?.Data?.Select(x => new CategoryTitleMediaComponent()
+            {
+                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.ProductCategory), x.ParentIdModel?.GetData<SelectDataSeoModel>()?.PageKeyName)),
+                Href = string.Format(RouteConst.GetRoute(RouteConst.ProductCategory), x.PageKeyName),
+                Media = x?.Image?.Path,
+                Id = x.Id,
+                Title = x.Name,
+            });
+
+
     var testimonialModel = new List<BaseCarouselItemModel>();
 }
 <div class="container">
@@ -24,31 +47,22 @@
     </div>
 </div>
 
-
 <!-- danh mục sản phẩm-->
-<div class="container">
-    <div class="row">
-        <div class="col categories">
-            <div class="owl-carousel owl-theme show-nav-hover" data-plugin-options="{'items': 4, 'margin': 20, 'loop': false,'nav': true, 'dots': false}">
-                @for (int i = 0; i < 5; i++)
-                {
-                    @(
-                        await Html.PartialAsync("~/Views/Shared/Components/Common/CategoryTitleMedia.cshtml", new CategoryTitleMediaComponent()
-                {
-                    Id = Guid.NewGuid(),
-                    Title = "Danh mục con  " + i + 1,
-                    Href = "/Home/Product",
-                    Media = "https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png",
-                    Group = new BaseMediaLinkModel("Cảm biến", "/Home/ProductCategoryDetail"),
-                })
-                        )
-                }
+@if (productCategoryModel?.Any() == true)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col categories">
+                <div class="owl-carousel owl-theme show-nav-hover" data-plugin-options="{'items': 4, 'margin': 20, 'loop': false,'nav': true, 'dots': false}">
+                    @foreach (var item in productCategoryModel)
+                    {
+                        @await Html.PartialAsync("~/Views/Shared/Components/Common/CategoryTitleMedia.cshtml", item)
+                    }
+                </div>
             </div>
-
         </div>
     </div>
-
-</div>
+}
 
 <!-- sản phẩm-->
 <div class="container">

@@ -5,6 +5,7 @@ namespace web_client.Models.Response.Pages;
 public class PageDetailResponse : PageItemResponse
 {
     public string Description { get; set; }
+
     public PageDetailResponse():base()
     {
     }

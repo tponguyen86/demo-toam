@@ -21,7 +21,7 @@ public class ServiceCategoryService : IServiceCategoryService
 
     public async Task<BaseProcess<List<ServiceCategoryItemResponse>>> GetAllAsync(GetServiceCategoryAllRequest request, CancellationToken cancellationToken)
     {
-        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status != PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
+        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
 
         if (request.ParentIdHasValue())
         {
@@ -65,7 +65,7 @@ public class ServiceCategoryService : IServiceCategoryService
 
     public async Task<BaseProcess<ServiceCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
     {
-        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status != PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
+        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
 
         var result = await query.FirstOrDefaultAsync(cancellationToken);
         if (result == null)

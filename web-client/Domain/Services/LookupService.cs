@@ -3,6 +3,7 @@ using web_client.Domain.IServices;
 using web_client.Models.Base;
 using web_client.Models.Base.Properties;
 using web_client.Models.Data.Contexts;
+using web_client.Models.Data.Contexts.Entities;
 
 namespace web_client.Domain.Services;
 
@@ -15,6 +16,7 @@ public class LookupService : ILookupService
     }
     public async Task<BaseProcess<int>> GetLookUpAsync(List<BaseSelectModel> request, CancellationToken cancellationToken)
     {
+        await LookUpCategoryChild(request, cancellationToken);
         await LookUpCategory(request, cancellationToken);
         await LookUpProductCategory(request, cancellationToken);
         await LookUpGroupProductSetting(request, cancellationToken);
@@ -91,7 +93,7 @@ public class LookupService : ILookupService
         var keys = keyValues.Select(x => x.GetKeyFilter())?.Distinct()?.ToList();
         if (keys?.Any() != true) return;
 
-        var datas = await _context.ProductCategories.Where(x => keys.Contains(x.Id.ToString())).ToListAsync(cancellationToken);
+        var datas = await _context.Categories.Where(x => keys.Contains(x.Id.ToString())).ToListAsync(cancellationToken);
         if (datas?.Any() != true)
             return;
 
@@ -111,7 +113,6 @@ public class LookupService : ILookupService
                     Sort = selected.Sort ?? 0,
                     selected.ParentId,
                     selected.ShowHome,
-                    selected.GroupProductSetting,
                     selected.ShowMenu,
                     selected.PageKeyName,
                     selected.Status,
@@ -119,7 +120,7 @@ public class LookupService : ILookupService
             }
         }
     }
-  
+
     private async Task LookUpProductCategory(List<BaseSelectModel> request, CancellationToken cancellationToken)
     {
         var keyValues = request?.Where(x => x is ProductCategorySelectModel).Select(x => x as ProductCategorySelectModel);
@@ -155,4 +156,74 @@ public class LookupService : ILookupService
             }
         }
     }
+    #region Category Child
+    public List<Category> GetAllDescendants(List<Category> allItems, Guid parentId)
+    {
+        var children = allItems
+            .Where(item => item.ParentId == parentId)
+            .ToList();
+
+        var descendants = new List<Category>(children);
+
+        foreach (var child in children)
+        {
+            var subDescendants = GetAllDescendants(allItems, child.Id);
+            descendants.AddRange(subDescendants);
+        }
+
+        return descendants;
+    }
+
+    private async Task LookUpCategoryChild(List<BaseSelectModel> request, CancellationToken cancellationToken)
+    {
+        var keyValues = request?.Where(x => x is CategoryChildrenSelectModel).Select(x => x as CategoryChildrenSelectModel);
+        if (keyValues?.Any() != true) return;
+        var keys = keyValues.Select(x => x.GetKeyFilter())?.Distinct()?.ToList();
+        if (keys?.Any() != true) return;
+        var categories = await _context.Categories.ToListAsync(cancellationToken);
+        var datas = categories.Where(x => keys.Contains(x.Id.ToString())).ToList();
+        if (datas?.Any() != true)
+            return;
+
+        foreach (var item in keyValues)
+        {
+            if (item == null) continue;
+            var selected = datas.FirstOrDefault(x => item.GetKeyFilter() == $"{x.Id}");
+            if (selected == null)
+                item.Value = item.Key = item.GetKeyFilter();
+            else
+            {
+                item.Value = $"{selected.Id}";
+                item.Key = $"{selected.PageKeyName}";
+                item.Label = selected.Name;
+                item.SetData(new
+                {
+                    Sort = selected.Sort ?? 0,
+                    selected.ParentId,
+                    selected.ShowHome,
+                    selected.ShowMenu,
+                    selected.PageKeyName,
+                    selected.Status,
+                });
+                //get child 
+                var allChildren = GetAllDescendants(categories, selected.Id);
+                item.Child = allChildren.Select(x => new CategorySelectModel(x.Id)
+                {
+                    Value = $"{x.Id}",
+                    Key = $"{x.PageKeyName}",
+                    Label = x.Name,
+                    Data = new
+                    {
+                        Sort = x.Sort ?? 0,
+                        x.ParentId,
+                        x.ShowHome,
+                        x.ShowMenu,
+                        x.PageKeyName,
+                        x.Status,
+                    }
+                }).ToList();
+            }
+        }
+    }
+    #endregion
 }

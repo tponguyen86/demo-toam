@@ -1,5 +1,7 @@
 ﻿using web_client.Application.IServices;
 using web_client.Domain.IServices;
+using web_client.Helpers;
+using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Request.News;
 using web_client.Models.Response.News;
@@ -21,6 +23,7 @@ public class NewsAppService : INewsAppService
     public async Task<BaseProcess<IEnumerable<NewsItemResponse>>> GetFeatureAsync(int? take, CancellationToken cancellationToken = default)
     {
         var request = new NewsPagingRequest();
+        request.Category = PredefineDataConst.CategoryParentId.Key.News.GetGuid();
         request.PageSize = take ?? 5;
         request.Featured = true;
         var result = await _service.GetPagingAsync(request, cancellationToken);

@@ -16,32 +16,32 @@ public class ProductCategoryAppService : IProductCategoryAppService
         _service = service;
     }
 
-    public async Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetAllAsync()
     {
         var request = new GetProductCategoryAllRequest();
         request.Discriminator = CategoryDiscriminator.Key.ProductCategory;
-        var result = await _service.GetAllAsync(request, cancellationToken);
+        var result = await _service.GetAllAsync(request, CancellationToken.None);
         return new BaseProcess<IEnumerable<ProductCategoryItemResponse>>(result.Data, result?.Errors);
     }
 
-    public async Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetByShowHomeAsync(CancellationToken cancellationToken)
+    public async Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetByShowHomeAsync()
     {
         var request = new GetProductCategoryAllRequest();
         request.Discriminator = CategoryDiscriminator.Key.ProductCategory;
         request.ShowHome = true;
-        var result = await _service.GetAllAsync(request, cancellationToken);
+        var result = await _service.GetAllAsync(request, CancellationToken.None);
         return new BaseProcess<IEnumerable<ProductCategoryItemResponse>>(result.Data, result?.Errors);
     }
 
-    public async Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetByShowMenuAsync(CancellationToken cancellationToken)
+    public async Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetByShowMenuAsync()
     {
         var request = new GetProductCategoryAllRequest();
         request.Discriminator = CategoryDiscriminator.Key.ProductCategory;
         request.ShowMenu = true;
-        var result = await _service.GetAllAsync(request, cancellationToken);
+        var result = await _service.GetAllAsync(request, CancellationToken.None);
         return new BaseProcess<IEnumerable<ProductCategoryItemResponse>>(result.Data, result?.Errors);
     }
 
-    public Task<BaseProcess<ProductCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
-   => _service.GetDetailAsync(request, cancellationToken);
+    public Task<BaseProcess<ProductCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request)
+   => _service.GetDetailAsync(request, CancellationToken.None);
 }

@@ -17,8 +17,10 @@
         public const string NotFound = "not-found";
         public const string Service = "service";
         public const string ServiceDetail = "service-detail";
+        public const string NewsCategory = "news-category";
         public const string News = "news";
         public const string NewsDetail = "news-detail";
+        public const string PageDetail = "page-detail";
 
         public static string GetRoute(string routeName)
         {
@@ -39,7 +41,9 @@
                 Service => "/dich-vu",
                 ServiceDetail => "/dich-vu/{0}/chi-tiet",//page-key-name of service
                 News => "/tin-tuc",
+                NewsCategory => "/tin-tuc/{0}",//page-key-name of category
                 NewsDetail => "/tin-tuc/{0}/chi-tiet",//page-key-name of service
+                PageDetail => "/trang/{0}",//page-key-name of page
                 _ => throw new ArgumentException($"Unknown route name: {routeName}")
             };
 

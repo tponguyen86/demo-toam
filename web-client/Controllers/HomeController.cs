@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using System.Threading;
 using web_client.Application.IServices;
 using web_client.Helpers;
 using web_client.Helpers.Shared;
 using web_client.Models;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
-using web_client.Models.Htmls.Base;
 using web_client.Models.Htmls.Common;
 using web_client.Models.Request.News;
 using web_client.Models.Request.Products;
@@ -31,9 +28,7 @@ namespace web_client.Controllers
 
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var products = await _dbContext.Products.ToListAsync(cancellationToken);
-            var bannerModel = await _layoutService.GetHomeBannerSliderAsync();
-            ViewData["HomeBannerSliderDataModel"] = bannerModel;
+            //var products = await _dbContext.Products.ToListAsync(cancellationToken);
             return View();
         }
 
@@ -55,9 +50,13 @@ namespace web_client.Controllers
             return View();
         }
 
-        [Route("san-pham")]
-        public async Task<IActionResult> Product([FromServices] IProductAppService services, ProductPagingRequest request, CancellationToken cancellationToken)
+        [Route("san-pham/{seoKeyCategory?}")]
+        public async Task<IActionResult> Product([FromServices] IProductAppService services, [FromServices] IProductCategoryAppService categoryServices, ProductPagingRequest request, string? seoKeyCategory, CancellationToken cancellationToken)
         {
+            var getCategoryDetail = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKeyCategory));
+            if ((getCategoryDetail?.Data?.Id.HasValueGuid() == true))
+                request.Category = getCategoryDetail?.Data?.Id;
+
             var resultProduct = await services.GetPagingAsync(request, cancellationToken);
             if (resultProduct.HasError)
                 return RedirectToAction("Service");
@@ -122,10 +121,12 @@ namespace web_client.Controllers
             return View(response);
         }
 
-        [Route("tin-tuc")]
-        public async Task<IActionResult> Blog([FromServices] INewsAppService services, NewsPagingRequest request, CancellationToken cancellationToken)
+        [Route("tin-tuc/{seoKeyCategory?}")]
+        public async Task<IActionResult> Blog([FromServices] INewsAppService services, [FromServices] INewsCategoryAppService categoryServices, NewsPagingRequest request, string? seoKeyCategory, CancellationToken cancellationToken)
         {
-            request.Category = PredefineDataConst.CategoryParentId.Key.News.GetGuid();
+            //get category detail if seoKeyCategory is provided
+            var getCategoryDetail = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKeyCategory), cancellationToken);
+            request.Category = (getCategoryDetail?.Data?.Id.HasValueGuid() == true) ? getCategoryDetail?.Data?.Id : PredefineDataConst.CategoryParentId.Key.News.GetGuid();
             var result = await services.GetPagingAsync(request, cancellationToken);
             var responseData = result.Data;
             var model = responseData?.Items?.Select(x => new ArticleTitleMediaComponent()
@@ -165,26 +166,25 @@ namespace web_client.Controllers
                 Content = responseData.Content
             };
 
-            //relative
-            var resultRelative = await services.GetRelativeAsync(response.Id, cancellationToken);
-            ViewBag.relative = resultRelative?.Data?.Select(x => new BaseArticleItemModel()
-            {
-                CreatedAt = x.CreatedAt,
-                CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
-                ShortDescription = x.ShortDescription,
-                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
-                Href = string.Format(RouteConst.GetRoute(RouteConst.NewsDetail), x.PageKeyName),
-                Media = x?.Image?.Path,
-                Id = x.Id,
-                Title = x.Name,
-            });
-
             return View(response);
         }
 
-
-        public IActionResult PageDetail()
+        [Route("trang/{seoKey}")]
+        public async Task<IActionResult> PageDetail([FromServices] IPageAppService services, string seoKey, CancellationToken cancellationToken)
         {
+            var result = await services.GetDetailAsync(new BaseDetailRequestDto(seoKey), cancellationToken);
+            if (result.HasError)
+                return RedirectToAction("Index");
+
+            var responseData = result.Data;
+            var response = new PageTitleMediaDetailComponent()
+            {
+                Href = string.Format(RouteConst.GetRoute(RouteConst.PageDetail), responseData.PageKeyName),
+                Media = responseData?.Image?.Path,
+                Id = responseData.Id,
+                Title = responseData.Name,
+                Content = responseData.Description
+            };
             return View();
         }
 

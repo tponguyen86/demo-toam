@@ -2,7 +2,7 @@
 
 namespace web_client.Models.Base;
 
-public class BaseSelectModel
+public class BaseSelectModel<TData> where TData : class
 {
     public string? Key { get; set; }
     public string? Value { get; set; }
@@ -34,15 +34,55 @@ public class BaseSelectModel
         Key = key;
     }
     [JsonIgnore]
-    public object? Data { get; set; }
-    public void SetData(object? data)
+    public TData? Data { get; set; }
+    public void SetData(TData? data)
     {
         if (data == null) return;
         Data = data;
     }
+    //public TData? GetData<TData>() where TData : class
+    //{
+    //    return Data as TData;
+    //}
+
+    //public bool TryGetData<TData>(out TData? result) where TData : class
+    //{
+    //    result = Data as TData;
+    //    return result != null;
+    //}
 }
 
-public class BaseSelectModel<T> : BaseSelectModel
+public class BaseSelectModel : BaseSelectModel<object>
 {
-    public T? Settings { get; set; }
+    public BaseSelectModel() : base() { }
+    public BaseSelectModel(string value) : base(value) { }
+
+    public BaseSelectModel(Guid value) : base(value) { }
+    public BaseSelectModel(Guid? value) : base(value) { }
+    public BaseSelectModel(string value, string label) : base(value, label) { }
+
+    public BaseSelectModel(string value, string label, string key) : base(value, label, key) { }
+    public TData? GetData<TData>() where TData : class
+    {
+        return Data as TData;
+    }
+
+    public bool TryGetData<TData>(out TData? result) where TData : class
+    {
+        result = Data as TData;
+        return result != null;
+    }
 }
+
+#region Data item
+public class BaseSelectDataModel
+{
+    [JsonIgnore]
+    public Guid? Id { get; set; }
+}
+public class SelectDataSeoModel: BaseSelectDataModel
+{
+    [JsonIgnore]
+    public string? PageKeyName { get; set; }
+}
+#endregion

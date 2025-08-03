@@ -21,7 +21,7 @@ public class PageService : IPageService
 
     public async Task<BaseProcess<List<PageItemResponse>>> GetAllAsync(GetPageAllRequest request, CancellationToken cancellationToken)
     {
-        var query = _context.Pages.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status != PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.CreatedAt).AsQueryable();
+        var query = _context.Pages.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.CreatedAt).AsQueryable();
 
         //if (request?.HasShowHome() == true)
         //{
@@ -55,7 +55,7 @@ public class PageService : IPageService
 
     public async Task<BaseProcess<PageDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
     {
-        var query = _context.Pages.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status != PredefineDataConst.Status.Key.Active && (x.PageKeyName == request.Code || x.Id == request.Id || x.Code == request.Code)).AsQueryable();
+        var query = _context.Pages.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active && (x.PageKeyName == request.Code || x.Id == request.Id || x.Code == request.Code)).AsQueryable();
 
         var result = await query.FirstOrDefaultAsync(cancellationToken);
         if (result == null)

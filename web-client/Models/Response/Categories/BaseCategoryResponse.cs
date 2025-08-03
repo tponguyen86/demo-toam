@@ -11,7 +11,7 @@ public class BaseCategoryResponse : BaseCategory
     public bool ShowHome { get; set; }
     public string? ShowType { get; set; }
     public ProductCategorySelectModel? ParentIdModel { get; set; }
-
+    public CategoryChildrenSelectModel? ChildModel { get; set; }
     public BaseCategoryResponse() { }
     public BaseCategoryResponse(Category category)
     {
@@ -34,7 +34,9 @@ public class BaseCategoryResponse : BaseCategory
 
         ParentId = category.ParentId;
         if (category.ParentId?.HasValueGuid() == true)
-            ParentIdModel = new ProductCategorySelectModel(category.Id);
+            ParentIdModel = new ProductCategorySelectModel(category.ParentId.Value);
+
+        ChildModel = new CategoryChildrenSelectModel(category.Id);
     }
 
     //public BaseCategoryResponse(CategoryDetail category)

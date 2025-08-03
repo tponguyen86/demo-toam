@@ -18,5 +18,6 @@ public static class DependencyInjection
         services.AddScoped<ISystemConfigurationService, SystemConfigurationService>();
         services.AddScoped<ILayoutService, LayoutService>();
         services.AddScoped<IPageService, PageService>();
+        services.AddScoped<IPageConfigurationService, PageConfigurationService>();
     }
 }

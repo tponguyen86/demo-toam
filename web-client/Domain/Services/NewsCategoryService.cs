@@ -22,7 +22,7 @@ public class NewsCategoryService : INewsCategoryService
 
     public async Task<BaseProcess<List<NewsCategoryItemResponse>>> GetAllAsync(GetNewsCategoryAllRequest request, CancellationToken cancellationToken)
     {
-        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status != PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
+        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
 
         if (request.ParentIdHasValue())
         {
@@ -67,7 +67,7 @@ public class NewsCategoryService : INewsCategoryService
 
     public async Task<BaseProcess<NewsCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
     {
-        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status != PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
+        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
 
         var result = await query.FirstOrDefaultAsync(cancellationToken);
         if (result == null)

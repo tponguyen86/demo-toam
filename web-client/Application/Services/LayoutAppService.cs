@@ -1,7 +1,6 @@
 ﻿using web_client.Application.IServices;
 using web_client.Domain.IServices;
 using web_client.Models.Base;
-using web_client.Models.Htmls.Carousels;
 using web_client.Models.Request.SystemConfigurations;
 using web_client.Models.Response.SystemConfigurations;
 
@@ -17,9 +16,6 @@ public class LayoutAppService : ILayoutAppService
         _layoutService = layoutService;
         _systemConfigurationService = systemConfigurationService;
     }
-
-    public Task<List<BaseCarouselItemModel>> GetHomeBannerSliderAsync()
-    => _layoutService.GetHomeBannerSliderAsync(CancellationToken.None);
 
     public Task<BaseProcess<SystemConfigurationDetailResponse>> GetSystemConfigurationDetailAsync(BaseDetailRequestDto request)
     => _systemConfigurationService.GetDetailAsync(request, CancellationToken.None);

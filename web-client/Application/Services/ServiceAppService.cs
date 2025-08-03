@@ -1,5 +1,7 @@
 ﻿using web_client.Application.IServices;
 using web_client.Domain.IServices;
+using web_client.Helpers;
+using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Request.Services;
 using web_client.Models.Response.Services;
@@ -21,6 +23,7 @@ public class ServiceAppService : IServiceAppService
     public async Task<BaseProcess<IEnumerable<ServiceItemResponse>>> GetFeatureAsync(int? take, CancellationToken cancellationToken = default)
     {
         var request = new ServicePagingRequest();
+        request.Category = PredefineDataConst.CategoryParentId.Key.Service.GetGuid();
         request.PageSize = take ?? 5;
         request.Featured = true;
         var result = await _service.GetPagingAsync(request, cancellationToken);
@@ -29,6 +32,7 @@ public class ServiceAppService : IServiceAppService
     public async Task<BaseProcess<IEnumerable<ServiceItemResponse>>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var request = new ServicePagingRequest();
+        request.Category = PredefineDataConst.CategoryParentId.Key.Service.GetGuid();
         request.PageSize = 30;
         var result = await _service.GetPagingAsync(request, cancellationToken);
         return new BaseProcess<IEnumerable<ServiceItemResponse>>(result?.Data?.Items, result?.Errors);

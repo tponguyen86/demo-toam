@@ -21,7 +21,7 @@ public class ProductCategoryService : IProductCategoryService
 
     public async Task<BaseProcess<ProductCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
     {
-        var query = _context.ProductCategories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status != PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
+        var query = _context.ProductCategories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
 
         var result = await query.FirstOrDefaultAsync(cancellationToken);
         if (result == null)
@@ -31,6 +31,10 @@ public class ProductCategoryService : IProductCategoryService
 
         //set look up
         var selectModels = new List<BaseSelectModel>();
+
+        if (response.ChildModel != null)
+            selectModels.Add(response.ChildModel);
+
         if (response.ParentIdModel != null)
             selectModels.Add(response.ParentIdModel);
 
@@ -45,7 +49,7 @@ public class ProductCategoryService : IProductCategoryService
 
     public async Task<BaseProcess<List<ProductCategoryItemResponse>>> GetAllAsync(GetProductCategoryAllRequest request, CancellationToken cancellationToken)
     {
-        var query = _context.ProductCategories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status != PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
+        var query = _context.ProductCategories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
 
         if (request.ParentIdHasValue())
         {
@@ -70,7 +74,6 @@ public class ProductCategoryService : IProductCategoryService
         var result = await query.OrderByDescending(x => x.CreatedAt).ToListAsync(cancellationToken);
 
         var response = result.Select(x => new ProductCategoryItemResponse(x)).ToList();
-
         if (response?.Any() != true)
             return BaseProcess<List<ProductCategoryItemResponse>>.Success(response);
 

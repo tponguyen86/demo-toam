@@ -20,8 +20,8 @@ public class PredefineDataConst
         {
             public const string Delete = "delete";
         }
-    } 
-    
+    }
+
     public class CategoryDiscriminator
     {
         public const string Group = "Discriminator";
@@ -40,7 +40,7 @@ public class PredefineDataConst
             public const string Service = "a245a6e7-c072-4123-b57d-22edadeb657e";
         }
     }
-    
+
     public class SystemConfigurationKeys
     {
         public const string Group = "LAYOUT-KEY-WEB";
@@ -69,6 +69,29 @@ public class PredefineDataConst
             public const string Twitter = "twitter";
 
             public const string SidebarAboutus = "sidebar-about-us";
+        }
+    }
+    public class PageId
+    {
+        public const string Group = "PAGEID";
+        public class Key
+        {
+            public const string GioiThieu = "4c1a4535-9d20-4cc3-ba41-a8070365b754";
+            public const string VeChungToi = "4f52660b-dd9f-4b99-bd46-ca6b725f5bbf";
+            public const string LienHe = "5347e10c-de61-49e5-b384-5c59260ae83e";
+            public const string TrangChu = "874ac0cc-5760-444b-b924-4d8282b1006c";
+            public const string ChinhSach = "892bf10b-4eaa-4a9d-b88b-cd2b17c3f3ea";
+            public const string DieuKhoan = "924c3ba5-a90f-4dbd-aff9-57cfcb75f931";
+            public const string TuyenDung = "e0ba6136-1f8e-49a0-a2de-8652392fd346";
+        }
+    }
+    public class PageConfigurationName
+    {
+        public const string Group = "PageConfigurationName";
+        public class Key
+        {
+            public const string CarouselSlider = "carousel-slider";
+
         }
     }
 }

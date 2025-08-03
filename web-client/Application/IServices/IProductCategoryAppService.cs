@@ -5,8 +5,8 @@ namespace web_client.Application.IServices;
 
 public interface IProductCategoryAppService
 {
-    Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetAllAsync(CancellationToken cancellationToken);
-    Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetByShowHomeAsync(CancellationToken cancellationToken);
-    Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetByShowMenuAsync(CancellationToken cancellationToken);
-    Task<BaseProcess<ProductCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken);
+    Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetAllAsync();
+    Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetByShowHomeAsync();
+    Task<BaseProcess<IEnumerable<ProductCategoryItemResponse>>> GetByShowMenuAsync();
+    Task<BaseProcess<ProductCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request);
 }
