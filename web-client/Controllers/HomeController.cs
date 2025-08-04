@@ -54,8 +54,9 @@ namespace web_client.Controllers
         public async Task<IActionResult> Product([FromServices] IProductAppService services, [FromServices] IProductCategoryAppService categoryServices, ProductPagingRequest request, string? seoKeyCategory, CancellationToken cancellationToken)
         {
             var getCategoryDetail = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKeyCategory));
-            if ((getCategoryDetail?.Data?.Id.HasValueGuid() == true))
-                request.Category = getCategoryDetail?.Data?.Id;
+            var categoryIds = getCategoryDetail?.Data?.ChildModel?.GetAllId();
+            if (categoryIds?.Any() == true)
+                request.SetCategory(categoryIds);
 
             var resultProduct = await services.GetPagingAsync(request, cancellationToken);
             if (resultProduct.HasError)
@@ -75,11 +76,16 @@ namespace web_client.Controllers
             var response = new ProductTitleMediaDetailComponent(responseData);
             return View(response);
         }
-
-        [Route("dich-vu")]
-        public async Task<IActionResult> Service([FromServices] IServiceAppService services, ServicePagingRequest request, CancellationToken cancellationToken)
+        [Route("dich-vu/{seoKeyCategory?}")]
+        public async Task<IActionResult> Service([FromServices] IServiceAppService services, [FromServices] IServiceCategoryAppService categoryServices, string? seoKeyCategory,ServicePagingRequest request, CancellationToken cancellationToken)
         {
-            request.Category = PredefineDataConst.CategoryParentId.Key.Service.GetGuid();
+            var getCategoryDetail = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKeyCategory));
+            var categoryIds = getCategoryDetail?.Data?.ChildModel?.GetAllId();
+            if (categoryIds?.Any() == true)
+                request.SetCategory(categoryIds);
+            else
+                request.AddCategory(PredefineDataConst.CategoryParentId.Key.Service.GetGuid());
+
             var result = await services.GetPagingAsync(request, cancellationToken);
             var responseData = result.Data;
             var model = responseData?.Items?.Select(x => new ArticleTitleMediaComponent()
@@ -124,9 +130,13 @@ namespace web_client.Controllers
         [Route("tin-tuc/{seoKeyCategory?}")]
         public async Task<IActionResult> Blog([FromServices] INewsAppService services, [FromServices] INewsCategoryAppService categoryServices, NewsPagingRequest request, string? seoKeyCategory, CancellationToken cancellationToken)
         {
-            //get category detail if seoKeyCategory is provided
-            var getCategoryDetail = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKeyCategory), cancellationToken);
-            request.Category = (getCategoryDetail?.Data?.Id.HasValueGuid() == true) ? getCategoryDetail?.Data?.Id : PredefineDataConst.CategoryParentId.Key.News.GetGuid();
+            var getCategoryDetail = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKeyCategory));
+            var categoryIds = getCategoryDetail?.Data?.ChildModel?.GetAllId();
+            if (categoryIds?.Any() == true)
+                request.SetCategory(categoryIds);
+            else
+                request.AddCategory(PredefineDataConst.CategoryParentId.Key.News.GetGuid());
+
             var result = await services.GetPagingAsync(request, cancellationToken);
             var responseData = result.Data;
             var model = responseData?.Items?.Select(x => new ArticleTitleMediaComponent()
@@ -185,7 +195,7 @@ namespace web_client.Controllers
                 Title = responseData.Name,
                 Content = responseData.Description
             };
-            return View();
+            return View(response);
         }
 
         public IActionResult Contact()

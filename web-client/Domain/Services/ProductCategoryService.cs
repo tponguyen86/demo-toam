@@ -81,6 +81,9 @@ public class ProductCategoryService : IProductCategoryService
         var selectModels = new List<BaseSelectModel>();
         foreach (var item in response)
         {
+            if (item.ChildModel != null)
+                selectModels.Add(item.ChildModel);
+
             if (item.ParentIdModel != null)
                 selectModels.Add(item.ParentIdModel);
 

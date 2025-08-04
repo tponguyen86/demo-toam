@@ -17,6 +17,7 @@
     var footerDescription = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.FooterDescription, "Mô tả Chân Trang");
     var phoneNumberFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.PhoneNumberFooter, "0987654321");
     var emailFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.EmailFooter, "support@gmail.com");
+    var copyrightFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.CopyrightFooter, "© 2024 tên công ty All rights reserved. Mã số thuế: 2104509916 do Sở Kế Hoạch & Đầu Tư Hà Nội cấp lần đầu ngày 14/10/2010");
     var address = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Address, "234 Street Name, City Name");
 
 }
@@ -144,7 +145,7 @@
                         <div class="header-column w-100">
                             <div class="header-row justify-content-between">
                                 <div class="header-logo z-index-2 col-lg-2 px-0">
-                                    <a href="index.html">
+                                    <a href="/">
                                         <img alt="Porto" width="100" height="48" data-sticky-width="82" data-sticky-height="40" data-sticky-top="84" src="/img/logo-default-slim.png">
                                     </a>
                                 </div>
@@ -222,7 +223,7 @@
                                                         </a>
                                                     </li>
                                                     <li class="dropdown">
-                                                        <a class="dropdown-item dropdown-toggle" asp-area="" asp-controller="Home" asp-action="About">
+                                                        <a class="dropdown-item dropdown-toggle" asp-area="" asp-controller="Home" asp-action="PageDetail" asp-route-seoKey="gioi-thieu">
                                                             Giới thiệu
                                                         </a>
                                                     </li>
@@ -346,7 +347,7 @@
                 <div class="container">
                     <div class="row footer-copyright footer-copyright-style-2 pt-2 pb-2">
                         <div class="col-lg-12 text-center">
-                            <p class="text-3 mb-0 opacity-6">© 2024 hoplongtech.com All rights reserved. Mã số thuế: 0104509916 do Sở Kế Hoạch & Đầu Tư Hà Nội cấp lần đầu ngày 14/10/2010 </p>
+                            <p class="text-3 mb-0 opacity-6">@Html.Raw(copyrightFooter)</p>
                         </div>
 
                     </div>

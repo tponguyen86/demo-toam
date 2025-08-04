@@ -68,8 +68,10 @@ namespace web_client.Domain.Services
 
             if (request?.CategoryHasValue() == true)
             {
-                query = query.Where(x => x.ProductCategory == request.Category);
+                var categoryIds = request.GetCategory();
+                query = query.Where(x => categoryIds.Contains(x.ProductCategory));
             }
+
             if (request?.FeaturedHasValue() == true)
             {
                 query = query.Where(x => x.Featured == request.Featured);

@@ -54,6 +54,9 @@ public class ServiceCategoryService : IServiceCategoryService
         var selectModels = new List<BaseSelectModel>();
         foreach (var item in response)
         {
+            if (item.ChildModel != null)
+                selectModels.Add(item.ChildModel);
+
             if (item.ParentIdModel != null)
                 selectModels.Add(item.ParentIdModel);
         }
@@ -75,6 +78,9 @@ public class ServiceCategoryService : IServiceCategoryService
 
         //set look up
         var selectModels = new List<BaseSelectModel>();
+        if (response.ChildModel != null)
+            selectModels.Add(response.ChildModel);
+
         if (response.ParentIdModel != null)
             selectModels.Add(response.ParentIdModel);
 

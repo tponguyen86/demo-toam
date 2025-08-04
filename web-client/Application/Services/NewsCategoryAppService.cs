@@ -46,6 +46,6 @@ public class NewsCategoryAppService : INewsCategoryAppService
         return new BaseProcess<IEnumerable<NewsCategoryItemResponse>>(result.Data, result?.Errors);
     }
 
-    public Task<BaseProcess<NewsCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
-   => _service.GetDetailAsync(request, cancellationToken);
+    public Task<BaseProcess<NewsCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request)
+   => _service.GetDetailAsync(request, CancellationToken.None);
 }

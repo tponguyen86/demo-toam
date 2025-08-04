@@ -1,4 +1,13 @@
-﻿@{
+﻿@using static web_client.Helpers.Shared.PredefineDataConst
+@inject ILayoutAppService _layout
+@{
+    var layoutData = await _layout.GetSystemConfigurationsAsync(new GetAllSystemConfigurationRequest());
+
+    var description = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.ContactUsDescription, "Mô tả Chân Trang");
+    var phoneNumber = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.ContactUsPhoneNumber, "0987654321");
+    var email = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.ContactUsEmail, "support@gmail.com");
+    var address = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.ContactUsAddress, "234 Street Name, City Name");
+
     var pageModel = new PageModel() { Title = "Liên hệ", Description = "Mô ta seo liên hệ", BodyClassName = "p-contact", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
@@ -14,25 +23,25 @@
     <div class="row pb-5 appear-animation" data-appear-animation="fadeInUpShorter">
         <div class="col-lg-7 pe-lg-5">
             @await Html.PartialAsync("~/Views/Shared/Components/Common/HeaderTitle.cshtml", new HeaderTitleComponent("Thông tin liên hệ",
-                     "Dựa trên những đầu tư nghiên cứu phát triển công nghệ bài bản trong nhiều năm qua và sự nhanh nhạy trong việc nắm bắt những xu hướng công nghệ mới, Hợp Long đã tập trung xây dựng các công nghệ lõi, nâng cao năng lực công nghệ và năng lực cạnh tranh cho công ty", true))
+                     description, true))
             <div class="row pt-4">
                 <div class="col">
                     <form class="contact-form form-style-3" action="php/contact-form.php" method="POST" novalidate="novalidate">
                         <input type="hidden" value="Contact Form" name="subject" id="subject">
                         <div class="row">
                             <div class="form-group col-md-6 pe-md-2">
-                                <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control h-auto py-2" placeholder="Your Name..." name="name" id="name" required="">
+                                <input type="text" value="" data-msg-required="Họ tên" maxlength="100" class="form-control h-auto py-2" placeholder="Họ tên" name="name" id="name" required="">
                             </div>
                             <div class="form-group col-md-6 ps-md-2">
-                                <input type="text" value="" data-msg-required="Please enter your phone." maxlength="100" class="form-control h-auto py-2" placeholder="Your Phone..." name="phone" id="phone" required="">
+                                <input type="text" value="" data-msg-required="Số điện thoại" maxlength="100" class="form-control h-auto py-2" placeholder="Số điện thoại" name="phone" id="phone" required="">
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control h-auto py-2" placeholder="Your Email Address..." name="email" id="email" required="">
+                            <input type="email" value="" data-msg-required="Email" data-msg-email="Email không hợp lệ" maxlength="100" class="form-control h-auto py-2" placeholder="Email" name="email" id="email" required="">
                         </div>
                         <div class="row">
                             <div class="form-group col">
-                                <textarea maxlength="5000" data-msg-required="Please enter your message." rows="4" class="form-control" placeholder="Your Message..." name="message" id="message" required=""></textarea>
+                                <textarea maxlength="5000" data-msg-required="Nội dung" rows="4" class="form-control" placeholder="Nội dung" name="message" id="message" required=""></textarea>
                             </div>
                         </div>
                         <div class="row">
@@ -54,9 +63,9 @@
             </div>
 
             <ul class="list list-icons list-icons-style-3 mt-5">
-                <li><i class="fas fa-map-marker-alt"></i> <strong>Địa chỉ:</strong> Melbourne, 121 King St, Australia</li>
-                <li><i class="fas fa-phone"></i> <strong>Điện thoại:</strong> (123) 456-789</li>
-                <li><i class="far fa-envelope"></i> <strong>Email:</strong> <a href="mailto:mail@example.com">mail@example.com</a></li>
+                <li><i class="fas fa-map-marker-alt"></i> <strong>Địa chỉ:</strong> @address</li>
+                <li><i class="fas fa-phone"></i> <strong>Điện thoại:</strong> @phoneNumber</li>
+                <li><i class="far fa-envelope"></i> <strong>Email:</strong> <a href="mailto:@phoneNumber">@phoneNumber</a></li>
             </ul>
 
         </div>

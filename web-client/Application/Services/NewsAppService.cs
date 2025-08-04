@@ -23,7 +23,7 @@ public class NewsAppService : INewsAppService
     public async Task<BaseProcess<IEnumerable<NewsItemResponse>>> GetFeatureAsync(int? take, CancellationToken cancellationToken = default)
     {
         var request = new NewsPagingRequest();
-        request.Category = PredefineDataConst.CategoryParentId.Key.News.GetGuid();
+        request.AddCategory(PredefineDataConst.CategoryParentId.Key.News.GetGuid());
         request.PageSize = take ?? 5;
         request.Featured = true;
         var result = await _service.GetPagingAsync(request, cancellationToken);

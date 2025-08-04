@@ -56,6 +56,7 @@ public class PredefineDataConst
             public const string Slogan2 = "slogan-2";
             public const string PhoneNumber = "phone-number";
 
+            public const string CopyrightFooter = "copyright-footer";
             public const string FooterDescription = "footer-description";
             public const string Company = "company";
             public const string Address = "address";
@@ -69,6 +70,13 @@ public class PredefineDataConst
             public const string Twitter = "twitter";
 
             public const string SidebarAboutus = "sidebar-about-us";
+
+            public const string ContactUsDescription = "contact-us-description";
+            public const string ContactUsAddress = "contact-us-address";
+            public const string ContactUsEmail = "contact-us-email";
+            public const string ContactUsPhoneNumber = "contact-us-phone-number";
+
+
         }
     }
     public class PageId

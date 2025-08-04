@@ -46,6 +46,6 @@ public class ServiceCategoryAppService : IServiceCategoryAppService
         return new BaseProcess<IEnumerable<ServiceCategoryItemResponse>>(result.Data, result?.Errors);
     }
 
-    public Task<BaseProcess<ServiceCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
-   => _service.GetDetailAsync(request, cancellationToken);
+    public Task<BaseProcess<ServiceCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request)
+   => _service.GetDetailAsync(request, CancellationToken.None);
 }

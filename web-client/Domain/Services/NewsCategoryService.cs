@@ -5,7 +5,6 @@ using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
 using web_client.Models.Request.Categories.News;
 using web_client.Models.Responses.Categories.News;
-using web_client.Models.Responses.Categories.Products;
 
 namespace web_client.Domain.Services;
 
@@ -56,6 +55,9 @@ public class NewsCategoryService : INewsCategoryService
         var selectModels = new List<BaseSelectModel>();
         foreach (var item in response)
         {
+            if (item.ChildModel != null)
+                selectModels.Add(item.ChildModel);
+
             if (item.ParentIdModel != null)
                 selectModels.Add(item.ParentIdModel);
         }
@@ -77,6 +79,9 @@ public class NewsCategoryService : INewsCategoryService
 
         //set look up
         var selectModels = new List<BaseSelectModel>();
+        if (response.ChildModel != null)
+            selectModels.Add(response.ChildModel);
+
         if (response.ParentIdModel != null)
             selectModels.Add(response.ParentIdModel);
 
