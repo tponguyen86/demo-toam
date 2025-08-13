@@ -12,6 +12,8 @@
         public const string Product = "product";
         public const string ProductDetail = "product-detail";
         public const string ProductCategory = "product-category";
+        public const string CategoryOfProduct = "category-of-product";
+        public const string CategoryOfProductDetail = "category-of-product-detail";
         public const string UserProfile = "user-profile";
         public const string UserProfileEdit = "user-profile-edit";
         public const string NotFound = "not-found";
@@ -35,6 +37,8 @@
                 UserProfile => "/user/profile",
                 UserProfileEdit => "/user/profile/edit",
                 NotFound => "/not-found",
+                CategoryOfProduct => "/danh-muc",
+                CategoryOfProductDetail => "/danh-muc/{0}/chi-tiet",//page-key-name of category
                 Product => "/san-pham",
                 ProductDetail => "/san-pham/{0}/chi-tiet",//page-key-name of product
                 ProductCategory => "/san-pham/{0}",//page-key-name of category,

@@ -1,6 +1,8 @@
-﻿@using web_client.Models.Request.Pages.PageConfigurations.Values
-@inject IPageAppService _pageService
+﻿@inject IPageAppService _pageService
 @inject IProductCategoryAppService _productCategoryAppService
+@inject IProductAppService _productAppService
+@inject IServiceAppService _serviceAppService
+@inject INewsAppService _newsAppService
 @{
     ViewData["Page"] = new PageModel() { Title = "Trang chủ", Description = "Mô ta seo trang chủ", BodyClassName = "shop p-index", MainClassName = "" };
 
@@ -17,14 +19,65 @@
     var productCategoryResponse = await _productCategoryAppService.GetByShowHomeAsync();
     var productCategoryModel = productCategoryResponse?.Data?.Select(x => new CategoryTitleMediaComponent()
             {
-                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.ProductCategory), x.ParentIdModel?.GetData<SelectDataSeoModel>()?.PageKeyName)),
+                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.CategoryOfProductDetail), $"{x.ParentIdModel?.Key}")),
                 Href = string.Format(RouteConst.GetRoute(RouteConst.ProductCategory), x.PageKeyName),
                 Media = x?.Image?.Path,
                 Id = x.Id,
                 Title = x.Name,
             });
 
+    //3.1 get category feature ,2 then  product feature by 3.1
+    var productCategoryTopLevelResponse = await _productCategoryAppService.GetAllTopLevelShowHomeAsync();
+    var productCategoryIds = new List<Guid>();
+    foreach (var item in productCategoryTopLevelResponse.Data)
+    {
+        productCategoryIds.Add(item.Id);
+        productCategoryIds.AddRange(item.ChildModel?.GetAllId());
+    }
 
+    var producByCategoryFeatureRequest = new ProductPagingRequest();
+    producByCategoryFeatureRequest.Featured = true;
+    producByCategoryFeatureRequest.PageSize = 100;
+    if (productCategoryIds?.Any() == true)
+        producByCategoryFeatureRequest.SetCategory(productCategoryIds);
+    var producByCategoryFeatureResponse = await _productAppService.GetPagingAsync(producByCategoryFeatureRequest, CancellationToken.None);
+    var producByCategoryFeatureResponseData = producByCategoryFeatureResponse?.Data;
+    //4. service feature
+    var serviceFeatureResponse = await _serviceAppService.GetFeatureAsync(6, CancellationToken.None);
+    var serviceFeatureModel = new ArticleTitleLinksComponent()
+            {
+                Title = "Dịch vụ nổi bật",
+                Links = serviceFeatureResponse?.Data?.Select(x => new BaseArticleItemModel()
+                {
+                    CreatedAt = x.CreatedAt,
+                    CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
+                    ShortDescription = x.ShortDescription,
+                    Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
+                    Href = string.Format(RouteConst.GetRoute(RouteConst.ServiceDetail), x.PageKeyName),
+                    Media = x?.Image?.Path,
+                    Id = x.Id,
+                    Title = x.Name,
+                }).ToList()
+            };
+            //5. news feature
+    var newsFeatureResponse = await _newsAppService.GetFeatureAsync(6, CancellationToken.None);
+    var newsFeatureModel = new ArticleTitleLinksComponent()
+            {
+                Title = "Tin tức nổi bật",
+                Links = newsFeatureResponse?.Data?.Select(x => new BaseArticleItemModel()
+                {
+                    CreatedAt = x.CreatedAt,
+                    CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
+                    ShortDescription = x.ShortDescription,
+                    Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
+                    Href = string.Format(RouteConst.GetRoute(RouteConst.ServiceDetail), x.PageKeyName),
+                    Media = x?.Image?.Path,
+                    Id = x.Id,
+                    Title = x.Name,
+                }).ToList()
+            };
+
+    //6. terminal
     var testimonialModel = new List<BaseCarouselItemModel>();
 }
 <div class="container">
@@ -65,96 +118,80 @@
 }
 
 <!-- sản phẩm-->
-<div class="container">
-    @for (int i = 0; i < 3; i++)
-    {
-        var productsModel = new ProductTitleLinksComponent();
-        productsModel.Title = "Danh muc cha" + i;
-        productsModel.Links = new List<BaseProductItemModel>
-        ();
-        for (int x = 0; x < 5; x++)
+@if (productCategoryTopLevelResponse?.Data?.Any() == true)
+{
+    <div class="container">
+        @foreach (var item in productCategoryTopLevelResponse.Data)
         {
-            productsModel.Links.Add(new BaseProductItemModel()
+            var productsModel = new ProductTitleLinksComponent();
+            productsModel.Title = item.Name;
+            productsModel.Link = new BaseMediaLinkModel(item.Name, string.Format(RouteConst.GetRoute(RouteConst.CategoryOfProductDetail), item.PageKeyName));
+            productsModel.Links = producByCategoryFeatureResponseData?.Items?.Where(x => x.ProductCategory == item.Id || (item.ChildModel?.GetAllId()?.Contains(x.Id) == true)).Select(x => new BaseProductItemModel(x)).Take(5).ToList();
+            // productsModel.Links = new List<BaseProductItemModel>();
+            //         for (int x = 0; x < 5; x++)
+            //         {
+            //             productsModel.Links.Add(new BaseProductItemModel()
 
-                    {
-                        Id = Guid.NewGuid(),
-                        Title = "Contactor LC1D09M7 Schneider  " + x + 1,
-                        Price = x + 1,
-                        Sale = x * 2 + 1,
-                        Sku = "sku" + x + 1,
-                        Href = "/Home/ProductDetail",
-                        Media = "https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg",
-                        Group = new BaseMediaLinkModel("Danh mục con", "/Home/Product"),
-                        CreatedAt = CommonHelper.GetCurrent(),
-                        DisplayContact = true,
-                        DisplayPrice = false,
-                        DisplaySale = true,
-                        Attributes = new List<BaseAttributeItemModel>
-                    ()
-    {
-    new BaseAttributeItemModel("Loại sản phẩm", "Contactor", "product-type"),
-    new BaseAttributeItemModel("Số cực", i + "P", "number"),
-    new BaseAttributeItemModel("Dòng tiếp điểm", i + "9A", "dong-tiep-dan"),
-    new BaseAttributeItemModel("Tiếp điểm phụ", "1NO+1NC", "tiep-diem-phu"),
+            //                     {
+            //                         Id = Guid.NewGuid(),
+            //                         Title = "Contactor LC1D09M7 Schneider  " + x + 1,
+            //                         Price = x + 1,
+            //                         Sale = x * 2 + 1,
+            //                         Sku = "sku" + x + 1,
+            //                         Href = "/Home/ProductDetail",
+            //                         Media = "https://img.hoplongtech.com/hoplong/thiet-bi-dong-cat/contactor/schneider-lc1d09-main.jpg",
+            //                         Group = new BaseMediaLinkModel("Danh mục con", "/Home/Product"),
+            //                         CreatedAt = CommonHelper.GetCurrent(),
+            //                         DisplayContact = true,
+            //                         DisplayPrice = false,
+            //                         DisplaySale = true,
+            //                         Attributes = new List<BaseAttributeItemModel>
+            //                     ()
+            // {
+            // new BaseAttributeItemModel("Loại sản phẩm", "Contactor", "product-type"),
+            // new BaseAttributeItemModel("Số cực","P", "number"),
+            // new BaseAttributeItemModel("Dòng tiếp điểm",  "9A", "dong-tiep-dan"),
+            // new BaseAttributeItemModel("Tiếp điểm phụ", "1NO+1NC", "tiep-diem-phu"),
 
-    }
-                    });
-        }
+            // }
+            //                     });
+            //         }
 
-        <div class="card mb-4">
-            <div class="card-body p-0">
-                <div class="row">
-                    <div class="col-sm-3  pe-0">
-                        <div class="card border-0 border-radius-0 bg-color-primary text-center h-100">
-                            <div class="card-body align-items-center align-content-center p-0">
-                                <img class="img-fluid" src="https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png" alt="Card Image">
-                            </div>
-                            <div class="card-footer bg-color-grey">
-                                <a href="/" class="btn btn-arrow-effect-1 text-uppercase bg-transparent text-primary border-0 p-0">Xem thêm<i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
+            <div class="card mb-4">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-sm-3  pe-0">
+                            <div class="card border-0 border-radius-0 bg-color-primary text-center h-100">
+                                <div class="card-body align-items-center align-content-center p-0">
+                                    <img class="img-fluid" src="@(item.Image?.Path)" alt="@productsModel.Title">
+                                </div>
+                                <div class="card-footer bg-color-grey">
+                                    <a href="@productsModel.Link" class="btn btn-arrow-effect-1 text-uppercase bg-transparent text-primary border-0 p-0">Xem thêm<i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="row products mt-3">
-                            <div class="col">
-                                @await Html.PartialAsync("~/Views/Shared/Components/Common/SliderProductTitleList.cshtml", productsModel)
+                        <div class="col-sm-9">
+                            <div class="row products mt-3">
+                                <div class="col">
+                                    @await Html.PartialAsync("~/Views/Shared/Components/Common/SliderProductTitleList.cshtml", productsModel)
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+}
 
 <!-- dịch vụ nổi bật -->
 
 <div class="bg-color-grey-100">
     <div class="container py-5">
-        @{
-            var serviceModel = new ArticleTitleLinksComponent()
-            {
-                Title = "Dịch vụ nổi bật",
-                Links = new List<BaseArticleItemModel>()
-            };
-            for (int i = 0; i < 6; i++)
-            {
-                serviceModel.Links.Add(new BaseArticleItemModel()
-                {
-                    Id = Guid.NewGuid(),
-                    Title = "Dịch vụ " + i + 1,
-                    ShortDescription = "Nội dung dịch vụ",
-                    CreatedAt = CommonHelper.GetCurrent(),
-
-                    Href = "/Home/ServiceDetail",
-                    Media = "https://img.hoplongtech.com/hoplong/uploads/bac-my-tang-toc-tu-dong-hoa-580-trieu-usd-do-vao-robot-trong-quy-i-2025-4.jpg"
-                });
-            }
-        }
-        @await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleListStyle3.cshtml", serviceModel)
+        @await Html.PartialAsync("~/Views/Shared/Components/Common/ArticleTitleListStyle3.cshtml", serviceFeatureModel)
         <div class="row mt-3">
             <div class="col col text-center">
-                <a href="/Home/Service" class="btn btn-modern btn-rounded btn-primary btn-outline btn-arrow-effect-1">Tất cả dịch vụ<i class="fas fa-arrow-right ms-2"></i></a>
+                <a href="@Url.Action("Service","Home")" class="btn btn-modern btn-rounded btn-primary btn-outline btn-arrow-effect-1">Tất cả dịch vụ<i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -410,7 +447,7 @@
 </div>
 
 <!-- new feature and  testimonial-->
-<section class="section section-custom-map appear-animation lazyload mt-0 p-0" data-appear-animation="fadeInUpShorter" data-src-bg="img/map.png" style="background-color: transparent; background-position: center 0; background-repeat: no-repeat;">
+@* <section class="section section-custom-map appear-animation lazyload mt-0 p-0" data-appear-animation="fadeInUpShorter" data-src-bg="img/map.png" style="background-color: transparent; background-position: center 0; background-repeat: no-repeat;">
     <section class="section section-default section-footer py-1">
         <div class="container">
             <div class="row mt-5 appear-animation" data-appear-animation="fadeInUpShorter">
@@ -418,114 +455,47 @@
                     <div class="recent-posts mb-5">
                         <h2 class="font-weight-normal text-6 mb-4">Tin tức <strong class="font-weight-extra-bold">nổi bật</strong> </h2>
                         <div class="owl-carousel owl-theme dots-title mb-0" data-plugin-options="{'items': 1, 'autoHeight': true, 'autoplay': true, 'autoplayTimeout': 8000}">
-                            <div class="row">
-                                <div class="col-lg-6 mb-4 mb-lg-0">
-                                    <article>
-                                        <div class="row">
-                                            <div class="col-auto pe-0">
-                                                <div class="date">
-                                                    <span class="day font-weight-extra-bold">15</span>
-                                                    <span class="month text-1">JAN</span>
+                            @foreach (var item in newsFeatureModel.Links)
+                            {
+                                <div class="row">
+                                    <div class="col-lg-6 mb-4 mb-lg-0">
+                                        <article>
+                                            <div class="row">
+                                                <div class="col-auto pe-0">
+                                                    <div class="date">
+                                                        <span class="day font-weight-extra-bold">15</span>
+                                                        <span class="month text-1">JAN</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col ps-1">
+                                                    <h4 class="text-primary text-4"><a class="d-block" href="@item.Href">@item.Title</a></h4>
+                                                    <p class="pe-4 mb-0">@item.ShortDescription</p>
+                                                    <a href="@item.Href" class="read-more text-color-dark font-weight-semibold text-2">Chi tiết <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
                                                 </div>
                                             </div>
-                                            <div class="col ps-1">
-                                                <h4 class="text-primary text-4"><a class="d-block" href="blog-post.html">Lorem ipsum dolor sit amet, consectetur</a></h4>
-                                                <p class="pe-4 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                                <a href="/" class="read-more text-color-dark font-weight-semibold text-2">read more <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                                <div class="col-lg-6">
-                                    <article>
-                                        <div class="row">
-                                            <div class="col-auto pe-0">
-                                                <div class="date">
-                                                    <span class="day font-weight-extra-bold">14</span>
-                                                    <span class="month text-1">JAN</span>
+                                        </article>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <article>
+                                            <div class="row">
+                                                <div class="col-auto pe-0">
+                                                    <div class="date">
+                                                        <span class="day font-weight-extra-bold">14</span>
+                                                        <span class="month text-1">JAN</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col ps-1">
+                                                    <h4 class="text-primary text-4"><a class="d-block" href="blog-post.html">Lorem ipsum dolor sit amet, consectetur</a></h4>
+                                                    <p class="pe-4 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                    <a href="/" class="read-more text-color-dark font-weight-semibold text-2">read more <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
                                                 </div>
                                             </div>
-                                            <div class="col ps-1">
-                                                <h4 class="text-primary text-4"><a class="d-block" href="blog-post.html">Lorem ipsum dolor sit amet, consectetur</a></h4>
-                                                <p class="pe-4 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                                <a href="/" class="read-more text-color-dark font-weight-semibold text-2">read more <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
-                                            </div>
-                                        </div>
-                                    </article>
+                                        </article>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 mb-4 mb-lg-0">
-                                    <article>
-                                        <div class="row">
-                                            <div class="col-auto pe-0">
-                                                <div class="date">
-                                                    <span class="day font-weight-extra-bold">13</span>
-                                                    <span class="month text-1">JAN</span>
-                                                </div>
-                                            </div>
-                                            <div class="col ps-1">
-                                                <h4 class="text-primary text-4"><a class="d-block" href="blog-post.html">Lorem ipsum dolor sit amet, consectetur</a></h4>
-                                                <p class="pe-4 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                                <a href="/" class="read-more text-color-dark font-weight-semibold text-2">read more <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                                <div class="col-lg-6">
-                                    <article>
-                                        <div class="row">
-                                            <div class="col-auto pe-0">
-                                                <div class="date">
-                                                    <span class="day font-weight-extra-bold">12</span>
-                                                    <span class="month text-1">JAN</span>
-                                                </div>
-                                            </div>
-                                            <div class="col ps-1">
-                                                <h4 class="text-primary text-4"><a class="d-block" href="blog-post.html">Lorem ipsum dolor sit amet, consectetur</a></h4>
-                                                <p class="pe-4 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                                <a href="/" class="read-more text-color-dark font-weight-semibold text-2">read more <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 mb-4 mb-lg-0">
-                                    <article>
-                                        <div class="row">
-                                            <div class="col-auto pe-0">
-                                                <div class="date">
-                                                    <span class="day font-weight-extra-bold">11</span>
-                                                    <span class="month text-1">JAN</span>
-                                                </div>
-                                            </div>
-                                            <div class="col ps-1">
-                                                <h4 class="text-primary text-4"><a href="blog-post.html">Lorem ipsum dolor sit amet, consectetur</a></h4>
-                                                <p class="pe-4 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                                <a href="/" class="read-more text-color-dark font-weight-semibold text-2">read more <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                                <div class="col-lg-6">
-                                    <article>
-                                        <div class="row">
-                                            <div class="col-auto pe-0">
-                                                <div class="date">
-                                                    <span class="day font-weight-extra-bold">10</span>
-                                                    <span class="month text-1">JAN</span>
-                                                </div>
-                                            </div>
-                                            <div class="col ps-1">
-                                                <h4 class="text-primary text-4"><a href="blog-post.html">Lorem ipsum dolor sit amet, consectetur</a></h4>
-                                                <p class="pe-4 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                                <a href="/" class="read-more text-color-dark font-weight-semibold text-2">read more <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
+                            }
+                          
+                           
                         </div>
                     </div>
                 </div>
@@ -544,3 +514,4 @@
         </div>
     </section>
 </section>
+ *@

@@ -3,6 +3,7 @@ using web_client.Domain.IServices;
 using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
+using web_client.Models.Request.Categories;
 using web_client.Models.Request.Categories.Products;
 using web_client.Models.Responses.Categories.Products;
 
@@ -19,9 +20,21 @@ public class ProductCategoryService : IProductCategoryService
         _lookup = lookup;
     }
 
-    public async Task<BaseProcess<ProductCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
+    public async Task<BaseProcess<ProductCategoryDetailResponse>> GetDetailAsync(CategoryDetailRequestDto request, CancellationToken cancellationToken)
     {
-        var query = _context.ProductCategories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
+        var query = _context.ProductCategories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active && (x.PageKeyName == request.Code || x.Id == request.Id)).AsQueryable();
+
+        if (request?.DiscriminatorHasValue() == true)
+        {
+            string discriminator = request.GetDiscriminator();
+            query = query.Where(x => x.Discriminator == discriminator);
+        }
+
+        if (request?.ParentIdValidate()==true)
+        {
+            var parentId = request.GetParentId();
+            query = query.Where(x => x.ParentId == parentId);
+        }
 
         var result = await query.FirstOrDefaultAsync(cancellationToken);
         if (result == null)
@@ -47,11 +60,17 @@ public class ProductCategoryService : IProductCategoryService
         return BaseProcess<ProductCategoryDetailResponse>.Success(response);
     }
 
+    //get mutil level
     public async Task<BaseProcess<List<ProductCategoryItemResponse>>> GetAllAsync(GetProductCategoryAllRequest request, CancellationToken cancellationToken)
     {
         var query = _context.ProductCategories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
 
-        if (request.ParentIdHasValue())
+        if (request.GetTopLevel() == true)
+        {
+            query = query.Where(x => x.ParentId == null || x.ParentId == Guid.Empty);
+        }
+
+        if (request.ParentIdValidate())
         {
             query = query.Where(x => x.ParentId == request.ParentId);
         }
@@ -68,7 +87,8 @@ public class ProductCategoryService : IProductCategoryService
 
         if (request?.DiscriminatorHasValue() == true)
         {
-            query = query.Where(x => x.Discriminator == request.Discriminator);
+            string discriminator = request.GetDiscriminator();
+            query = query.Where(x => x.Discriminator == discriminator);
         }
 
         var result = await query.OrderByDescending(x => x.CreatedAt).ToListAsync(cancellationToken);

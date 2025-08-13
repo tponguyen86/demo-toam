@@ -12,6 +12,7 @@ public class BaseCategoryResponse : BaseCategory
     public string? ShowType { get; set; }
     public ProductCategorySelectModel? ParentIdModel { get; set; }
     public CategoryChildrenSelectModel? ChildModel { get; set; }
+
     public BaseCategoryResponse() { }
     public BaseCategoryResponse(Category category)
     {

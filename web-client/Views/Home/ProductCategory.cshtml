@@ -1,104 +1,13 @@
-﻿@{
-    var pageModel = new PageModel() { Title = "Danh mục sản phẩm", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product-category", MainClassName = "shop" }; ;
+﻿@model List<BaseCategoryItemModel>
+@{
+    var pageModel = new PageModel() { Title = "Danh mục", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product-category", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
         new BaseLinkModel("Trang chủ","/"),
         new BaseLinkModel(pageModel.Title,"/Home/ProductCatogory"),
     });
-    var categoriesModel = new CategoryTitleLinksComponent("Danh mục", new List<BaseCategoryItemModel>
-{
-    new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến", "/category/cam-bien", new List<BaseCategoryItemModel>
-    {
-        new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến tiệm cận", "/category/cam-bien-tiem-can"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến quang", "/category/cam-bien-quang"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến sợi quang", "/category/cam-bien-soi-quang"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến cửa", "/category/cam-bien-cua"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến vùng", "/category/cam-bien-vung"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến hình ảnh", "/category/cam-bien-hinh-anh"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến áp suất", "/category/cam-bien-ap-suat"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến đo lường", "/category/cam-bien-do-luong"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Bộ mã hóa vòng quay / Encoder", "/category/bo-ma-hoa-vong-quay-encoder"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Bộ điều khiển cảm biến", "/category/bo-dieu-khien-cam-bien")
-    }),
-    new BaseCategoryItemModel(Guid.NewGuid(), "Chuyển mạch/ Nút nhấn", "/category/chuyen-mach-nut-nhan", new List<BaseCategoryItemModel>
-    {
-        new BaseCategoryItemModel(Guid.NewGuid(), "Chuyển mạch 2-3 vị trí", "/category/chuyen-mach-2-3-vi-tri"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Chuyển mạch có khóa", "/category/chuyen-mach-co-khoa"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Cần gạt 2-4 hướng", "/category/can-gat-2-4-huong"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Chuyển mạch khác", "/category/chuyen-mach-khac"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Nút nhấn", "/category/nut-nhan")
-    }),
-    new BaseCategoryItemModel(Guid.NewGuid(), "Đèn báo", "/category/den-bao", new List<BaseCategoryItemModel>
-    {
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đèn báo panel tròn", "/category/den-bao-panel-tron"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đèn báo panel khối", "/category/den-bao-panel-khoi"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đèn báo tháp", "/category/den-bao-thap"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đèn báo quay", "/category/den-bao-quay"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Đèn báo khác", "/category/den-bao-khac")
-    }),
-    new BaseCategoryItemModel(Guid.NewGuid(), "Đồng hồ đo", "/category/dong-ho-do", new List<BaseCategoryItemModel>
-    {
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đồng hồ Counter", "/category/dong-ho-counter"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đồng hồ Timer", "/category/dong-ho-timer"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đồng hồ Counter/ Timer", "/category/dong-ho-counter-timer"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đồng hồ đo xung/ tốc độ", "/category/dong-ho-do-xung-toc-do"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đồng hồ đo hiển thị số", "/category/dong-ho-do-hien-thi-so"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đồng hồ đo giám sát điện năng", "/category/dong-ho-do-giam-sat-dien-nang"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đồng hồ đo điện năng", "/category/dong-ho-do-dien-nang")
-    }),
-    new BaseCategoryItemModel(Guid.NewGuid(), "Bộ điều khiển nhiệt độ", "/category/bo-dieu-khien-nhiet-do", new List<BaseCategoryItemModel>
-    {
-        new BaseCategoryItemModel(Guid.NewGuid(), "Đồng hồ nhiệt độ", "/category/dong-ho-nhiet-do"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Bộ transmitter nhiệt độ", "/category/bo-transmitter-nhiet-do"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Can nhiệt", "/category/can-nhiet"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến mưa, nhiệt độ, độ ẩm", "/category/cam-bien-mua-nhiet-do-do-am"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Bộ ghi dữ liệu nhiệt độ", "/category/bo-ghi-du-lieu-nhiet-do")
-    }),
-    new BaseCategoryItemModel(Guid.NewGuid(), "Biến tần", "/category/bien-tan", new List<BaseCategoryItemModel>
-    {
-        new BaseCategoryItemModel(Guid.NewGuid(), "Biến tần hạ thế", "/category/bien-tan-ha-the"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Biến tần trung thế", "/category/bien-tan-trung-the")
-    }),
-    new BaseCategoryItemModel(Guid.NewGuid(), "Khởi động mềm", "/category/khoi-dong-mem", new List<BaseCategoryItemModel>
-    {
-        new BaseCategoryItemModel(Guid.NewGuid(), "Khởi động mềm 1 phase", "/category/khoi-dong-mem-1-phase"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Khởi động mềm 3 phase", "/category/khoi-dong-mem-3-phase")
-    }),
-    new BaseCategoryItemModel(Guid.NewGuid(), "PLC/ HMI", "/category/plc-hmi", new List<BaseCategoryItemModel>
-    {
-        new BaseCategoryItemModel(Guid.NewGuid(), "PLC", "/category/plc"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "HMI", "/category/hmi")
-    }),
-    new BaseCategoryItemModel(Guid.NewGuid(), "Relay", "/category/relay", new List<BaseCategoryItemModel>
-    {
-        new BaseCategoryItemModel(Guid.NewGuid(), "Relay trung gian", "/category/relay-trung-gian"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Relay trung gian bán dẫn", "/category/relay-trung-gian-ban-dan"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Relay bán dẫn", "/category/relay-ban-dan"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Relay luân phiên", "/category/relay-luan-phien"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "I/O Relay Terminal", "/category/i-o-relay-terminal"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Relay điều khiển mức", "/category/relay-die-u-khie-n-mu-c"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Relay an toàn", "/category/relay-an-toan"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Relay Terminal", "/category/relay-terminal")
-    }),
-    new BaseCategoryItemModel(Guid.NewGuid(), "Thiết bị đóng cắt", "/category/thiet-bi-dong-cat", new List<BaseCategoryItemModel>
-    {
-        new BaseCategoryItemModel(Guid.NewGuid(), "MCB Cầu dao tự động - dạng cài", "/category/mcb-cau-dao-tu-dong-dang-cai"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "RCCB Cầu dao chống dòng rò - dạng cài", "/category/rccb-cau-dao-chong-dong-ro-dang-cai"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "RCBO Cầu dao tích hợp chống dòng rò - dạng cài", "/category/rcbo-cau-dao-tich-hop-chong-dong-ro-dang-cai"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Cầu dao chống sét - dạng cài", "/category/cau-dao-chong-set-dang-cai"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "MCCB Cầu dao tự động - dạng khối", "/category/mccb-cau-dao-tu-dong-dang-khoi"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "MCCB Cầu dao tự động - dạng khối (Loại chỉnh dòng)", "/category/mccb-cau-dao-tu-dong-dang-khoi-loai-chinh-dong"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "ELCB Cầu dao chống dòng rò - dạng khối", "/category/elcb-cau-dao-chong-dong-ro-dang-khoi"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "ACB Máy cắt khí", "/category/acb-may-cat-khi"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "MotorCB Cầu dao bảo vệ motor - dạng khối", "/category/motorcb-cau-dao-bao-ve-motor-dang-khoi"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "CB Máy cắt", "/category/cb-may-cat"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "ATS Compact (MCCB/CB)", "/category/ats-compact-mccb-cb"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "ATS Masterpact (ACB)", "/category/ats-masterpact-acb"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Contactor", "/category/contactor"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Relay nhiệt", "/category/relay-nhiet"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "CP Cầu dao tự động", "/category/cp-cau-dao-tu-dong")
-    })
+    var categoriesModel = new CategoryTitleLinksComponent("Danh mục", Model);
 });
 }
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
@@ -122,7 +31,7 @@
                                 )
                             <div class="row">
                                 <div class="col col text-center">
-                                    <a href="/Home/ProductCategoryDetail" class="btn btn-modern btn-rounded btn-primary btn-outline btn-arrow-effect-1">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
+                                    <a href="@item.Href" class="btn btn-modern btn-rounded btn-primary btn-outline btn-arrow-effect-1">Chi tiết <i class="fas fa-arrow-right ms-2"></i></a>
                                 </div>
                             </div>
                         </div>

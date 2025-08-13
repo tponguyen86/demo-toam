@@ -9,4 +9,5 @@ public interface IProductAppService
     Task<BaseProcess<IEnumerable<ProductItemResponse>>> GetFeatureAsync(int? take, CancellationToken cancellationToken);
     Task<BaseProcess<BasePagingModel<ProductItemResponse>>> GetPagingAsync(ProductPagingRequest request, CancellationToken cancellationToken);
     Task<BaseProcess<ProductDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken);
+    Task<BaseProcess<List<ProductItemResponse>>> GetRelativeAsync(Guid productId, CancellationToken cancellationToken);
 }

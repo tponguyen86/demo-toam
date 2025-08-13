@@ -196,14 +196,17 @@ public class LookupService : ILookupService
                 item.Value = $"{selected.Id}";
                 item.Key = $"{selected.PageKeyName}";
                 item.Label = selected.Name;
-                item.SetData(new
+                item.SetData(new CategoryDataSelectModel
                 {
-                    Sort = selected.Sort ?? 0,
-                    selected.ParentId,
-                    selected.ShowHome,
-                    selected.ShowMenu,
-                    selected.PageKeyName,
-                    selected.Status,
+                    Sort = selected.Sort,
+                    ParentId = selected.ParentId,
+                    ShowHome = selected.ShowHome,
+                    ShowMenu = selected.ShowMenu,
+                    PageKeyName = selected.PageKeyName,
+                    ShortDescription = selected.ShortDescription,
+                    Image = selected.Image,
+                    Banner = selected.Banner,
+                    Id = selected.Id,
                 });
                 //get child 
                 var allChildren = GetAllDescendants(categories, selected.Id);
@@ -212,14 +215,17 @@ public class LookupService : ILookupService
                     Value = $"{x.Id}",
                     Key = $"{x.PageKeyName}",
                     Label = x.Name,
-                    Data = new
+                    Data = new CategoryDataSelectModel
                     {
-                        Sort = x.Sort ?? 0,
-                        x.ParentId,
-                        x.ShowHome,
-                        x.ShowMenu,
-                        x.PageKeyName,
-                        x.Status,
+                        Sort = x.Sort,
+                        ParentId = x.ParentId,
+                        ShowHome = x.ShowHome,
+                        ShowMenu = x.ShowMenu,
+                        PageKeyName = x.PageKeyName,
+                        ShortDescription = x.ShortDescription,
+                        Image = x.Image,
+                        Banner = x.Banner,
+                        Id = x.Id,
                     }
                 }).ToList();
             }

@@ -1,5 +1,22 @@
 ﻿@model ProductTitleMediaDetailComponent
+@inject IProductAppService _service
 @{
+    var relativeResponse = await _service.GetRelativeAsync(Model.Id, CancellationToken.None);
+    var relativeModel = new ArticleTitleLinksComponent()
+            {
+                Title = "Dịch vụ khác",
+                Links = relativeResponse?.Data?.Select(x => new BaseArticleItemModel()
+                {
+                    CreatedAt = x.CreatedAt,
+                    CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
+                    ShortDescription = x.ShortDescription,
+                    Group = new BaseMediaLinkModel($"{x.ProductCategoryModel?.Label}", $"{x.ProductCategoryModel?.Key}"),
+                    Href = string.Format(RouteConst.GetRoute(RouteConst.ServiceDetail), x.PageKeyName),
+                    Media = x?.Image?.Path,
+                    Id = x.Id,
+                    Title = x.Name,
+                }).ToList()
+            };
     var pageModel = new PageModel() { Title = "Sản phẩm", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product-detail", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()

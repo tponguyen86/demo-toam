@@ -3,6 +3,7 @@ using web_client.Domain.IServices;
 using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
+using web_client.Models.Request.Categories;
 using web_client.Models.Request.Categories.News;
 using web_client.Models.Responses.Categories.News;
 
@@ -23,7 +24,12 @@ public class NewsCategoryService : INewsCategoryService
     {
         var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
 
-        if (request.ParentIdHasValue())
+        if (request.GetTopLevel() == true)
+        {
+            query = query.Where(x => x.ParentId == null || x.ParentId == Guid.Empty);
+        }
+
+        if (request.ParentIdValidate())
         {
             query = query.Where(x => x.ParentId == request.ParentId);
         }
@@ -40,7 +46,8 @@ public class NewsCategoryService : INewsCategoryService
 
         if (request?.DiscriminatorHasValue() == true)
         {
-            query = query.Where(x => x.Discriminator == request.Discriminator);
+            string discriminator = request.GetDiscriminator();
+            query = query.Where(x => x.Discriminator == discriminator);
         }
 
         var result = await query.OrderByDescending(x => x.CreatedAt).ToListAsync(cancellationToken);
@@ -67,11 +74,24 @@ public class NewsCategoryService : INewsCategoryService
         return BaseProcess<List<NewsCategoryItemResponse>>.Success(response);
     }
 
-    public async Task<BaseProcess<NewsCategoryDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken)
+    public async Task<BaseProcess<NewsCategoryDetailResponse>> GetDetailAsync(CategoryDetailRequestDto request, CancellationToken cancellationToken)
     {
-        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
+        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active && (x.PageKeyName == request.Code || x.Id == request.Id)).AsQueryable();
+
+        if (request?.DiscriminatorHasValue() == true)
+        {
+            string discriminator = request.GetDiscriminator();
+            query = query.Where(x => x.Discriminator == discriminator);
+        }
+
+        if (request?.ParentIdValidate() == true)
+        {
+            var parentId = request.GetParentId();
+            query = query.Where(x => x.ParentId == parentId);
+        }
 
         var result = await query.FirstOrDefaultAsync(cancellationToken);
+
         if (result == null)
             return BaseProcess<NewsCategoryDetailResponse>.Success(null);
 

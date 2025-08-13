@@ -11,10 +11,10 @@
                     @(
                         await Html.PartialAsync("~/Views/Shared/Components/Common/CategoryTitleMedia.cshtml", new CategoryTitleMediaComponent()
         {
-            Id = Guid.NewGuid(),
+            Id = item.Id,
             Title = item.Title,
-            Href = "/Home/Product",
-            Media = "https://img.hoplongtech.com/hoplong/logo-hang/banner-danh-muc/gv2me326-new.png",
+            Href = item.Href,
+            Media = item.Media,
                             @*   Group = new BaseMediaLinkModel(Model.Title, Model.Link?.Href), *@
         })
                         )

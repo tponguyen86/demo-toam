@@ -29,4 +29,7 @@ public class ProductAppService : IProductAppService
 
     public Task<BaseProcess<BasePagingModel<ProductItemResponse>>> GetPagingAsync(ProductPagingRequest request, CancellationToken cancellationToken)
     => _service.GetPagingAsync(request, cancellationToken);
+
+    public Task<BaseProcess<List<ProductItemResponse>>> GetRelativeAsync(Guid productId, CancellationToken cancellationToken)
+=> _service.GetRelativeAsync(productId, cancellationToken);
 }

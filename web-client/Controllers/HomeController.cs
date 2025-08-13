@@ -6,6 +6,8 @@ using web_client.Helpers.Shared;
 using web_client.Models;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
+using web_client.Models.Htmls;
+using web_client.Models.Htmls.Base;
 using web_client.Models.Htmls.Common;
 using web_client.Models.Request.News;
 using web_client.Models.Request.Products;
@@ -31,40 +33,59 @@ namespace web_client.Controllers
             //var products = await _dbContext.Products.ToListAsync(cancellationToken);
             return View();
         }
+        [Route("danh-muc")]
+        public async Task<IActionResult> ProductCategory([FromServices] IProductCategoryAppService services, CancellationToken cancellationToken)
+        {
+            var result = await services.GetAllTopLevelAsync();
+            if (result.HasError)
+                return RedirectToAction("Index");
 
-        public IActionResult About()
-        {
-            return View();
+            var response = result.Data?.Select(x => new BaseCategoryItemModel(x)).ToList();
+            return View(response);
         }
 
-        public IActionResult Privacy()
+        [Route("danh-muc/{seoKey}/chi-tiet")]
+        public async Task<IActionResult> ProductCategoryDetailAsync([FromServices] IProductCategoryAppService categoryServices, string? seoKey, CancellationToken cancellationToken)
         {
-            return View();
-        }
-        public IActionResult ProductCategory()
-        {
-            return View();
-        }
-        public IActionResult ProductCategoryDetail()
-        {
-            return View();
+            var result = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKey));
+            if (result.HasError)
+                return RedirectToAction("ProductCategory");
+            var responseData = result.Data;
+            var response = new CategoryTitleLinksDetailComponent(responseData?.Name, responseData?.ChildModel?.Child?.Select(c => new BaseCategoryItemModel(c))?.ToList(), responseData?.ShortDescription);
+
+            //var categoryIds = responseData?.ChildModel?.GetAllId();
+            //if (categoryIds?.Any() == true)
+            //    request.SetCategory(categoryIds);
+
+            return View(response);
         }
 
         [Route("san-pham/{seoKeyCategory?}")]
         public async Task<IActionResult> Product([FromServices] IProductAppService services, [FromServices] IProductCategoryAppService categoryServices, ProductPagingRequest request, string? seoKeyCategory, CancellationToken cancellationToken)
         {
+            var pageModel = new PageModel() { Title = "Sản phẩm", Description = "Danh sách sản phẩm", BodyClassName = "p-product", MainClassName = "shop", Keywords = "danh sách sản phẩm, sản phẩm, sản phẩm mới, sản phẩm nổi bật" };
+
             var getCategoryDetail = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKeyCategory));
-            var categoryIds = getCategoryDetail?.Data?.ChildModel?.GetAllId();
-            if (categoryIds?.Any() == true)
-                request.SetCategory(categoryIds);
+            if (getCategoryDetail?.Data != null)
+            {
+                pageModel.Title = getCategoryDetail.Data.Name;
+                pageModel.Description = getCategoryDetail.Data.ShortDescription;
+                pageModel.Keywords = getCategoryDetail.Data.MetaKeyword;
+
+                var categoryIds = getCategoryDetail?.Data?.ChildModel?.GetAllId();
+                if (categoryIds?.Any() == true)
+                    request.SetCategory(categoryIds);
+            }
 
             var resultProduct = await services.GetPagingAsync(request, cancellationToken);
             if (resultProduct.HasError)
-                return RedirectToAction("Service");
+                return RedirectToAction("Product");
             var responseData = resultProduct.Data;
             var model = responseData?.Items?.Select(x => new ProductTitleMediaComponent(x));
             var response = responseData.GetPaging(model);
             ViewBag.paging = response?.BuildPaging($"{RouteConst.GetRoute(RouteConst.Product)}?page={0}");
+
+            ViewData["Page"] = pageModel;
             return View(response);
         }
 
@@ -72,12 +93,12 @@ namespace web_client.Controllers
         public async Task<IActionResult> ProductDetail([FromServices] IProductAppService services, string seoKey, CancellationToken cancellationToken)
         {
             var resultProduct = await services.GetDetailAsync(new BaseDetailRequestDto(seoKey), cancellationToken);
-            var responseData = resultProduct.Data;
-            var response = new ProductTitleMediaDetailComponent(responseData);
+            var response = new ProductTitleMediaDetailComponent(resultProduct.Data);
             return View(response);
         }
+
         [Route("dich-vu/{seoKeyCategory?}")]
-        public async Task<IActionResult> Service([FromServices] IServiceAppService services, [FromServices] IServiceCategoryAppService categoryServices, string? seoKeyCategory,ServicePagingRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Service([FromServices] IServiceAppService services, [FromServices] IServiceCategoryAppService categoryServices, string? seoKeyCategory, ServicePagingRequest request, CancellationToken cancellationToken)
         {
             var getCategoryDetail = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKeyCategory));
             var categoryIds = getCategoryDetail?.Data?.ChildModel?.GetAllId();

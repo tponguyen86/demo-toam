@@ -1,27 +1,15 @@
-﻿@{
-    var pageModel = new PageModel() { Title = "Cảm biến", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product-category", MainClassName = "shop" }; ;
+﻿@model CategoryTitleLinksDetailComponent
+@{
+    var pageModel = new PageModel() { Title = Model?.Title, Description = "Mô ta seo sản phẩm", BodyClassName = "p-product-category", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
+    var categoryLink = new BaseLinkModel("Danh mục", Url.ActionLink("ProductCategory", "Home"));
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
         new BaseLinkModel("Trang chủ","/"),
-        new BaseLinkModel(pageModel.Title,"/Home/ProductCatogory"),
+       categoryLink,
+        new BaseLinkModel(pageModel.Title),
     });
-    var categoriesModel = new CategoryTitleLinksComponent("Danh mục", new List<BaseCategoryItemModel>
-{
-    new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến", "/category/cam-bien", new List<BaseCategoryItemModel>
-    {
-        new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến tiệm cận", "/category/cam-bien-tiem-can"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến quang", "/category/cam-bien-quang"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến sợi quang", "/category/cam-bien-soi-quang"),
-        new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến cửa", "/category/cam-bien-cua"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến vùng", "/category/cam-bien-vung"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến hình ảnh", "/category/cam-bien-hinh-anh"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến áp suất", "/category/cam-bien-ap-suat"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Cảm biến đo lường", "/category/cam-bien-do-luong"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Bộ mã hóa vòng quay / Encoder", "/category/bo-ma-hoa-vong-quay-encoder"),
-        // new BaseCategoryItemModel(Guid.NewGuid(), "Bộ điều khiển cảm biến", "/category/bo-dieu-khien-cam-bien")
-    }),
-});
+    var categoriesModel = new CategoryTitleLinksComponent(Model?.Title ?? "Danh mục", Model?.Links);
 }
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
 <div class="container py-4">
@@ -30,22 +18,19 @@
         @if (categoriesModel.Links?.Any() == true)
         {
             <div class="col">
-                @foreach (var item in categoriesModel.Links)
-                {
-                    <div class="card border-radius-2 bg-color-light border-0 box-shadow-1 mb-4">
-                        <div class="card-body">
-                            @(
-                                await Html.PartialAsync("~/Views/Shared/Components/Common/CategoryLevelTitleMediaList.cshtml", new CategoryTitleLinksComponent()
+                <div class="card border-radius-2 bg-color-light border-0 box-shadow-1 mb-4">
+                    <div class="card-body">
+                        @(
+                            await Html.PartialAsync("~/Views/Shared/Components/Common/CategoryLevelTitleMediaList.cshtml", new CategoryTitleLinksComponent()
                     {
-                        Title = item.Title,
-                        Link = item,
-                        Links = item.Children,
+                        Title = Model?.Title,
+                        Link = categoryLink,
+                        Links = Model?.Links,
                     })
-                                )
+                            )
 
-                        </div>
                     </div>
-                }
+                </div>
 
             </div>
         }
@@ -86,34 +71,31 @@
                             new BaseAttributeItemModel("Số cực", "P", "number"),
                             new BaseAttributeItemModel("Dòng tiếp điểm","9A", "dong-tiep-dan"),
                             new BaseAttributeItemModel("Tiếp điểm phụ", "1NO+1NC", "tiep-diem-phu"),
-
                             }
                 });
                                 }
-
                             }
                             @await Html.PartialAsync("~/Views/Shared/Components/Common/SliderProductTitleListStyle3.cshtml", productsModel)
 
                             <div class="description mt-4">
                                 <div data-plugin-readmore data-plugin-options="{'buttonOpenLabel' : 'Hiển thị <i class=\' fas fa-chevron-down text-2 ms-1\'> </i>','buttonCloseLabel': 'Thu gọn <i class=\'fas fa-chevron-up text-2 ms-1\'></i>'}">
                                     <div>
-                                        Có nhiều loại cảm biến khác nhau với đặc tính riêng đáp ứng yêu cầu sử dụng trong nhiều trường hợp. &nbsp;<br>• &nbsp; &nbsp;Cảm biến hình ảnh: &nbsp; &nbsp; &nbsp;&nbsp;<br>Có tên gọi khác là cảm biến thị giác có thể phát hiện đối tượng cụ thể, màu sắc trong phạm vi nhất định. Tín hiệu sẽ được chuyển đổi thành hình ảnh đến hệ thống điều khiển để người dùng có thể quan sát và theo dõi. &nbsp;<br>• &nbsp; &nbsp;Cảm biến nhiệt độ: &nbsp; &nbsp; &nbsp;&nbsp;<br>Có thiết kế chủ yếu ở dạng một đầu dò nhiệt độ. Những thông số nhiệt sẽ được tiếp nhận, truyền tín hiệu đến thiết bị đo nhiệt. Nó được sử dụng để đo các đặc tính nhiệt độ của chất lỏng, khí, rắn trong các ngành môi trường, công nghiệp chế biến. &nbsp; &nbsp;<br>Một số loại cảm biến nhiệt độ gồm có: cảm biến nhiệt bán dẫn, nhiệt điện trở,nhiệt kế bức xạ, &nbsp;điện trở oxit kim loại,… &nbsp; &nbsp; &nbsp;&nbsp;<br>• &nbsp; &nbsp;Cảm biến quang điện: &nbsp; &nbsp; &nbsp;&nbsp;<br>Dùng để phát hiện các đối tượng, sự thay đổi trong trên bề mặt thông qua đặc tính quang học. Cấu tạo cơ bản gồm bộ phát (phát ánh sáng) và bộ thu (nhận ánh sáng). &nbsp;
-                                    </div>
-                                    <div class="readmore-button-wrapper d-none text-center">
-                                        <a href="#" class="text-decoration-none">
-                                            Hiển thị
-                                            <i class="fas fa-chevron-down"></i>
-                                        </a>
+                                        @Html.Raw(Model?.Description)
+                                        <div class="readmore-button-wrapper d-none text-center">
+                                            <a href="#" class="text-decoration-none">
+                                                Hiển thị
+                                                <i class="fas fa-chevron-down"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-
         </div>
-    </div>
 
-</div>
+    </div>

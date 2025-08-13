@@ -114,5 +114,40 @@ namespace web_client.Domain.Services
 
             return BaseProcess<BasePagingModel<ProductItemResponse>>.Success(response);
         }
+
+        public async Task<BaseProcess<List<ProductItemResponse>>> GetRelativeAsync(Guid productId, CancellationToken cancellationToken)
+        {
+            var query = _context.Products.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active && x.Id != productId).AsQueryable();
+
+            var resultItems = await query.OrderBy(r => Guid.NewGuid()).Take(5).ToListAsync(cancellationToken);
+            var response = resultItems.Select(x => new ProductItemResponse(x)).ToList();
+
+            if (response?.Any() != true)
+                return BaseProcess<List<ProductItemResponse>>.Success(response);
+
+            //set look up
+            var selectModels = new List<BaseSelectModel>();
+            foreach (var item in response)
+            {
+                if (item.ProductCategoryModel != null)
+                    selectModels.Add(item.ProductCategoryModel);
+
+                if (item.GroupProductSettingModel != null)
+                    selectModels.Add(item.GroupProductSettingModel);
+
+                if (item.StatusModel != null)
+                    selectModels.Add(item.StatusModel);
+
+                if (item.CreatedByModel != null)
+                    selectModels.Add(item.CreatedByModel);
+
+                if (item.UpdatedByModel != null)
+                    selectModels.Add(item.UpdatedByModel);
+            }
+            if (selectModels?.Any() == true)
+                await _lookup.GetLookUpAsync(selectModels, cancellationToken);
+
+            return BaseProcess<List<ProductItemResponse>>.Success(response);
+        }
     }
 }

@@ -6,7 +6,7 @@ public class BaseLinkModel : BaseTitleModel
     public BaseLinkModel()
     {
     }
-    public BaseLinkModel(string title, string href)
+    public BaseLinkModel(string title, string? href="#")
     {
         Title = title;
         Href = href;

@@ -1,0 +1,44 @@
+﻿using web_client.Helpers;
+using web_client.Models.Base;
+
+namespace web_client.Models.Request.Categories;
+
+public class CategoryDetailRequestDto : BaseDetailRequestDto
+{
+    private Guid? ParentId { get; set; }
+    public bool ParentIdValidate() => ParentId.HasValue && ParentId != Guid.Empty;
+    public void SetParentId(Guid parentId)
+    {
+        ParentId = parentId;
+    }
+    public Guid GetParentId() => ParentId ?? Guid.Empty;
+
+    //ProductCategory, Category,...
+    private string? Discriminator { get; set; }
+    public bool DiscriminatorHasValue() => Discriminator?.HasValueString() == true;
+    public void SetDiscriminator(string discriminator)
+    {
+        Discriminator = discriminator;
+    }
+
+    public string GetDiscriminator() => Discriminator ?? string.Empty;
+
+    public CategoryDetailRequestDto() : base()
+    {
+    }
+    public CategoryDetailRequestDto(string code) : base(code)
+    {
+    }
+    public CategoryDetailRequestDto(Guid id) : base(id)
+    {
+    }
+    public CategoryDetailRequestDto(Guid id, string? code) : base(id, code)
+    {
+    }
+    public CategoryDetailRequestDto(BaseDetailRequestDto baseDetailRequest)
+    {
+        if (baseDetailRequest == null) return;
+        Id = baseDetailRequest.Id;
+        Code = baseDetailRequest.Code;
+    }
+}

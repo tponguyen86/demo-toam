@@ -73,16 +73,3 @@ public class BaseSelectModel : BaseSelectModel<object>
         return result != null;
     }
 }
-
-#region Data item
-public class BaseSelectDataModel
-{
-    [JsonIgnore]
-    public Guid? Id { get; set; }
-}
-public class SelectDataSeoModel: BaseSelectDataModel
-{
-    [JsonIgnore]
-    public string? PageKeyName { get; set; }
-}
-#endregion

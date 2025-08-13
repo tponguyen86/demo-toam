@@ -1,7 +1,13 @@
 ﻿@model BasePagingModel<ProductTitleMediaComponent>
 @{
-    var pageModel = new PageModel() { Title = "Cảm biến", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product", MainClassName = "shop" }; ;
-    ViewData["Page"] = pageModel;
+    var pageModel = ViewData["Page"] as PageModel ?? new PageModel()
+            {
+                Title = "Sản phẩm",
+                Description = "Danh mục sản phẩm",
+                BodyClassName = "p-product",
+                MainClassName = "shop"
+            };
+
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
         new BaseLinkModel("Trang chủ","/"),
