@@ -7,6 +7,7 @@ Remove-Item ./zip/* -Recurse -Force
 
 dotnet restore ./web-client/web-client.csproj
 dotnet publish ./web-client/web-client.csproj -c Release --runtime linux-musl-x64 --no-restore -o ./build
+Start-Sleep 2
 
 Compress-Archive ./build/*  ./zip/netecs.zip
 
