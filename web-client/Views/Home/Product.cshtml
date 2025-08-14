@@ -7,11 +7,13 @@
                 BodyClassName = "p-product",
                 MainClassName = "shop"
             };
-
+    var categoryLink = new BaseLinkModel("Danh mục", Url.ActionLink("ProductCategory", "Home"));
+    var productLink = new BaseLinkModel(pageModel.Title, Url.ActionLink("Product", "Home"));
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
         new BaseLinkModel("Trang chủ","/"),
-        new BaseLinkModel(pageModel.Title,"/Home/Product"),
+        categoryLink,
+        productLink,
     });
     var sideBarCategoryModel = new CategoryTitleLinksComponent("Danh mục", new List<BaseCategoryItemModel>
 {

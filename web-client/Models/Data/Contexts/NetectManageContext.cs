@@ -9,7 +9,7 @@ public class NetectManageContext : DbContext
     public NetectManageContext(DbContextOptions<NetectManageContext> options) : base(options)
     {
     }
-
+    public virtual DbSet<AdminAccount> Managers { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<CategoryDetail> CategoryDetails { get; set; }
     public DbSet<RoleFeature> RoleFeatures { get; set; }

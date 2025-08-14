@@ -6,7 +6,7 @@ namespace web_client.Models.Request.Categories;
 public class CategoryDetailRequestDto : BaseDetailRequestDto
 {
     private Guid? ParentId { get; set; }
-    public bool ParentIdValidate() => ParentId.HasValue && ParentId != Guid.Empty;
+    public bool ParentIdValidate() => ParentId.HasValue && ParentId != Guid.Empty && ParentId != Id;
     public void SetParentId(Guid parentId)
     {
         ParentId = parentId;

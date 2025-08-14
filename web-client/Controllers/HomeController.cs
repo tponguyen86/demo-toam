@@ -65,12 +65,15 @@ namespace web_client.Controllers
         {
             var pageModel = new PageModel() { Title = "Sản phẩm", Description = "Danh sách sản phẩm", BodyClassName = "p-product", MainClassName = "shop", Keywords = "danh sách sản phẩm, sản phẩm, sản phẩm mới, sản phẩm nổi bật" };
 
-            var getCategoryDetail = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKeyCategory));
+            var categoryDetailRequest = new BaseDetailRequestDto(seoKeyCategory);
+            //if (seoKeyCategory?.HasValueString() != true) categoryDetailRequest.Id = PredefineDataConst.CategoryParentId.Key.Product.GetGuid();
+            var getCategoryDetail = await categoryServices.GetDetailAsync(categoryDetailRequest);
             if (getCategoryDetail?.Data != null)
             {
                 pageModel.Title = getCategoryDetail.Data.Name;
                 pageModel.Description = getCategoryDetail.Data.ShortDescription;
                 pageModel.Keywords = getCategoryDetail.Data.MetaKeyword;
+                pageModel.PageKeyName = getCategoryDetail.Data.PageKeyName;
 
                 var categoryIds = getCategoryDetail?.Data?.ChildModel?.GetAllId();
                 if (categoryIds?.Any() == true)
@@ -100,12 +103,12 @@ namespace web_client.Controllers
         [Route("dich-vu/{seoKeyCategory?}")]
         public async Task<IActionResult> Service([FromServices] IServiceAppService services, [FromServices] IServiceCategoryAppService categoryServices, string? seoKeyCategory, ServicePagingRequest request, CancellationToken cancellationToken)
         {
-            var getCategoryDetail = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKeyCategory));
+            var categoryDetailRequest = new BaseDetailRequestDto(seoKeyCategory);
+            if (seoKeyCategory?.HasValueString() != true) categoryDetailRequest.Id = PredefineDataConst.CategoryParentId.Key.Service.GetGuid();
+            var getCategoryDetail = await categoryServices.GetDetailAsync(categoryDetailRequest);
             var categoryIds = getCategoryDetail?.Data?.ChildModel?.GetAllId();
             if (categoryIds?.Any() == true)
                 request.SetCategory(categoryIds);
-            else
-                request.AddCategory(PredefineDataConst.CategoryParentId.Key.Service.GetGuid());
 
             var result = await services.GetPagingAsync(request, cancellationToken);
             var responseData = result.Data;
@@ -114,7 +117,7 @@ namespace web_client.Controllers
                 CreatedAt = x.CreatedAt,
                 CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
                 ShortDescription = x.ShortDescription,
-                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
+                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.ServiceCategory), x.ParentIdModel?.Key)),
                 Href = string.Format(RouteConst.GetRoute(RouteConst.ServiceDetail), x.PageKeyName),
                 Media = x?.Image?.Path,
                 Id = x.Id,
@@ -138,7 +141,7 @@ namespace web_client.Controllers
                 CreatedAt = responseData.CreatedAt,
                 CreatedBy = new BaseMediaLinkModel($"{responseData.CreatedByModel?.Label}", $"{responseData.CreatedByModel?.Key}"),
                 ShortDescription = responseData.ShortDescription,
-                Group = new BaseMediaLinkModel($"{responseData.ParentIdModel?.Label}", $"{responseData.ParentIdModel?.Key}"),
+                Group = new BaseMediaLinkModel($"{responseData.ParentIdModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.ServiceCategory), responseData.ParentIdModel?.Key)),
                 Href = string.Format(RouteConst.GetRoute(RouteConst.ServiceDetail), responseData.PageKeyName),
                 Media = responseData?.Image?.Path,
                 Id = responseData.Id,
@@ -151,12 +154,22 @@ namespace web_client.Controllers
         [Route("tin-tuc/{seoKeyCategory?}")]
         public async Task<IActionResult> Blog([FromServices] INewsAppService services, [FromServices] INewsCategoryAppService categoryServices, NewsPagingRequest request, string? seoKeyCategory, CancellationToken cancellationToken)
         {
-            var getCategoryDetail = await categoryServices.GetDetailAsync(new BaseDetailRequestDto(seoKeyCategory));
-            var categoryIds = getCategoryDetail?.Data?.ChildModel?.GetAllId();
-            if (categoryIds?.Any() == true)
-                request.SetCategory(categoryIds);
-            else
-                request.AddCategory(PredefineDataConst.CategoryParentId.Key.News.GetGuid());
+            var pageModel = new PageModel() { Title = "Tin tức", Description = "Mô ta seo tin tức", BodyClassName = "p-blog", MainClassName = "shop" };
+
+            var categoryDetailRequest = new BaseDetailRequestDto(seoKeyCategory);
+            if (seoKeyCategory?.HasValueString() != true) categoryDetailRequest.Id = PredefineDataConst.CategoryParentId.Key.News.GetGuid();
+            var getCategoryDetail = await categoryServices.GetDetailAsync(categoryDetailRequest);
+            if (getCategoryDetail?.Data != null)
+            {
+                pageModel.Title = getCategoryDetail.Data.Name;
+                pageModel.Description = getCategoryDetail.Data.ShortDescription;
+                pageModel.Keywords = getCategoryDetail.Data.MetaKeyword;
+                pageModel.PageKeyName = getCategoryDetail.Data.PageKeyName;
+
+                var categoryIds = getCategoryDetail?.Data?.ChildModel?.GetAllId();
+                if (categoryIds?.Any() == true)
+                    request.SetCategory(categoryIds);
+            }
 
             var result = await services.GetPagingAsync(request, cancellationToken);
             var responseData = result.Data;
@@ -165,7 +178,7 @@ namespace web_client.Controllers
                 CreatedAt = x.CreatedAt,
                 CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
                 ShortDescription = x.ShortDescription,
-                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
+                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.NewsCategory), x.ParentIdModel?.Key)),
                 Href = string.Format(RouteConst.GetRoute(RouteConst.NewsDetail), x.PageKeyName),
                 Media = x?.Image?.Path,
                 Id = x.Id,
@@ -173,6 +186,8 @@ namespace web_client.Controllers
             });
             var response = responseData.GetPaging(model);
             ViewBag.paging = response?.BuildPaging($"{RouteConst.GetRoute(RouteConst.News)}?page={0}");
+
+            ViewData["Page"] = pageModel;
             return View(response);
         }
 
@@ -189,7 +204,7 @@ namespace web_client.Controllers
                 CreatedAt = responseData.CreatedAt,
                 CreatedBy = new BaseMediaLinkModel($"{responseData.CreatedByModel?.Label}", $"{responseData.CreatedByModel?.Key}"),
                 ShortDescription = responseData.ShortDescription,
-                Group = new BaseMediaLinkModel($"{responseData.ParentIdModel?.Label}", $"{responseData.ParentIdModel?.Key}"),
+                Group = new BaseMediaLinkModel($"{responseData.ParentIdModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.NewsCategory), responseData.ParentIdModel?.Key)),
                 Href = string.Format(RouteConst.GetRoute(RouteConst.NewsDetail), responseData.PageKeyName),
                 Media = responseData?.Image?.Path,
                 Id = responseData.Id,

@@ -7,14 +7,29 @@
     var layoutData = await _layout.GetSystemConfigurationsAsync(new GetAllSystemConfigurationRequest());
     var aboutUs = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.SidebarAboutus, "Mô tả giới thiệu ngắn gọn...");
 
-    var pageModel = new PageModel() { Title = "Chi tiết tin tức", Description = "Mô ta seo tin tức", BodyClassName = "p-blog-detail", MainClassName = "shop" }; ;
-    ViewData["Page"] = pageModel;
+    var pageTitle = "Tin tức";
+    var pageModel = ViewData["Page"] as PageModel ?? new PageModel() { Title = pageTitle, Description = "Mô ta seo tin tức", BodyClassName = "p-blog-detail", MainClassName = "shop" };
+    var blogLink = new BaseLinkModel(pageTitle, RouteConst.GetRoute(RouteConst.News));
+
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
         new BaseLinkModel("Trang chủ","/"),
-        new BaseLinkModel(pageModel.Title,"/Home/Blog"),
-        new BaseLinkModel("Chi tiết","/Home/BlogDetail"),
+        blogLink,
     });
+    //has category
+    if (Model?.Group != null)
+        breadcrumbModel.SetLinks(Model.Group);
+
+    //is detail page
+    if (pageModel.Title != pageTitle)
+        breadcrumbModel.SetLinks(new BaseLinkModel(pageModel.Title, string.Format(RouteConst.GetRoute(RouteConst.NewsDetail), pageModel.PageKeyName)));
+
+    // var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
+    // {
+    //     new BaseLinkModel("Trang chủ","/"),
+    //     new BaseLinkModel(pageModel.Title,"/Home/Blog"),
+    //     new BaseLinkModel("Chi tiết","/Home/BlogDetail"),
+    // });
     var _newCategoryResponse = await _newCategoryService.GetAllAsync(CancellationToken.None);
     var sideBarCategoryModel = new CategoryTitleLinksComponent("Danh mục", _newCategoryResponse?.Data?.Select(x => new BaseCategoryItemModel()
             {
@@ -54,7 +69,7 @@
                 }).ToList()
             };
 }
-@(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
+@(await Html.PartialAsync("~/Views/Shared/Components/Common/BreadcrumbStyle2.cshtml", breadcrumbModel))
 <div class="container py-4">
     <div class="row">
         <div class="col-lg-3 order-lg-2">

@@ -5,7 +5,7 @@
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
         new BaseLinkModel("Trang chủ","/"),
-        new BaseLinkModel(pageModel.Title,"/Home/Service"),
+        new BaseLinkModel(pageModel.Title, Url.ActionLink("Service", "Home"))
     });
 }
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/BreadcrumbStyle2.cshtml", breadcrumbModel))

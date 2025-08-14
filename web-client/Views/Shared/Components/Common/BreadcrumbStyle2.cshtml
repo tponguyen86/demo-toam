@@ -11,11 +11,22 @@
                         {
                             if (i + 1 == count && Model.LastIsSpan == true)
                             {
-                                <li class="active">@Model.Links[i].Title</li>
+                                <li class="active"><a class="text-color-default text-color-hover-primary text-decoration-none" href="@Model.Links[i].Href">@Model.Links[i].Title</a></li>
                             }
                             else
                             {
-                                <li><a class="text-color-default text-color-hover-primary text-decoration-none" href="@Model.Links[i].Href">@Model.Links[i].Title</a></li>
+                                <li>
+                                    <a class="text-color-default text-color-hover-primary text-decoration-none" href="@Model.Links[i].Href" >
+                                        @if (i == 0)
+                                        {
+                                            <i class="fa fa-house"></i>
+                                        }
+                                        else
+                                        {
+                                            @Model.Links[i].Title
+                                        }
+                                    </a>
+                                </li>
                             }
                         }
                     </ul>

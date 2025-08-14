@@ -19,7 +19,8 @@ public class LookupService : ILookupService
         await LookUpCategoryChild(request, cancellationToken);
         await LookUpCategory(request, cancellationToken);
         await LookUpProductCategory(request, cancellationToken);
-        await LookUpGroupProductSetting(request, cancellationToken);
+        await LookUpGroupProductSetting(request, cancellationToken); 
+        await LookUpManager(request, cancellationToken);
         await LookUpPredefineData(request, cancellationToken);
 
         return BaseProcess<int>.Success(1);
@@ -82,6 +83,37 @@ public class LookupService : ILookupService
                 item.SetData(new
                 {
                     selected.Status
+                });
+            }
+        }
+    } 
+    private async Task LookUpManager(List<BaseSelectModel> request, CancellationToken cancellationToken)
+    {
+        var keyValues = request?.Where(x => x is ManagerSelectModel).Select(x => x as ManagerSelectModel);
+        if (keyValues?.Any() != true) return;
+        var keys = keyValues.Select(x => x.GetKeyFilter())?.Distinct()?.ToList();
+        if (keys?.Any() != true) return;
+
+        var datas = await _context.Managers.Where(x => keys.Contains(x.Id.ToString())).ToListAsync(cancellationToken);
+        if (datas?.Any() != true)
+            return;
+
+        foreach (var item in keyValues)
+        {
+            if (item == null) continue;
+            var selected = datas.FirstOrDefault(x => item.GetKeyFilter() == $"{x.Id}");
+            if (selected == null)
+                item.Value = item.Key = item.GetKeyFilter();
+            else
+            {
+                item.Value = $"{selected.Id}";
+                item.Key = $"{selected.Id}";
+                item.Label = selected.FullName;
+                item.SetData(new
+                {
+                    selected.UserName,
+                    selected.Email,
+                    selected.PhoneNumber,
                 });
             }
         }

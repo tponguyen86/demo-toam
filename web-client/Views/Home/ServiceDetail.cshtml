@@ -40,13 +40,13 @@
                 }).ToList()
             };
 
-    var pageModel = new PageModel() { Title = "Dịch vụ", Description = "Mô ta seo dịch vụ", BodyClassName = "p-service-detail", MainClassName = "shop" }; ;
+    var pageModel = new PageModel() { Title = Model?.Title, Description = "Mô ta seo dịch vụ", BodyClassName = "p-service-detail", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
         new BaseLinkModel("Trang chủ","/"),
-        new BaseLinkModel(pageModel.Title,"/Home/Service"),
-        new BaseLinkModel("Chi tiết","/Home/ServiceDetail"),
+        new BaseLinkModel("Dịch vụ", Url.ActionLink("Service", "Home")),
+        new BaseLinkModel(pageModel.Title)
     });
 }
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))

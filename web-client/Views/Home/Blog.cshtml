@@ -6,27 +6,32 @@
 @{
     var layoutData = await _layout.GetSystemConfigurationsAsync(new GetAllSystemConfigurationRequest());
     var aboutUs = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.SidebarAboutus, "Mô tả giới thiệu ngắn gọn...");
-
-    var pageModel = new PageModel() { Title = "Tin tức", Description = "Mô ta seo tin tức", BodyClassName = "p-blog", MainClassName = "shop" }; ;
+    var pageTitle = "Tin tức";
+    var pageModel = ViewData["Page"] as PageModel ?? new PageModel() { Title = pageTitle, Description = "Mô ta seo tin tức", BodyClassName = "p-blog", MainClassName = "shop" };
     ViewData["Page"] = pageModel;
+    var blogLink = new BaseLinkModel(pageTitle, RouteConst.GetRoute(RouteConst.News));
+
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
         new BaseLinkModel("Trang chủ","/"),
-        new BaseLinkModel(pageModel.Title,"/Home/Blog"),
+        blogLink,
     });
+    //has category
+    if (pageModel.Title != pageTitle)
+        breadcrumbModel.SetLinks(new BaseLinkModel(pageModel.Title, string.Format(RouteConst.GetRoute(RouteConst.NewsCategory), pageModel.PageKeyName)));
 
     var _newCategoryResponse = await _newCategoryService.GetAllAsync(CancellationToken.None);
     var sideBarCategoryModel = new CategoryTitleLinksComponent("Danh mục", _newCategoryResponse?.Data?.Select(x => new BaseCategoryItemModel()
-    {
+            {
                 Id = x.Id,
                 Media = x?.Image?.Path,
                 Title = x.Name,
                 Href = string.Format(RouteConst.GetRoute(RouteConst.NewsCategory), x.PageKeyName),
-    }).ToList());
+            }).ToList());
 
     var newsFeatures = await _newService.GetFeatureAsync(3, CancellationToken.None);
-    var sideBarArticleModel = new ArticleTitleLinksComponent("Bài viết nổi bật",newsFeatures?.Data?.Select(x=>new BaseArticleItemModel()
-    {
+    var sideBarArticleModel = new ArticleTitleLinksComponent("Bài viết nổi bật", newsFeatures?.Data?.Select(x => new BaseArticleItemModel()
+            {
                 CreatedAt = x.CreatedAt,
                 CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
                 ShortDescription = x.ShortDescription,
@@ -35,7 +40,7 @@
                 Media = x?.Image?.Path,
                 Id = x.Id,
                 Title = x.Name,
-    }).ToList());
+            }).ToList());
 }
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/BreadcrumbStyle2.cshtml", breadcrumbModel))
 <div class="container py-4">

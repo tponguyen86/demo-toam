@@ -7,9 +7,9 @@ public class ProductTitleMediaDetailComponent : ProductTitleMediaComponent
 {
     public List<BaseFileModel>? Medias { get; set; }
 
-    public string? Description { get; set; }
-    public string? Technical { get; set; }
-    public string? Datasheet { get; set; }
+    public string Description { get; set; }
+    public string Technical { get; set; }
+    public string Datasheet { get; set; }
 
     public ProductTitleMediaDetailComponent()
     {
@@ -18,9 +18,9 @@ public class ProductTitleMediaDetailComponent : ProductTitleMediaComponent
     {
         if (productItem == null) return;
         ToViewModel(productItem);
-        Description = productItem.Description ?? string.Empty;
+        Description = productItem.Description;
         Medias = productItem.Medias;
-        Technical = productItem.Technical ?? string.Empty;
-        Datasheet = productItem.Datasheet ?? string.Empty;
+        Technical = productItem.Technical;
+        Datasheet = productItem.Datasheet;
     }
 }

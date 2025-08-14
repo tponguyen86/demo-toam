@@ -18,6 +18,7 @@
         public const string UserProfileEdit = "user-profile-edit";
         public const string NotFound = "not-found";
         public const string Service = "service";
+        public const string ServiceCategory = "service-category";
         public const string ServiceDetail = "service-detail";
         public const string NewsCategory = "news-category";
         public const string News = "news";
@@ -43,6 +44,7 @@
                 ProductDetail => "/san-pham/{0}/chi-tiet",//page-key-name of product
                 ProductCategory => "/san-pham/{0}",//page-key-name of category,
                 Service => "/dich-vu",
+                ServiceCategory => "/dich-vu/{0}",//page-key-name of category
                 ServiceDetail => "/dich-vu/{0}/chi-tiet",//page-key-name of service
                 News => "/tin-tuc",
                 NewsCategory => "/tin-tuc/{0}",//page-key-name of category

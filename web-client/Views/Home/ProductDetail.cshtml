@@ -4,7 +4,7 @@
     var relativeResponse = await _service.GetRelativeAsync(Model.Id, CancellationToken.None);
     var relativeModel = new ArticleTitleLinksComponent()
             {
-                Title = "Dịch vụ khác",
+                Title = "Sản phẩm cùng loại",
                 Links = relativeResponse?.Data?.Select(x => new BaseArticleItemModel()
                 {
                     CreatedAt = x.CreatedAt,
@@ -210,7 +210,7 @@
                             }
                         </p>
 
-                        <p class="text-3-5 mb-3">@Model.Description</p>
+                        <p class="text-3-5 mb-3">@Model.ShortDescription</p>
 
                         <ul class="list list-unstyled text-2">
                             <li class="mb-0">SKU: <strong class="text-color-dark">@Model.Sku</strong></li>
@@ -267,8 +267,7 @@
                         </ul>
                         <div class="tab-content p-0">
                             <div class="tab-pane px-0 py-3 active" id="productDescription">
-                                <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, massa fringilla consequat blandit, mauris ligula porta nisi, non tristique enim sapien vel nisl. Suspendisse vestibulum lobortis dapibus. </p>
-                                <p class="m-0">Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, massa fringilla consequat blandit, mauris ligula porta nisi, non tristique enim sapien vel nisl. Suspendisse vestibulum lobortis dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
+                                @Html.Raw(Model.Description)
                             </div>
                             <div class="tab-pane px-0 py-3" id="productInfo">
                                 <table class="table table-striped m-0">
@@ -299,6 +298,12 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="tab-pane px-0 py-3" id="technicalInfo">
+                                @Html.Raw(Model.Technical)
+                            </div>
+                            <div class="tab-pane px-0 py-3" id="datasheetInfo">
+                                @Html.Raw(Model.Datasheet)
                             </div>
                         </div>
                     </div>

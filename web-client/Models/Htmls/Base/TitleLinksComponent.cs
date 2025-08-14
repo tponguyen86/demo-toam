@@ -13,6 +13,11 @@ public class TitleLinksComponent<TLink> : BaseTitleModel
         Title = title;
         Links = links;
     }
+    public void SetLinks(TLink link)
+    {
+        if (Links?.Any() != true) Links = new List<TLink>();
+        Links.Add(link);
+    }
 }
 
 public class TitleLinksComponent : TitleLinksComponent<BaseLinkModel>

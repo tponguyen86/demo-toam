@@ -2,10 +2,11 @@
 @{
     var pageModel = new PageModel() { Title = "Danh mục", Description = "Mô ta seo sản phẩm", BodyClassName = "p-product-category", MainClassName = "shop" }; ;
     ViewData["Page"] = pageModel;
+    var categoryLink = new BaseLinkModel("Danh mục", Url.ActionLink("ProductCategory", "Home"));
     var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
     {
         new BaseLinkModel("Trang chủ","/"),
-        new BaseLinkModel(pageModel.Title,"/Home/ProductCatogory"),
+        categoryLink,
     });
     var categoriesModel = new CategoryTitleLinksComponent("Danh mục", Model);
 });
