@@ -3,8 +3,10 @@ using web_client.Models.Base;
 
 namespace web_client.Models.Request.Categories;
 
-public class CategoryDetailRequestDto : BaseDetailRequestDto
+public class GetCategoryAllIdRequest
 {
+    public Guid Id { get; set; }
+    public string? Code { get; set; }
     private Guid? ParentId { get; set; }
     public bool ParentIdValidate() => ParentId.HasValue && ParentId != Guid.Empty && ParentId != Id;
     public void SetParentId(Guid parentId)
@@ -22,8 +24,19 @@ public class CategoryDetailRequestDto : BaseDetailRequestDto
     }
 
     public string GetDiscriminator() => Discriminator ?? string.Empty;
+    public GetCategoryAllIdRequest()
+    {
+    }
+    public GetCategoryAllIdRequest(Guid id)
+    {
+        Id = id;
+    }
 
-    public CategoryDetailRequestDto(BaseDetailRequestDto baseDetailRequest)
+    public GetCategoryAllIdRequest(string? code)
+    {
+        Code = code;
+    }
+    public GetCategoryAllIdRequest(BaseDetailRequestDto baseDetailRequest)
     {
         if (baseDetailRequest == null) return;
         Id = baseDetailRequest.Id;

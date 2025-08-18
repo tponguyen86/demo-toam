@@ -8,20 +8,14 @@
 
     if (Model.Links?.Any() == true)
     {
-        <ul class="nav nav-list flex-column">
+        <ul class="nav nav-list flex-column ">
             @foreach (var item in Model.Links)
             {
                 <li class="nav-item">
-                    <a class="nav-link" href="@item.Href">
-                        @item.Title
-                        @if (item.HasChildren())
-                        {
-                            <span class="bt-collapse icon-bt-round"><i class="fas fa-caret-down"></i></span>
-                        }
-                    </a>
-                    @if (item.HasChildren())
+                    <a class="nav-link" href="@item.Href">@item.Title</a>
+                    @if (item.Children?.Any() == true)
                     {
-                        <ul class="submenu" style="display:none">
+                        <ul style="display:none">
                             @foreach (var child in item.Children)
                             {
                                 <li class="nav-item"><a class="nav-link" href="@child.Href">@child.Title</a></li>

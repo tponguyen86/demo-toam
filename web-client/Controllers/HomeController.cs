@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using web_client.Application.IServices;
 using web_client.Helpers;
@@ -194,6 +195,7 @@ namespace web_client.Controllers
         [Route("tin-tuc/{seoKey}/chi-tiet")]
         public async Task<IActionResult> BlogDetail([FromServices] INewsAppService services, string seoKey, CancellationToken cancellationToken)
         {
+            var pageModel = new PageModel() { Title = "Tin tức", Description = "Mô ta seo tin tức", BodyClassName = "p-blog-detail", MainClassName = "shop" };
             var result = await services.GetDetailAsync(new BaseDetailRequestDto(seoKey), cancellationToken);
             if (result.HasError)
                 return RedirectToAction("Blog");

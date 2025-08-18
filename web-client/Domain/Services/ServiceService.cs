@@ -4,6 +4,7 @@ using web_client.Helpers;
 using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
+using web_client.Models.Request.Categories.Details;
 using web_client.Models.Request.Services;
 using web_client.Models.Response.Services;
 
@@ -110,11 +111,20 @@ namespace web_client.Domain.Services
             return BaseProcess<BasePagingModel<ServiceItemResponse>>.Success(response);
         }
 
-        public async Task<BaseProcess<List<ServiceItemResponse>>> GetRelativeAsync(Guid serviceId, CancellationToken cancellationToken)
+        public async Task<BaseProcess<List<ServiceItemResponse>>> GetRelativeAsync(GetCategoryDetailRelativeRequest request, CancellationToken cancellationToken)
         {
-            var query = _context.CategoryDetails.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active && x.Id != serviceId).AsQueryable();
+            if (request?.Validate() != true)
+                return BaseProcess<List<ServiceItemResponse>>.Success(null);
 
-            var resultItems = await query.OrderBy(r => Guid.NewGuid()).Take(5).ToListAsync(cancellationToken);
+            var query = _context.CategoryDetails.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active && x.Id != request.Id).AsQueryable();
+
+            if (request?.CategoryHasValue() == true)
+            {
+                var categoryIds = request.GetCategory();
+                query = query.Where(x => categoryIds.Contains(x.CategoryId));
+            }
+
+            var resultItems = await query.OrderBy(r => Guid.NewGuid()).Take(request.PageSize).ToListAsync(cancellationToken);
             var response = resultItems.Select(x => new ServiceItemResponse(x)).ToList();
 
             if (response?.Any() != true)

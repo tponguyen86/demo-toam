@@ -42,7 +42,7 @@
                 <div class="card-body">
                     <div class="row mb-4">
                         <div class="col">
-                            @{
+                         @*    @{
                                 var productsModel = new ProductTitleLinksComponent();
                                 productsModel.Title = "Sản phẩm nổi bật";
                                 productsModel.Links = new List<BaseProductItemModel>
@@ -74,9 +74,8 @@
                             }
                 });
                                 }
-                            }
-                            @await Html.PartialAsync("~/Views/Shared/Components/Common/SliderProductTitleListStyle3.cshtml", productsModel)
-
+                            } *@
+                            <!-- await Html.PartialAsync("~/Views/Shared/Components/Common/SliderProductTitleListStyle3.cshtml", productsModel) -->
                             <div class="description mt-4">
                                 <div data-plugin-readmore data-plugin-options="{'buttonOpenLabel' : 'Hiển thị <i class=\' fas fa-chevron-down text-2 ms-1\'> </i>','buttonCloseLabel': 'Thu gọn <i class=\'fas fa-chevron-up text-2 ms-1\'></i>'}">
                                     <div>
@@ -99,3 +98,4 @@
         </div>
 
     </div>
+</div>

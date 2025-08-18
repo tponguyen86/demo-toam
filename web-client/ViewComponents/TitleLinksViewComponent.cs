@@ -17,7 +17,7 @@ public class TitleLinksViewComponent : ViewComponent
         _logger = logger;
     }
     public async Task<IViewComponentResult> InvokeAsync(
-       ViewComponentModel<TitleLinksSettingModel, List<TitleLinksComponent>> request)
+       ViewComponentModel<TitleLinksSettingModel, TitleLinksComponent> request)
     {
         var settingResponse = GetSettingModel(request);
         ViewData[ViewComponentConst.ViewBagKey.Key.TitleLinksSettingModel] = settingResponse;

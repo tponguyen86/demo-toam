@@ -8,6 +8,7 @@ public class BaseCategoryItemModel : BaseMediaLinkModel
 {
     public Guid Id { get; set; }
     public List<BaseCategoryItemModel> Children { get; set; }
+    public bool HasChildren() => Children?.Any() == true;
     public BaseCategoryItemModel() : base() { }
     public BaseCategoryItemModel(string title, string href) : base(title, href) { }
     public BaseCategoryItemModel(Guid id, string title, string href) : base(title, href) { Id = id; }
@@ -38,8 +39,8 @@ public class BaseCategoryItemModel : BaseMediaLinkModel
         Media = category.Image?.Path;
         Href = string.Format(RouteConst.GetRoute(RouteConst.CategoryOfProductDetail), category.PageKeyName);
 
-        if (category?.ChildModel?.Child?.Any()==true)
+        if (category?.ChildModel?.Child?.Any() == true)
             Children = category.ChildModel.Child.Select(c => new BaseCategoryItemModel(c)).ToList();
-        
+
     }
 }

@@ -5,6 +5,7 @@ using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
 using web_client.Models.Request.Categories;
 using web_client.Models.Request.Categories.News;
+using web_client.Models.Response.Categories;
 using web_client.Models.Responses.Categories.News;
 
 namespace web_client.Domain.Services;
@@ -53,7 +54,6 @@ public class NewsCategoryService : INewsCategoryService
         var result = await query.OrderByDescending(x => x.CreatedAt).ToListAsync(cancellationToken);
 
         var response = result.Select(x => new NewsCategoryItemResponse(x)).ToList();
-
 
         if (response?.Any() != true)
             return BaseProcess<List<NewsCategoryItemResponse>>.Success(response);
@@ -110,7 +110,5 @@ public class NewsCategoryService : INewsCategoryService
 
         return BaseProcess<NewsCategoryDetailResponse>.Success(response);
     }
-
-
 }
 

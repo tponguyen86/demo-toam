@@ -22,7 +22,7 @@ public class NewsCategoryAppService : INewsCategoryAppService
     {
         var request = new GetNewsCategoryAllRequest();
         request.SetDiscriminator(CategoryDiscriminator.Key.Category);
-        request.ParentId = CategoryParentId.Key.News.GetGuid();
+        request.SetParentId(CategoryParentId.Key.News.GetGuid());
         var result = await _service.GetAllAsync(request, cancellationToken);
         return new BaseProcess<IEnumerable<NewsCategoryItemResponse>>(result.Data, result?.Errors);
     }
@@ -31,7 +31,7 @@ public class NewsCategoryAppService : INewsCategoryAppService
     {
         var request = new GetNewsCategoryAllRequest();
         request.SetDiscriminator(CategoryDiscriminator.Key.Category);
-        request.ParentId = CategoryParentId.Key.News.GetGuid();
+        request.SetParentId(CategoryParentId.Key.News.GetGuid());
         request.ShowHome = true;
         var result = await _service.GetAllAsync(request, cancellationToken);
         return new BaseProcess<IEnumerable<NewsCategoryItemResponse>>(result.Data, result?.Errors);
@@ -41,7 +41,7 @@ public class NewsCategoryAppService : INewsCategoryAppService
     {
         var request = new GetNewsCategoryAllRequest();
         request.SetDiscriminator(CategoryDiscriminator.Key.Category);
-        request.ParentId = CategoryParentId.Key.News.GetGuid();
+        request.SetParentId(CategoryParentId.Key.News.GetGuid());
         request.ShowMenu = true;
         var result = await _service.GetAllAsync(request, cancellationToken);
         return new BaseProcess<IEnumerable<NewsCategoryItemResponse>>(result.Data, result?.Errors);

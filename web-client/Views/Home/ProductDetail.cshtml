@@ -1,17 +1,17 @@
 ﻿@model ProductTitleMediaDetailComponent
 @inject IProductAppService _service
 @{
-    var relativeResponse = await _service.GetRelativeAsync(Model.Id, CancellationToken.None);
+    var relativeResponse = await _service.GetRelativeAsync(new GetCategoryDetailRelativeRequest(Model.Id), CancellationToken.None);
     var relativeModel = new ArticleTitleLinksComponent()
             {
                 Title = "Sản phẩm cùng loại",
                 Links = relativeResponse?.Data?.Select(x => new BaseArticleItemModel()
                 {
                     CreatedAt = x.CreatedAt,
-                    CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
+                    CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.AuthorDetail), x.CreatedByModel?.Key)),
                     ShortDescription = x.ShortDescription,
-                    Group = new BaseMediaLinkModel($"{x.ProductCategoryModel?.Label}", $"{x.ProductCategoryModel?.Key}"),
-                    Href = string.Format(RouteConst.GetRoute(RouteConst.ServiceDetail), x.PageKeyName),
+                    Group = new BaseMediaLinkModel($"{x.ProductCategoryModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.CategoryOfProductDetail), x.ProductCategoryModel?.Key)),
+                    Href = string.Format(RouteConst.GetRoute(RouteConst.ProductDetail), x.PageKeyName),
                     Media = x?.Image?.Path,
                     Id = x.Id,
                     Title = x.Name,

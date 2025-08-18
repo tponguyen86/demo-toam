@@ -24,12 +24,6 @@
     if (pageModel.Title != pageTitle)
         breadcrumbModel.SetLinks(new BaseLinkModel(pageModel.Title, string.Format(RouteConst.GetRoute(RouteConst.NewsDetail), pageModel.PageKeyName)));
 
-    // var breadcrumbModel = new BreadcrumbComponent(pageModel.Title, new List<BaseLinkModel>()
-    // {
-    //     new BaseLinkModel("Trang chủ","/"),
-    //     new BaseLinkModel(pageModel.Title,"/Home/Blog"),
-    //     new BaseLinkModel("Chi tiết","/Home/BlogDetail"),
-    // });
     var _newCategoryResponse = await _newCategoryService.GetAllAsync(CancellationToken.None);
     var sideBarCategoryModel = new CategoryTitleLinksComponent("Danh mục", _newCategoryResponse?.Data?.Select(x => new BaseCategoryItemModel()
             {
@@ -43,25 +37,25 @@
     var sideBarArticleModel = new ArticleTitleLinksComponent("Bài viết nổi bật", newsFeatures?.Data?.Select(x => new BaseArticleItemModel()
             {
                 CreatedAt = x.CreatedAt,
-                CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
+                CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.AuthorDetail), x.CreatedByModel?.Key)),
                 ShortDescription = x.ShortDescription,
-                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
+                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.NewsCategory), x.ParentIdModel?.Key)),
                 Href = string.Format(RouteConst.GetRoute(RouteConst.NewsDetail), x.PageKeyName),
                 Media = x?.Image?.Path,
                 Id = x.Id,
                 Title = x.Name,
             }).ToList());
-
-    var relativeResponse = await _newService.GetRelativeAsync(Model.Id, CancellationToken.None);
+     
+    var relativeResponse = await _newService.GetRelativeAsync(new GetCategoryDetailRelativeRequest(Model.Id), CancellationToken.None);
     var relativeModel = new ArticleTitleLinksComponent()
             {
                 Title = "Tin liên quan",
                 Links = relativeResponse?.Data?.Select(x => new BaseArticleItemModel()
                 {
                     CreatedAt = x.CreatedAt,
-                    CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
+                    CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.AuthorDetail), x.CreatedByModel?.Key)),
                     ShortDescription = x.ShortDescription,
-                    Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
+                    Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.NewsCategory), x.ParentIdModel?.Key)),
                     Href = string.Format(RouteConst.GetRoute(RouteConst.NewsDetail), x.PageKeyName),
                     Media = x?.Image?.Path,
                     Id = x.Id,

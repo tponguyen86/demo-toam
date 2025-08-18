@@ -24,6 +24,7 @@
         public const string News = "news";
         public const string NewsDetail = "news-detail";
         public const string PageDetail = "page-detail";
+        public const string AuthorDetail = "author-detail";
 
         public static string GetRoute(string routeName)
         {
@@ -50,6 +51,7 @@
                 NewsCategory => "/tin-tuc/{0}",//page-key-name of category
                 NewsDetail => "/tin-tuc/{0}/chi-tiet",//page-key-name of service
                 PageDetail => "/trang/{0}",//page-key-name of page
+                AuthorDetail => "#/author/{0}",//id or username or email.... of user
                 _ => throw new ArgumentException($"Unknown route name: {routeName}")
             };
 

@@ -12,6 +12,7 @@
 	<ItemGroup>
 		<Folder Include="Models\Htmls\Blogs\" />
 		<Folder Include="Models\Htmls\Categories\" />
+		<Folder Include="Models\Response\Categories\Details\" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -22,7 +22,7 @@ public class ServiceCategoryAppService : IServiceCategoryAppService
     {
         var request = new GetServiceCategoryAllRequest();
         request.SetDiscriminator(CategoryDiscriminator.Key.Category);
-        request.ParentId = CategoryParentId.Key.Service.GetGuid();
+        request.SetParentId(CategoryParentId.Key.Service.GetGuid());
         var result = await _service.GetAllAsync(request, cancellationToken);
         return new BaseProcess<IEnumerable<ServiceCategoryItemResponse>>(result.Data, result?.Errors);
     }
@@ -31,7 +31,7 @@ public class ServiceCategoryAppService : IServiceCategoryAppService
     {
         var request = new GetServiceCategoryAllRequest();
         request.SetDiscriminator(CategoryDiscriminator.Key.Category);
-        request.ParentId = CategoryParentId.Key.Service.GetGuid();
+        request.SetParentId(CategoryParentId.Key.Service.GetGuid());
         request.ShowHome = true;
         var result = await _service.GetAllAsync(request, cancellationToken);
         return new BaseProcess<IEnumerable<ServiceCategoryItemResponse>>(result.Data, result?.Errors);

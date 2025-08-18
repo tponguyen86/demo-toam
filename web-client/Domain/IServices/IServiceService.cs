@@ -1,4 +1,5 @@
 ﻿using web_client.Models.Base;
+using web_client.Models.Request.Categories.Details;
 using web_client.Models.Request.Services;
 using web_client.Models.Response.Services;
 
@@ -8,5 +9,5 @@ public interface IServiceService
 {
     Task<BaseProcess<BasePagingModel<ServiceItemResponse>>> GetPagingAsync(ServicePagingRequest request, CancellationToken cancellationToken);
     Task<BaseProcess<ServiceDetailResponse>> GetDetailAsync(BaseDetailRequestDto request, CancellationToken cancellationToken);
-    Task<BaseProcess<List<ServiceItemResponse>>> GetRelativeAsync(Guid serviceId, CancellationToken cancellationToken);
+    Task<BaseProcess<List<ServiceItemResponse>>> GetRelativeAsync(GetCategoryDetailRelativeRequest request, CancellationToken cancellationToken);
 }

@@ -1,5 +1,4 @@
-﻿@using static web_client.Helpers.Shared.PredefineDataConst
-@model BasePagingModel<ArticleTitleMediaComponent>
+﻿@model BasePagingModel<ArticleTitleMediaComponent>
 @inject ILayoutAppService _layout
 @inject INewsAppService _newService
 @inject INewsCategoryAppService _newCategoryService
@@ -33,9 +32,9 @@
     var sideBarArticleModel = new ArticleTitleLinksComponent("Bài viết nổi bật", newsFeatures?.Data?.Select(x => new BaseArticleItemModel()
             {
                 CreatedAt = x.CreatedAt,
-                CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", $"{x.CreatedByModel?.Key}"),
+                CreatedBy = new BaseMediaLinkModel($"{x.CreatedByModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.AuthorDetail), x.CreatedByModel?.Key)),
                 ShortDescription = x.ShortDescription,
-                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", $"{x.ParentIdModel?.Key}"),
+                Group = new BaseMediaLinkModel($"{x.ParentIdModel?.Label}", string.Format(RouteConst.GetRoute(RouteConst.NewsCategory), x.ParentIdModel?.Key)),
                 Href = string.Format(RouteConst.GetRoute(RouteConst.NewsDetail), x.PageKeyName),
                 Media = x?.Image?.Path,
                 Id = x.Id,
@@ -49,7 +48,7 @@
             <aside class="sidebar">
                 <div class="card card-border card-border-bottom bg-color-light mb-4">
                     <div class="card-body p-3">
-                        @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarCategoryTitleList.cshtml", sideBarCategoryModel))
+                       @(await Html.PartialAsync("~/Views/Shared/Components/Common/SideBarCategoryTitleList.cshtml", sideBarCategoryModel))
                     </div>
                 </div>
 

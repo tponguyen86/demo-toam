@@ -124,8 +124,10 @@ public class LookupService : ILookupService
         if (keyValues?.Any() != true) return;
         var keys = keyValues.Select(x => x.GetKeyFilter())?.Distinct()?.ToList();
         if (keys?.Any() != true) return;
-
-        var datas = await _context.Categories.Where(x => keys.Contains(x.Id.ToString())).ToListAsync(cancellationToken);
+        var categories = await _context.Categories.ToListAsync(cancellationToken);
+        var datas = categories.Where(x => keys.Contains(x.Id.ToString())).ToList();
+        if (datas?.Any() != true)
+            return;
         if (datas?.Any() != true)
             return;
 
@@ -140,15 +142,19 @@ public class LookupService : ILookupService
                 item.Value = $"{selected.Id}";
                 item.Key = $"{selected.PageKeyName}";
                 item.Label = selected.Name;
-                item.SetData(new
+                item.SetData(new CategoryDataSelectModel
                 {
-                    Sort = selected.Sort ?? 0,
-                    selected.ParentId,
-                    selected.ShowHome,
-                    selected.ShowMenu,
-                    selected.PageKeyName,
-                    selected.Status,
+                    Sort = selected.Sort,
+                    ParentId = selected.ParentId,
+                    ShowHome = selected.ShowHome,
+                    ShowMenu = selected.ShowMenu,
+                    PageKeyName = selected.PageKeyName,
+                    ShortDescription = selected.ShortDescription,
+                    Image = selected.Image,
+                    Banner = selected.Banner,
+                    Id = selected.Id,
                 });
+
             }
         }
     }

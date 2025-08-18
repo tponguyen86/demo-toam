@@ -17,3 +17,18 @@
     .ellipsis.ellipsis-line-clamp-2 {-webkit-line-clamp: 2;}
     .ellipsis.ellipsis-line-clamp-3 {-webkit-line-clamp: 3;}
     .ellipsis.ellipsis-line-clamp-4 {-webkit-line-clamp: 4;}
+
+.icon-bt-round {
+    content: '';
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    position: absolute;
+    right: 0;
+    left: auto;
+    border: 1px solid var(--dark-rgba-10);
+    transform: none;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+}

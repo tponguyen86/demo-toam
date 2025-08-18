@@ -12,6 +12,7 @@ public class CategoryChildrenSelectModel : BaseSelectCustomModel
     {
         return Child.Select(x => x.Value.GetGuid()).Where(x => x != Guid.Empty).ToList();
     }
+    //has current id and child
     public List<Guid> GetAllId()
     {
         var ids = GetChildId();

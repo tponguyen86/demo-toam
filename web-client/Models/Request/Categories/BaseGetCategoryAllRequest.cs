@@ -6,6 +6,11 @@ public class BaseGetCategoryAllRequest
 {
     public Guid? ParentId { get; set; }
     public bool ParentIdValidate() => ParentId.HasValue && ParentId != Guid.Empty && !TopLevel;
+    public void SetParentId(Guid parentId)
+    {
+        ParentId = parentId;
+    }
+    public Guid GetParentId() => ParentId ?? Guid.Empty;
 
     private bool TopLevel { get; set; }
     //when raise event => set pass where parentId
