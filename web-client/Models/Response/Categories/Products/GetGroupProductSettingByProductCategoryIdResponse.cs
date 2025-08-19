@@ -1,8 +1,5 @@
-﻿
-namespace web_client.Models.Responses.Categories.Products;
-public class GetGroupProductSettingByProductCategoryIdResponse
+﻿namespace web_client.Models.Response.Categories.Products;
+
+public class GetGroupProductSettingByProductCategoryIdResponse : BaseGroupSettingByCategoryIdResponse
 {
-    public Guid InputCategoryId { get; set; }
-    public Guid OutputCategoryId { get; set; }
-    public Guid OutputGroupProductSettingId { get; set; }
 }

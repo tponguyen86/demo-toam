@@ -16,9 +16,13 @@ public class CategoryChildrenSelectModel : BaseSelectCustomModel
     public List<Guid> GetAllId()
     {
         var ids = GetChildId();
-        var idCurrent = Value.GetGuid();
+        var idCurrent = GetValueGuid();
         if (idCurrent.HasValueGuid() == true)
             ids.Add(idCurrent);
         return ids;
+    }
+    public Guid GetValueGuid()
+    {
+        return Value.GetGuid();
     }
 }

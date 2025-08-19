@@ -62,8 +62,16 @@ namespace web_client.Controllers
         }
 
         [Route("san-pham/{seoKeyCategory?}")]
-        public async Task<IActionResult> Product([FromServices] IProductAppService services, [FromServices] IProductCategoryAppService categoryServices, ProductPagingRequest request, string? seoKeyCategory, CancellationToken cancellationToken)
+        public async Task<IActionResult> Product(
+            [FromServices] IProductAppService services, 
+            [FromServices] IProductCategoryAppService categoryServices, 
+            ProductPagingRequest request, 
+            string? seoKeyCategory, 
+            CancellationToken cancellationToken)
         {
+            request.SetCategoryKey(seoKeyCategory);
+
+            request.Attributes = Request.Query.Where(x => x.Key.StartsWith("p-"));
             var pageModel = new PageModel() { Title = "Sản phẩm", Description = "Danh sách sản phẩm", BodyClassName = "p-product", MainClassName = "shop", Keywords = "danh sách sản phẩm, sản phẩm, sản phẩm mới, sản phẩm nổi bật" };
 
             var categoryDetailRequest = new BaseDetailRequestDto(seoKeyCategory);
@@ -71,6 +79,8 @@ namespace web_client.Controllers
             var getCategoryDetail = await categoryServices.GetDetailAsync(categoryDetailRequest);
             if (getCategoryDetail?.Data != null)
             {
+                ViewData["ProductCategoryId"] = getCategoryDetail.Data.Id;
+
                 pageModel.Title = getCategoryDetail.Data.Name;
                 pageModel.Description = getCategoryDetail.Data.ShortDescription;
                 pageModel.Keywords = getCategoryDetail.Data.MetaKeyword;
@@ -88,8 +98,11 @@ namespace web_client.Controllers
             var model = responseData?.Items?.Select(x => new ProductTitleMediaComponent(x));
             var response = responseData.GetPaging(model);
             ViewBag.paging = response?.BuildPaging($"{RouteConst.GetRoute(RouteConst.Product)}?page={0}");
+            ViewBag.pagingRequest = request;
 
+            //configure page model , seo meodel...
             ViewData["Page"] = pageModel;
+
             return View(response);
         }
 

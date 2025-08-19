@@ -14,11 +14,13 @@ public static class DependencyInjection
         services.AddScoped<IProductCategoryService, ProductCategoryService>();
         services.AddScoped<INewsCategoryService, NewsCategoryService>();
         services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
+        services.AddScoped<IGroupSettingService, GroupSettingService>();
         services.AddScoped<INewsService, NewsService>();
         services.AddScoped<IServiceService, ServiceService>();
         services.AddScoped<ISystemConfigurationService, SystemConfigurationService>();
         services.AddScoped<ILayoutService, LayoutService>();
         services.AddScoped<IPageService, PageService>();
         services.AddScoped<IPageConfigurationService, PageConfigurationService>();
+     
     }
 }

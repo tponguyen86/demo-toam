@@ -1,4 +1,37 @@
-﻿@* <form class="contact-form" action="php/contact-form.php" method="POST" novalidate="novalidate" >
+﻿@inject IGroupSettingAppService _groupSettingAppService
+@{
+    var categoryId = (Guid)ViewData["ProductCategoryId"];
+    var groupSettingResponse = await _groupSettingAppService.GetGroupProductSettingDetailByCategoryId(categoryId);
+    var groupSettingResponseData = groupSettingResponse.Data;
+}
+<span>
+    aaaaa
+    @categoryId
+</span>
+@if (groupSettingResponseData?.Properties?.Any() == true)
+{
+    <form id="productSearchFrom" class="contact-form" action="@Url.Action("Product","Home")" method="get" novalidate="novalidate">
+        @foreach (var prop in groupSettingResponseData.Properties)
+        {
+            if (prop.Properties?.Any() == true)
+            {
+                <div class="row">
+                    <div class="form-group col">
+                        <label class="form-label required text-1 mb-0">@prop.Name</label>
+                        <select class="form-control" name="p-@prop.Code">
+                            @foreach (var propValue in prop.Properties)
+                            {
+                                <option value="@propValue.Value">@propValue.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            }
+        }
+    </form>
+}
+<button type="button" id="submitBtn" class="btn btn-primary mt-3">Submit</button>
+@* <form class="contact-form" action="php/contact-form.php" method="POST" novalidate="novalidate" >
     <div class="row">
         <div class="form-group col">
             <label class="form-label required text-1 mb-0">Hãng sản xuất</label>

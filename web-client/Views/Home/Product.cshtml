@@ -18,6 +18,7 @@
         productLink,
     });
     var sideBarCategoryModel = new CategoryTitleLinksComponent("Danh mục", productCategoryResponse?.Data?.Select(p => new BaseCategoryItemModel(p))?.ToList());
+
 }
 @(await Html.PartialAsync("~/Views/Shared/Components/Common/Breadcrumb.cshtml", breadcrumbModel))
 <div class="container limit">
@@ -53,5 +54,30 @@
             </div>
         </div>
     </div>
-
 </div>
+@section Scripts {
+    <script>
+        $(function () {
+            $("#submitBtn").on("click", function (e) {
+                e.preventDefault();
+                let form = $("#productSearchFrom");
+                // Validate form fields if needed
+               let formData= form.serialize();
+               console.log("formData",formData);
+                $.ajax({
+                    url: form.attr("action"),
+                    type: form.attr("method"),
+                    data: form.serialize(), // serialize form fields
+                    success: function (response) {
+                        // handle server response
+                        alert("Form submitted successfully!");
+                        console.log(response);
+                    },
+                    error: function (xhr) {
+                        alert("Error: " + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using web_client.Domain.IServices;
+using web_client.Helpers;
 using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
 using web_client.Models.Request.Categories;
 using web_client.Models.Response.Categories;
+using web_client.Models.Response.Categories.Products;
 
 namespace web_client.Domain.Services;
 
@@ -54,6 +56,38 @@ public class CategoryService : ICategoryService
             await _lookup.GetLookUpAsync(selectModels, cancellationToken);
 
         return BaseProcess<GetCategoryAllIdResponse>.Success(response);
+    }
+
+    public async Task<BaseProcess<GetGroupProductSettingByProductCategoryIdResponse>> GetGroupProductSettingByProductCategoryId(Guid categoryId, CancellationToken cancellationToken)
+    {
+        if (categoryId.HasValueGuid() != true)
+            return BaseProcess<GetGroupProductSettingByProductCategoryIdResponse>.Success(null);
+
+        var result = await GetGroupProductSettingId(categoryId, cancellationToken);
+        if (result == null) return BaseProcess<GetGroupProductSettingByProductCategoryIdResponse>.Success(null);
+
+        var response = new GetGroupProductSettingByProductCategoryIdResponse() { InputCategoryId = categoryId };
+        response.OutputGroupSettingId = result.Value.outputSettingId;
+        response.OutputCategoryId = result.Value.outputCategoryId;
+        return BaseProcess<GetGroupProductSettingByProductCategoryIdResponse>.Success(response);
+    }
+    private async Task<(Guid outputCategoryId, Guid outputSettingId)?> GetGroupProductSettingId(Guid categoryId, CancellationToken cancellationToken)
+    {
+        var category = await _context.ProductCategories.FirstOrDefaultAsync(x => x.Id == categoryId && x.Status != PredefineDataConst.SystemStatus.Key.Delete, cancellationToken);
+        if (category != null)
+        {
+            // Check if the current category has a group product setting
+            if (category.GroupProductSetting != Guid.Empty)
+            {
+                return (category.Id, category.GroupProductSetting);
+            }
+            // If not, recursively check the parent category
+            if (category.ParentId.HasValue)
+            {
+                return await GetGroupProductSettingId(category.ParentId.Value, cancellationToken);
+            }
+        }
+        return null;
     }
 }
 
