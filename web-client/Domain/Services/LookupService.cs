@@ -303,7 +303,8 @@ public class LookupService : ILookupService
         {
             if (item == null) continue;
             //var selected = datas.FirstOrDefault(x => item.GetKeyFilter() == $"{x.Id}");
-            var propertyselected = datas.Where(x => item.GetKeyFilter() == $"{x.Id}" || (x.Properties?.Any(p => p.Code == item.GetKeyFilter() && p.Properties.Any(pv=> pv.Value==item.ValueModel?.GetKeyFilter()))==true)).Select(x=>x.Properties).FirstOrDefault();
+            var values = item.ValueModel.Select(x => x.GetKeyFilter());
+            var propertyselected = datas.Where(x => item.GetKeyFilter() == $"{x.Id}" || (x.Properties?.Any(p => p.Code == item.GetKeyFilter() && p.Properties.Any(pv => values?.Contains(pv.Value) == true)) == true)).Select(x => x.Properties).FirstOrDefault();
             var selected = propertyselected?.FirstOrDefault(p => p.Code == item.GetKeyFilter());
             if (selected == null)
                 item.Value = item.Key = item.GetKeyFilter();
@@ -318,16 +319,18 @@ public class LookupService : ILookupService
                     selected.ShowInPageList,
                 });
                 //prop value
-                if (item.ValueModel?.Value?.HasValueString() == true)
+
+                var propValues = selected.Properties?.Where(v => values?.Contains(v.Value) == true);
+                foreach (var valueModel in item.ValueModel)
                 {
-                    var propValue = selected.Properties?.FirstOrDefault(v => v.Value == item.ValueModel.GetKeyFilter());
-                    if (propValue==null) item.ValueModel.Value = item.ValueModel.Key = item.ValueModel.GetKeyFilter(); 
+                    var propValue = propValues?.FirstOrDefault(v => v.Value == valueModel.GetKeyFilter());
+                    if (propValue == null) valueModel.Value = valueModel.Key = valueModel.GetKeyFilter();
                     else
                     {
-                        item.ValueModel.Value = $"{propValue.Value}";
-                        item.ValueModel.Key = $"{propValue.Value}";
-                        item.ValueModel.Label = propValue.Name;
-                        item.ValueModel.SetData(new
+                        valueModel.Value = $"{propValue.Value}";
+                        valueModel.Key = $"{propValue.Value}";
+                        valueModel.Label = propValue.Name;
+                        valueModel.SetData(new
                         {
                             propValue.Number,
                             propValue.NumberValue,
@@ -335,6 +338,8 @@ public class LookupService : ILookupService
                         });
                     }
                 }
+               
+
             }
         }
     }
