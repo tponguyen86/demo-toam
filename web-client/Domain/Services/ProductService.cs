@@ -134,8 +134,8 @@ namespace web_client.Domain.Services
                         if (prop.Value.PropertiesModelKey!=null)
                             selectModels.Add(prop.Value.PropertiesModelKey);
                         
-                        if (prop.Value.ValueModel!=null)
-                            selectModels.Add(prop.Value.ValueModel);
+                        //if (prop.Value.ValueModel!=null)
+                        //    selectModels.Add(prop.Value.ValueModel);
                     }
                 }
 

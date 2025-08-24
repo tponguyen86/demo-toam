@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using web_client.Domain.IServices;
+using web_client.Helpers;
 using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Base.Properties;
@@ -22,7 +23,7 @@ public class LookupService : ILookupService
         await LookUpProductCategory(request, cancellationToken);
         await LookUpGroupProductSetting(request, cancellationToken);
         await LookUpProperty(request, cancellationToken);
-        await LookUpPropertyValue(request, cancellationToken);
+        //await LookUpPropertyValue(request, cancellationToken);
         await LookUpManager(request, cancellationToken);
         await LookUpPredefineData(request, cancellationToken);
 
@@ -290,60 +291,82 @@ public class LookupService : ILookupService
         //    WHERE jsonb_path_exists(""Properties"", '$[*] ? (@.Code in (""hang-san-xuat""))')")
         //.ToListAsync(cancellationToken);
         var dataList = await _context.GroupProductSettings.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete).ToListAsync(cancellationToken);
-        var datas3 = await _context.GroupProductSettings.Where(x => EF.Functions.JsonContains(x.Properties, jsonKeys)).ToListAsync(cancellationToken);
-        var datas4 = await _context.GroupProductSettings.Where(x => keys.Any(k => EF.Functions.JsonExists(x.Properties.Select(x => x.Code), k))).ToListAsync(cancellationToken);
-        var datas = await _context.GroupProductSettings.Where(x => keys.Contains(x.Id.ToString()) ||
-        (x.Properties != null && keys.Any(k => EF.Functions.JsonContains(x.Properties, jsonKeys)))).ToListAsync(cancellationToken);
+        var datas = dataList.Where(x => keys.Contains(x.Id.ToString()) || (x.Properties != null && x.Properties.Any(p => keys.Contains(p.Code)))).ToList();
+        //var datas3 = await _context.GroupProductSettings.Where(x => EF.Functions.JsonContains(x.Properties, jsonKeys)).ToListAsync(cancellationToken);
+        //var datas4 = await _context.GroupProductSettings.Where(x => keys.Any(k => EF.Functions.JsonExists(x.Properties.Select(x => x.Code), k))).ToListAsync(cancellationToken);
+        //var datas = await _context.GroupProductSettings.Where(x => keys.Contains(x.Id.ToString()) ||
+        //(x.Properties != null && keys.Any(k => EF.Functions.JsonContains(x.Properties, jsonKeys)))).ToListAsync(cancellationToken);
         if (datas?.Any() != true)
             return;
 
         foreach (var item in keyValues)
         {
             if (item == null) continue;
-            var selected = datas.FirstOrDefault(x => item.GetKeyFilter() == $"{x.Id}");
+            //var selected = datas.FirstOrDefault(x => item.GetKeyFilter() == $"{x.Id}");
+            var propertyselected = datas.Where(x => item.GetKeyFilter() == $"{x.Id}" || (x.Properties?.Any(p => p.Code == item.GetKeyFilter() && p.Properties.Any(pv=> pv.Value==item.ValueModel?.GetKeyFilter()))==true)).Select(x=>x.Properties).FirstOrDefault();
+            var selected = propertyselected?.FirstOrDefault(p => p.Code == item.GetKeyFilter());
             if (selected == null)
                 item.Value = item.Key = item.GetKeyFilter();
             else
             {
-                item.Value = $"{selected.Id}";
-                item.Key = $"{selected.Id}";
+                item.Value = $"{selected.Code}";
+                item.Key = $"{selected.Code}";
                 item.Label = selected.Name;
                 item.SetData(new
                 {
-                    selected.Status
+                    selected.Selected,
+                    selected.ShowInPageList,
                 });
+                //prop value
+                if (item.ValueModel?.Value?.HasValueString() == true)
+                {
+                    var propValue = selected.Properties?.FirstOrDefault(v => v.Value == item.ValueModel.GetKeyFilter());
+                    if (propValue==null) item.ValueModel.Value = item.ValueModel.Key = item.ValueModel.GetKeyFilter(); 
+                    else
+                    {
+                        item.ValueModel.Value = $"{propValue.Value}";
+                        item.ValueModel.Key = $"{propValue.Value}";
+                        item.ValueModel.Label = propValue.Name;
+                        item.ValueModel.SetData(new
+                        {
+                            propValue.Number,
+                            propValue.NumberValue,
+                            propValue.Id,
+                        });
+                    }
+                }
             }
         }
     }
 
-    private async Task LookUpPropertyValue(List<BaseSelectModel> request, CancellationToken cancellationToken)
-    {
-        var keyValues = request?.Where(x => x is PropertyValueSelectModel).Select(x => x as PropertyValueSelectModel);
-        if (keyValues?.Any() != true) return;
-        var keys = keyValues.Select(x => x.GetKeyFilter())?.Distinct()?.ToList();
-        if (keys?.Any() != true) return;
+    //private async Task LookUpPropertyValue(List<BaseSelectModel> request, CancellationToken cancellationToken)
+    //{
+    //    var keyValues = request?.Where(x => x is PropertyValueSelectModel).Select(x => x as PropertyValueSelectModel);
+    //    if (keyValues?.Any() != true) return;
+    //    var keys = keyValues.Select(x => x.GetKeyFilter())?.Distinct()?.ToList();
+    //    if (keys?.Any() != true) return;
 
-        var datas = await _context.GroupProductSettings.Where(x => keys.Contains(x.Id.ToString())).ToListAsync(cancellationToken);
-        if (datas?.Any() != true)
-            return;
+    //    var datas = await _context.GroupProductSettings.Where(x => keys.Contains(x.Id.ToString())).ToListAsync(cancellationToken);
+    //    if (datas?.Any() != true)
+    //        return;
 
-        foreach (var item in keyValues)
-        {
-            if (item == null) continue;
-            var selected = datas.FirstOrDefault(x => item.GetKeyFilter() == $"{x.Id}");
-            if (selected == null)
-                item.Value = item.Key = item.GetKeyFilter();
-            else
-            {
-                item.Value = $"{selected.Id}";
-                item.Key = $"{selected.Id}";
-                item.Label = selected.Name;
-                item.SetData(new
-                {
-                    selected.Status
-                });
-            }
-        }
-    }
+    //    foreach (var item in keyValues)
+    //    {
+    //        if (item == null) continue;
+    //        var selected = datas.FirstOrDefault(x => item.GetKeyFilter() == $"{x.Id}");
+    //        if (selected == null)
+    //            item.Value = item.Key = item.GetKeyFilter();
+    //        else
+    //        {
+    //            item.Value = $"{selected.Id}";
+    //            item.Key = $"{selected.Id}";
+    //            item.Label = selected.Name;
+    //            item.SetData(new
+    //            {
+    //                selected.Status
+    //            });
+    //        }
+    //    }
+    //}
 
 }

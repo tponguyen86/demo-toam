@@ -12,21 +12,30 @@ public class AttributePropertyValueResponse : BaseAttributePropertyValue
     public PropertySelectModel PropertiesModelKey { get; set; }
 
     //value  of branch :  omron, nvidia
-    public PropertyValueSelectModel? ValueModel { get; set; }
+    //public PropertyValueSelectModel? ValueModel { get; set; }
 
     public AttributePropertyValueResponse() { }
+    //public AttributePropertyValueResponse(string propertyKey, BaseAttributePropertyValue baseValue)
+    //{
+    //    if (propertyKey.HasValueString() == true)
+    //        PropertiesModelKey = new PropertySelectModel(propertyKey);
+
+    //    if (baseValue != null)
+    //    {
+    //        if (baseValue?.Value?.HasValueString() == true)
+    //        {
+    //            Value = baseValue.Value;
+    //            ValueModel = new PropertyValueSelectModel(baseValue.Value);
+    //        }
+    //        Type = baseValue?.Type;
+    //    }
+    //} 
     public AttributePropertyValueResponse(string propertyKey, BaseAttributePropertyValue baseValue)
     {
-        if (propertyKey.HasValueString() == true)
-            PropertiesModelKey = new PropertySelectModel(propertyKey);
-
-        if (baseValue != null)
+        if (propertyKey.HasValueString() == true && baseValue?.Value?.HasValueString() == true)
         {
-            if (baseValue?.Value?.HasValueString() == true)
-            {
-                Value = baseValue.Value;
-                ValueModel = new PropertyValueSelectModel(baseValue.Value);
-            }
+            PropertiesModelKey = new PropertySelectModel(propertyKey, baseValue.Value);
+            Value = baseValue.Value;
             Type = baseValue?.Type;
         }
     }
