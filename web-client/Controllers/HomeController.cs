@@ -60,6 +60,10 @@ namespace web_client.Controllers
 
             return View(response);
         }
+        public bool IsAjaxRequest()
+        {
+            return Request.Headers["x-requested-with"] == "XMLHttpRequest";
+        }
 
         [Route("san-pham/{seoKeyCategory?}")]
         public async Task<IActionResult> Product(
@@ -70,7 +74,7 @@ namespace web_client.Controllers
             CancellationToken cancellationToken)
         {
             request.SetCategoryKey(seoKeyCategory);
-
+            
             request.Attributes = Request.Query.Where(x => x.Key.StartsWith("p-"));
             var pageModel = new PageModel() { Title = "Sản phẩm", Description = "Danh sách sản phẩm", BodyClassName = "p-product", MainClassName = "shop", Keywords = "danh sách sản phẩm, sản phẩm, sản phẩm mới, sản phẩm nổi bật" };
 
@@ -93,7 +97,7 @@ namespace web_client.Controllers
 
             var resultProduct = await services.GetPagingAsync(request, cancellationToken);
             if (resultProduct.HasError)
-                return RedirectToAction("Product");
+                return RedirectToAction("ProductCategory");
             var responseData = resultProduct.Data;
             var model = responseData?.Items?.Select(x => new ProductTitleMediaComponent(x));
             var response = responseData.GetPaging(model);
@@ -103,9 +107,15 @@ namespace web_client.Controllers
             //configure page model , seo meodel...
             ViewData["Page"] = pageModel;
 
+            bool isAjaxCall = IsAjaxRequest();
+            if (isAjaxCall)
+            {
+                // If it's an AJAX request, return a partial view or JSON response
+                return PartialView("Components/_ProductListPartial", response);
+            }
             return View(response);
-        }
-
+        } 
+        
         [Route("san-pham/{seoKey}/chi-tiet")]
         public async Task<IActionResult> ProductDetail([FromServices] IProductAppService services, string seoKey, CancellationToken cancellationToken)
         {

@@ -1,6 +1,6 @@
 ﻿namespace web_client.Models.Data;
 
-public class PropertySelectModel
+public class PropertyValueModel
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public double NumberValue { get; set; }

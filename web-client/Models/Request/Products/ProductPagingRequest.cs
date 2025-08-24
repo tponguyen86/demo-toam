@@ -36,5 +36,26 @@ public class ProductPagingRequest : BaseSearchRequest
     }
 
     public IEnumerable<KeyValuePair<string,StringValues>> Attributes { get; set; }
+  
+    public void SetAttributes(IEnumerable<KeyValuePair<string, StringValues>> attributes)
+    {
+        if (attributes == null || !attributes.Any()) return;
+        Attributes = attributes;
+    }
+    public IEnumerable<KeyValuePair<string, string>>? GetAttributes()
+    {
+        if (Attributes == null || !Attributes.Any()) return null;
+        var result = new List<KeyValuePair<string, string>>();
+        foreach (var attributes in Attributes?.Where(x => !string.IsNullOrEmpty(x.Value)))
+        {
+            var key = attributes.Key.Replace("p-", "");
+            var value = attributes.Value.ToString().Split(",");
+            foreach (var item in value)
+            {
+                result.Add(new KeyValuePair<string, string>(key, item));
+            }
+        }
+        return result;
+    }
 
 }

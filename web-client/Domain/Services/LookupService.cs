@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using web_client.Domain.IServices;
+using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Base.Properties;
 using web_client.Models.Data.Contexts;
@@ -19,7 +20,9 @@ public class LookupService : ILookupService
         await LookUpCategoryChild(request, cancellationToken);
         await LookUpCategory(request, cancellationToken);
         await LookUpProductCategory(request, cancellationToken);
-        await LookUpGroupProductSetting(request, cancellationToken); 
+        await LookUpGroupProductSetting(request, cancellationToken);
+        await LookUpProperty(request, cancellationToken);
+        await LookUpPropertyValue(request, cancellationToken);
         await LookUpManager(request, cancellationToken);
         await LookUpPredefineData(request, cancellationToken);
 
@@ -58,35 +61,7 @@ public class LookupService : ILookupService
             }
         }
     }
-    private async Task LookUpGroupProductSetting(List<BaseSelectModel> request, CancellationToken cancellationToken)
-    {
-        var keyValues = request?.Where(x => x is GroupProductSettingSelectModel).Select(x => x as GroupProductSettingSelectModel);
-        if (keyValues?.Any() != true) return;
-        var keys = keyValues.Select(x => x.GetKeyFilter())?.Distinct()?.ToList();
-        if (keys?.Any() != true) return;
 
-        var datas = await _context.GroupProductSettings.Where(x => keys.Contains(x.Id.ToString())).ToListAsync(cancellationToken);
-        if (datas?.Any() != true)
-            return;
-
-        foreach (var item in keyValues)
-        {
-            if (item == null) continue;
-            var selected = datas.FirstOrDefault(x => item.GetKeyFilter() == $"{x.Id}");
-            if (selected == null)
-                item.Value = item.Key = item.GetKeyFilter();
-            else
-            {
-                item.Value = $"{selected.Id}";
-                item.Key = $"{selected.Id}";
-                item.Label = selected.Name;
-                item.SetData(new
-                {
-                    selected.Status
-                });
-            }
-        }
-    } 
     private async Task LookUpManager(List<BaseSelectModel> request, CancellationToken cancellationToken)
     {
         var keyValues = request?.Where(x => x is ManagerSelectModel).Select(x => x as ManagerSelectModel);
@@ -118,6 +93,7 @@ public class LookupService : ILookupService
             }
         }
     }
+
     private async Task LookUpCategory(List<BaseSelectModel> request, CancellationToken cancellationToken)
     {
         var keyValues = request?.Where(x => x is CategorySelectModel).Select(x => x as CategorySelectModel);
@@ -270,4 +246,104 @@ public class LookupService : ILookupService
         }
     }
     #endregion
+
+    private async Task LookUpGroupProductSetting(List<BaseSelectModel> request, CancellationToken cancellationToken)
+    {
+        var keyValues = request?.Where(x => x is GroupProductSettingSelectModel).Select(x => x as GroupProductSettingSelectModel);
+        if (keyValues?.Any() != true) return;
+        var keys = keyValues.Select(x => x.GetKeyFilter())?.Distinct()?.ToList();
+        if (keys?.Any() != true) return;
+
+        var datas = await _context.GroupProductSettings.Where(x => keys.Contains(x.Id.ToString())).ToListAsync(cancellationToken);
+        if (datas?.Any() != true)
+            return;
+
+        foreach (var item in keyValues)
+        {
+            if (item == null) continue;
+            var selected = datas.FirstOrDefault(x => item.GetKeyFilter() == $"{x.Id}");
+            if (selected == null)
+                item.Value = item.Key = item.GetKeyFilter();
+            else
+            {
+                item.Value = $"{selected.Id}";
+                item.Key = $"{selected.Id}";
+                item.Label = selected.Name;
+                item.SetData(new
+                {
+                    selected.Status
+                });
+            }
+        }
+    }
+    private async Task LookUpProperty(List<BaseSelectModel> request, CancellationToken cancellationToken)
+    {
+        var keyValues = request?.Where(x => x is PropertySelectModel).Select(x => x as PropertySelectModel);
+        if (keyValues?.Any() != true) return;
+        var keys = keyValues.Select(x => x.GetKeyFilter())?.Distinct()?.ToArray();
+        if (keys?.Any() != true) return;
+        var jsonKeys = keys.Select(x => $"[{{\"Code\":\"{x}\"}}]");
+        //    var datas1 = await _context.GroupProductSettings
+        //.FromSqlInterpolated($@"
+        //    SELECT * 
+        //    FROM ""GroupProductSettings""
+        //    WHERE jsonb_path_exists(""Properties"", '$[*] ? (@.Code in (""hang-san-xuat""))')")
+        //.ToListAsync(cancellationToken);
+        var dataList = await _context.GroupProductSettings.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete).ToListAsync(cancellationToken);
+        var datas3 = await _context.GroupProductSettings.Where(x => EF.Functions.JsonContains(x.Properties, jsonKeys)).ToListAsync(cancellationToken);
+        var datas4 = await _context.GroupProductSettings.Where(x => keys.Any(k => EF.Functions.JsonExists(x.Properties.Select(x => x.Code), k))).ToListAsync(cancellationToken);
+        var datas = await _context.GroupProductSettings.Where(x => keys.Contains(x.Id.ToString()) ||
+        (x.Properties != null && keys.Any(k => EF.Functions.JsonContains(x.Properties, jsonKeys)))).ToListAsync(cancellationToken);
+        if (datas?.Any() != true)
+            return;
+
+        foreach (var item in keyValues)
+        {
+            if (item == null) continue;
+            var selected = datas.FirstOrDefault(x => item.GetKeyFilter() == $"{x.Id}");
+            if (selected == null)
+                item.Value = item.Key = item.GetKeyFilter();
+            else
+            {
+                item.Value = $"{selected.Id}";
+                item.Key = $"{selected.Id}";
+                item.Label = selected.Name;
+                item.SetData(new
+                {
+                    selected.Status
+                });
+            }
+        }
+    }
+
+    private async Task LookUpPropertyValue(List<BaseSelectModel> request, CancellationToken cancellationToken)
+    {
+        var keyValues = request?.Where(x => x is PropertyValueSelectModel).Select(x => x as PropertyValueSelectModel);
+        if (keyValues?.Any() != true) return;
+        var keys = keyValues.Select(x => x.GetKeyFilter())?.Distinct()?.ToList();
+        if (keys?.Any() != true) return;
+
+        var datas = await _context.GroupProductSettings.Where(x => keys.Contains(x.Id.ToString())).ToListAsync(cancellationToken);
+        if (datas?.Any() != true)
+            return;
+
+        foreach (var item in keyValues)
+        {
+            if (item == null) continue;
+            var selected = datas.FirstOrDefault(x => item.GetKeyFilter() == $"{x.Id}");
+            if (selected == null)
+                item.Value = item.Key = item.GetKeyFilter();
+            else
+            {
+                item.Value = $"{selected.Id}";
+                item.Key = $"{selected.Id}";
+                item.Label = selected.Name;
+                item.SetData(new
+                {
+                    selected.Status
+                });
+            }
+        }
+    }
+
 }

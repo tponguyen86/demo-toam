@@ -38,46 +38,58 @@
                 </div>
             </aside>
         </div>
-        <div class="col-lg-9 order-lg-2">
-            <div class="masonry-loader1 masonry-loader-showing1">
-                <div class="row products product-thumb-info-list">
-                    @if (Model?.Items?.Any() == true)
-                        foreach (var item in Model.Items)
-                        {
-                            <div class="col-sm-6 col-lg-4 mb-2">
-                                @await Html.PartialAsync("~/Views/Shared/Components/Common/ProductTitleMedia.cshtml", item)
-                            </div>
-                        }
-                </div>
-
-                @await Html.PartialAsync("~/Views/Shared/Components/Common/Paging.cshtml", ViewBag.paging as PagingComponent)
-            </div>
+        <div class="col-lg-9 order-lg-2" id="productItems">
+            <!--  Loading ....-->
         </div>
     </div>
 </div>
 @section Scripts {
     <script>
         $(function () {
-            $("#submitBtn").on("click", function (e) {
-                e.preventDefault();
-                let form = $("#productSearchFrom");
-                // Validate form fields if needed
-               let formData= form.serialize();
-               console.log("formData",formData);
-                $.ajax({
-                    url: form.attr("action"),
-                    type: form.attr("method"),
-                    data: form.serialize(), // serialize form fields
-                    success: function (response) {
-                        // handle server response
-                        alert("Form submitted successfully!");
-                        console.log(response);
+            var pageLoad = {
+                init: function () {
+                      pageLoad.product.init(); // Call the product get method
+                    // Initialize any page-specific scripts here
+                     // $("#submitBtn").click();
+                      $("#submitBtn").on("click", function (e) {
+                            e.preventDefault();
+                            pageLoad.product.get(); 
+
+                        });
+                    console.log("Page loaded and initialized.");
+                },
+                product: {
+                    init: function () {
+                        // Initialize product-specific scripts here
+                        console.log("Product scripts initialized.");
+                        pageLoad.product.get(); 
                     },
-                    error: function (xhr) {
-                        alert("Error: " + xhr.responseText);
+                    get: function () {
+                        let form = $("#productSearchFrom");
+                // Validate form fields if needed
+                           let formData= form.serialize();
+                           console.log("formData",formData);
+                            $.ajax({
+                                url: form.attr("action"),
+                                type: form.attr("method"),
+                                data: form.serialize(), // serialize form fields
+                                success: function (response) {
+                                    $("#productItems").html(response);
+                                    // handle server response
+                                    console.log(response);
+                                },
+                                error: function (xhr) {
+                                    alert("Error: " + xhr.responseText);
+                                }
+                            });
                     }
-                });
-            });
+                }
+            }
+
+
+            // init form
+            pageLoad.init();
+
         });
     </script>
 }

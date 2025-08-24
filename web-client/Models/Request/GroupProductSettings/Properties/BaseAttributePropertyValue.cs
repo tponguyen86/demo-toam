@@ -5,7 +5,7 @@ public class BaseAttributePropertyValue
     /// <summary>
     /// value ex: Omron
     /// </summary>
-    public object? Value { get; set; }
+    public string? Value { get; set; }
     //string , number , array, object..... default null => string
     public string? Type { get; set; } = "";
 }

@@ -35,9 +35,6 @@ public class ProductAppService : IProductAppService
     public Task<BaseProcess<BasePagingModel<ProductItemResponse>>> GetPagingAsync(ProductPagingRequest request, CancellationToken cancellationToken)
     => _service.GetPagingAsync(request, cancellationToken);
 
-    //    public Task<BaseProcess<List<ProductItemResponse>>> GetRelativeAsync(GetCategoryDetailRelativeRequest request, CancellationToken cancellationToken)
-    //=> _service.GetRelativeAsync(request, cancellationToken);
-
     public async Task<BaseProcess<List<ProductItemResponse>>> GetRelativeAsync(GetCategoryDetailRelativeRequest request, CancellationToken cancellationToken)
     {
         var categoryDetailRequest = new GetCategoryAllIdRequest();

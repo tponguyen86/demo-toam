@@ -47,7 +47,8 @@ public class ProductItemResponse : BaseProduct
 
         if (product.Attribute != null)
         {
-            Attribute = product.Attribute.DocumentToObject<BaseAttribute>(new JsonSerializerOptions());
+            //Attribute = product.Attribute.DocumentToObject<BaseAttribute>(new JsonSerializerOptions());
+            Attribute = product.Attribute;
             if (Attribute != null)
                 AttributeModel = new BaseAttributeResponse(Attribute);
         }

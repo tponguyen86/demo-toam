@@ -2,6 +2,7 @@
 using System.Text.Json;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts.Entities.Base;
+using web_client.Models.Request.GroupProductSettings.Properties;
 
 namespace web_client.Models.Data.Contexts.Entities;
 
@@ -14,7 +15,8 @@ public class Product : BaseSeo
     public Guid GroupProductSetting { get; set; }
     //BaseAttribute
     [Column(TypeName = "jsonb")]
-    public JsonDocument? Attribute { get; set; }
+    public BaseAttribute? Attribute { get; set; }
+    //public PropertyAttribute? Attribute { get; set; }
 
     public Guid ProductCategory { get; set; }
     //[Column(TypeName = "jsonb")]

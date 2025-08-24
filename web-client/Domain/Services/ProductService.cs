@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 using web_client.Domain.IServices;
 using web_client.Helpers;
 using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Data.Contexts;
+using web_client.Models.Data.Contexts.Entities;
 using web_client.Models.Request.Categories.Details;
 using web_client.Models.Request.Products;
 using web_client.Models.Response.Products;
@@ -78,6 +82,32 @@ namespace web_client.Domain.Services
                 query = query.Where(x => x.Featured == request.Featured);
             }
 
+            //atributes
+            var attributes = request?.GetAttributes();
+            if (attributes?.Any() == true)
+            {
+                var parameter = Expression.Parameter(typeof(Product), "u");
+                Expression? body = null;
+                foreach (var cond in attributes)
+                {
+                    var json = $@"{{ ""Properties"": {{ ""{cond.Key}"": {{ ""Value"": {(
+                        cond.Value is string ? $"\"{cond.Value}\"" : cond.Value.ToString())} }}}} }}";
+
+                    // EF.Functions.JsonContains(u.Data, json)
+                    var call = Expression.Call(
+                        typeof(NpgsqlJsonDbFunctionsExtensions),
+                        nameof(NpgsqlJsonDbFunctionsExtensions.JsonContains),
+                        Type.EmptyTypes,
+                        Expression.Property(null, typeof(EF), nameof(EF.Functions)),
+                        Expression.Property(parameter, nameof(Product.Attribute)),
+                        Expression.Constant(json));
+
+                    body = body == null ? call : Expression.OrElse(body, call);
+                }
+                var lambda = Expression.Lambda<Func<Product, bool>>(body!, parameter);
+                query = query.Where(lambda);
+
+            }
             var page = request?.GetPage() ?? 1;
             var pageSize = request?.GetPageSize() ?? 10;
 
@@ -95,7 +125,19 @@ namespace web_client.Domain.Services
             foreach (var item in response.Items)
             {
                 if (item.ProductCategoryModel != null)
-                    selectModels.Add(item.ProductCategoryModel);
+                    selectModels.Add(item.ProductCategoryModel);  
+                
+                if (item.AttributeModel != null)
+                {
+                    foreach (var prop in item.AttributeModel.PropertiesModel)
+                    {
+                        if (prop.Value.PropertiesModelKey!=null)
+                            selectModels.Add(prop.Value.PropertiesModelKey);
+                        
+                        if (prop.Value.ValueModel!=null)
+                            selectModels.Add(prop.Value.ValueModel);
+                    }
+                }
 
                 if (item.GroupProductSettingModel != null)
                     selectModels.Add(item.GroupProductSettingModel);
@@ -122,7 +164,7 @@ namespace web_client.Domain.Services
                 return BaseProcess<List<ProductItemResponse>>.Success(null);
 
             var query = _context.Products.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active && x.Id != request.Id).AsQueryable();
-           
+
             if (request?.CategoryHasValue() == true)
             {
                 var categoryIds = request.GetCategory();

@@ -1,4 +1,5 @@
-﻿using web_client.Models.Request.GroupProductSettings.Properties;
+﻿using web_client.Models.Base.Properties;
+using web_client.Models.Request.GroupProductSettings.Properties;
 
 namespace web_client.Models.Response.GroupProductSettings.Properties;
 
@@ -26,8 +27,24 @@ public class BaseAttributeResponse<TValueModel> : BaseAttribute
 }
 public class BaseAttributeResponse : BaseAttributeResponse<AttributePropertyValueResponse>
 {
-    public BaseAttributeResponse(BaseAttribute baseAttribute) : base(baseAttribute, x => new AttributePropertyValueResponse(x))
+    //public BaseAttributeResponse(BaseAttribute baseAttribute) : base(baseAttribute, x => new AttributePropertyValueResponse(x))
+    //{
+    //}
+    //public BaseAttributeResponse(BaseAttribute baseAttribute) : base(baseAttribute, x => new AttributePropertyValueResponse(x))
+    //{
+    //}
+    public BaseAttributeResponse(BaseAttribute baseAttribute)
     {
+        if (baseAttribute == null) return;
+        if (baseAttribute.Properties == null) return;
+
+        Properties = baseAttribute.Properties;
+        PropertiesModel = new Dictionary<string, AttributePropertyValueResponse>();
+
+        foreach (var property in Properties)
+        {
+            PropertiesModel.Add(property.Key,new AttributePropertyValueResponse(property.Key, property.Value));
+        }
     }
     //public BaseAttributeResponse(BaseAttribute baseAttribute)
     //{
