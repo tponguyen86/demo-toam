@@ -1,4 +1,5 @@
-﻿using web_client.Models.Base.Properties;
+﻿using web_client.Helpers;
+using web_client.Models.Base.Properties;
 using web_client.Models.Request.GroupProductSettings.Properties;
 
 namespace web_client.Models.Response.GroupProductSettings.Properties;
@@ -40,10 +41,12 @@ public class BaseAttributeResponse : BaseAttributeResponse<AttributePropertyValu
 
         Properties = baseAttribute.Properties;
         PropertiesModel = new Dictionary<string, AttributePropertyValueResponse>();
-
         foreach (var property in Properties)
         {
-            PropertiesModel.Add(property.Key,new AttributePropertyValueResponse(property.Key, property.Value));
+            if (property.Value?.Value?.HasValueString()==true)
+            {
+                PropertiesModel.Add(property.Key, new AttributePropertyValueResponse(property.Key, property.Value));
+            }
         }
     }
     //public BaseAttributeResponse(BaseAttribute baseAttribute)

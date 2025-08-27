@@ -3,6 +3,7 @@
 public class BaseLinkModel : BaseTitleModel
 {
     public string? Href { get; set; }
+    public string? Target { get; set; }= "_self";
     public BaseLinkModel()
     {
     }

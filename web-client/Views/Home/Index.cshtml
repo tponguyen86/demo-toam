@@ -127,11 +127,10 @@
             productsModel.Title = item.Name;
             productsModel.Link = new BaseMediaLinkModel(item.Name, string.Format(RouteConst.GetRoute(RouteConst.CategoryOfProductDetail), item.PageKeyName));
             productsModel.Links = producByCategoryFeatureResponseData?.Items?.Where(x => x.ProductCategory == item.Id || (item.ChildModel?.GetAllId()?.Contains(x.Id) == true)).Select(x => new BaseProductItemModel(x)).Take(5).ToList();
-            // productsModel.Links = new List<BaseProductItemModel>();
+            //productsModel.Links = new List<BaseProductItemModel>();
             //         for (int x = 0; x < 5; x++)
             //         {
             //             productsModel.Links.Add(new BaseProductItemModel()
-
             //                     {
             //                         Id = Guid.NewGuid(),
             //                         Title = "Contactor LC1D09M7 Schneider  " + x + 1,
@@ -147,15 +146,14 @@
             //                         DisplaySale = true,
             //                         Attributes = new List<BaseAttributeItemModel>
             //                     ()
-            // {
+            //{
             // new BaseAttributeItemModel("Loại sản phẩm", "Contactor", "product-type"),
             // new BaseAttributeItemModel("Số cực","P", "number"),
             // new BaseAttributeItemModel("Dòng tiếp điểm",  "9A", "dong-tiep-dan"),
             // new BaseAttributeItemModel("Tiếp điểm phụ", "1NO+1NC", "tiep-diem-phu"),
-
-            // }
-            //                     });
-            //         }
+            //}
+            //});
+            //}
 
             <div class="card mb-4">
                 <div class="card-body p-0">
@@ -166,7 +164,7 @@
                                     <img class="img-fluid" src="@(item.Image?.Path)" alt="@productsModel.Title">
                                 </div>
                                 <div class="card-footer bg-color-grey">
-                                    <a href="@productsModel.Link" class="btn btn-arrow-effect-1 text-uppercase bg-transparent text-primary border-0 p-0">Xem thêm<i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
+                                    <a href="@productsModel.Link?.Href" title="@productsModel.Link?.Title" class="btn btn-arrow-effect-1 text-uppercase bg-transparent text-primary border-0 p-0">Xem thêm<i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
                                 </div>
                             </div>
                         </div>

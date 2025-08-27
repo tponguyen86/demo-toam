@@ -1,8 +1,10 @@
 ﻿using web_client.Application.IServices;
 using web_client.Domain.IServices;
 using web_client.Models.Base;
+using web_client.Models.Request.Categories.Services;
 using web_client.Models.Request.SystemConfigurations;
 using web_client.Models.Response.SystemConfigurations;
+using web_client.Models.Responses.Categories;
 
 namespace web_client.Application.Services;
 
@@ -10,11 +12,13 @@ public class LayoutAppService : ILayoutAppService
 {
     private readonly ILayoutService _layoutService;
     private readonly ISystemConfigurationService _systemConfigurationService;
+    private readonly ICategoryService _categoryService;
 
-    public LayoutAppService(ILayoutService layoutService, ISystemConfigurationService systemConfigurationService)
+    public LayoutAppService(ILayoutService layoutService, ISystemConfigurationService systemConfigurationService, ICategoryService categoryService)
     {
         _layoutService = layoutService;
         _systemConfigurationService = systemConfigurationService;
+        _categoryService = categoryService;
     }
 
     public Task<BaseProcess<SystemConfigurationDetailResponse>> GetSystemConfigurationDetailAsync(BaseDetailRequestDto request)
@@ -32,5 +36,14 @@ public class LayoutAppService : ILayoutAppService
     public string? GetSystemConfigurationValueLocal(List<SystemConfigurationItemResponse>? datas, string key, string? defaultValue = "")
     {
         return GetSystemConfigurationLocal(datas, key)?.Value ?? defaultValue;
+    }
+
+    public async Task<BaseProcess<List<CategoryItemResponse>>> GetMenuTopAsync()
+    {
+        var request = new GetServiceCategoryAllRequest();
+        request.SetTopLevel();
+        request.ShowMenu = true;
+        var result = await _categoryService.GetAllAsync(request, CancellationToken.None);
+        return new BaseProcess<List<CategoryItemResponse>>(result.Data, result?.Errors);
     }
 }

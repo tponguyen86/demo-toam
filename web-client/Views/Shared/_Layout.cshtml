@@ -9,7 +9,7 @@
     var slogan2 = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Slogan2, "Học đi đôi với hành động");
     var phoneNumber = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.PhoneNumber, "0987654321");
     var email = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Email, "support@gmail.com");
-    
+
     var instagram = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Instagram, "https://www.instagram.com");
     var facebook = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Facebook, "https://www.facebook.com");
     var twitter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Twitter, "http://www.twitter.com");
@@ -20,6 +20,8 @@
     var copyrightFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.CopyrightFooter, "© 2024 tên công ty All rights reserved. Mã số thuế: 2104509916 do Sở Kế Hoạch & Đầu Tư Hà Nội cấp lần đầu ngày 14/10/2010");
     var address = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Address, "234 Street Name, City Name");
 
+    var menu = await _layout.GetMenuTopAsync();
+    var menuData = menu?.Data;
 }
 <html lang="en">
 <head>
@@ -242,6 +244,28 @@
                                                             Tài liệu
                                                         </a>
                                                     </li>
+                                                    @foreach (var menuItem in menu?.Data)
+                                                    {
+                                                        var hasChild = menuItem.ChildModel?.Child?.Any() == true;
+                                                        <li class="@(hasChild?"dropdown":"")">
+                                                            <a class="dropdown-item dropdown-toggle" href="#">
+                                                                @menuItem.Name
+                                                            </a>
+                                                            @if (hasChild)
+                                                            {
+                                                                <ul class="dropdown-menu">
+                                                                    @foreach (var childItem in menuItem?.ChildModel?.Child)
+                                                                    {
+                                                                        <li>
+                                                                            <a href="#" class="dropdown-item">
+                                                                                @childItem.Label
+                                                                            </a>
+                                                                        </li>
+                                                                    }
+                                                                </ul>
+                                                            }
+                                                        </li>
+                                                    }
                                                     <li class="dropdown">
                                                         <a class="dropdown-item dropdown-toggle" asp-area="" asp-controller="Home" asp-action="Contact">
                                                             Liên hệ
@@ -354,7 +378,7 @@
                 </div>
             </div>
         </footer>
-l
+        l
     </div>
 
     <!-- Vendor -->

@@ -8,4 +8,5 @@ public class BaseAttributePropertyValue
     public string? Value { get; set; }
     //string , number , array, object..... default null => string
     public string? Type { get; set; } = "";
+    public bool? Featured { get; set; } = false;
 }

@@ -7,6 +7,7 @@ using web_client.Models.Data.Contexts;
 using web_client.Models.Request.Categories;
 using web_client.Models.Response.Categories;
 using web_client.Models.Response.Categories.Products;
+using web_client.Models.Responses.Categories;
 
 namespace web_client.Domain.Services;
 
@@ -19,6 +20,59 @@ public class CategoryService : ICategoryService
     {
         _context = context;
         _lookup = lookup;
+    }
+
+    public async Task<BaseProcess<List<CategoryItemResponse>>> GetAllAsync(BaseGetCategoryAllRequest request, CancellationToken cancellationToken)
+    {
+        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
+
+        if (request.GetTopLevel() == true)
+        {
+            query = query.Where(x => x.ParentId == null || x.ParentId == Guid.Empty);
+        }
+
+        if (request.ParentIdValidate())
+        {
+            query = query.Where(x => x.ParentId == request.ParentId);
+        }
+
+        if (request?.HasShowHome() == true)
+        {
+            query = query.Where(x => x.ShowHome == request.ShowHome);
+        }
+
+        if (request?.HasShowMenu() == true)
+        {
+            query = query.Where(x => x.ShowMenu == request.ShowMenu);
+        }
+
+        if (request?.DiscriminatorHasValue() == true)
+        {
+            string discriminator = request.GetDiscriminator();
+            query = query.Where(x => x.Discriminator == discriminator);
+        }
+
+        var result = await query.OrderByDescending(x => x.CreatedAt).ToListAsync(cancellationToken);
+
+        var response = result.Select(x => new CategoryItemResponse(x)).ToList();
+
+        if (response?.Any() != true)
+            return BaseProcess<List<CategoryItemResponse>>.Success(response);
+
+        //set look up
+        var selectModels = new List<BaseSelectModel>();
+        foreach (var item in response)
+        {
+            if (item.ChildModel != null)
+                selectModels.Add(item.ChildModel);
+
+            if (item.ParentIdModel != null)
+                selectModels.Add(item.ParentIdModel);
+        }
+        if (selectModels?.Any() == true)
+            await _lookup.GetLookUpAsync(selectModels, cancellationToken);
+
+        return BaseProcess<List<CategoryItemResponse>>.Success(response);
     }
 
     public async Task<BaseProcess<GetCategoryAllIdResponse>> GetAllIdAsync(GetCategoryAllIdRequest request, CancellationToken cancellationToken)

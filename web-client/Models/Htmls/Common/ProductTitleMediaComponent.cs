@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using web_client.Helpers.Shared;
+﻿using web_client.Helpers.Shared;
 using web_client.Models.Base;
 using web_client.Models.Htmls.Base;
 using web_client.Models.Response.Products;
@@ -47,7 +46,8 @@ public class ProductTitleMediaComponent : BaseProductItemModel
             {
                 Key = x.Key,
                 Label = x.Value?.PropertiesModelKey?.Label,//get label from key
-                Title = x.Value?.PropertiesModelKey?.ValueModel?.Any() != true ? "" : string.Join(",", x.Value?.PropertiesModelKey?.ValueModel?.Select(x => $"{x?.Label}"))
+                Title = x.Value?.PropertiesModelKey?.ValueModel?.Any() != true ? "" : string.Join(",", x.Value?.PropertiesModelKey?.ValueModel?.Select(x => $"{x?.Label}")),
+                Featured = x.Value?.Featured ?? false
             }).ToList();
 
         }

@@ -39,7 +39,7 @@
             </aside>
         </div>
         <div class="col-lg-9 order-lg-2" id="productItems">
-            <!--  Loading ....-->
+            @await Html.PartialAsync("~/Views/Shared/Components/Products/_ProductListPartial.cshtml", Model)
         </div>
     </div>
 </div>
@@ -88,7 +88,7 @@
 
 
             // init form
-            pageLoad.init();
+           // pageLoad.init();
 
         });
     </script>

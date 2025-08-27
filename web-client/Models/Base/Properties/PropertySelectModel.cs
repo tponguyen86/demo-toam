@@ -5,10 +5,13 @@ namespace web_client.Models.Base.Properties;
 //key of branch : hang-san-xuat
 public class PropertySelectModel : BaseSelectCustomModel
 {
-    //omiron, nvidia
+    //value  of branch :  omron, nvidia
     public List<PropertyValueSelectModel>? ValueModel { get; set; }
+    public List<string>? Values { get; set; }
     public PropertySelectModel(string propertyKey, string propertyValue) : base(propertyKey)
     {
-        ValueModel = propertyValue?.Split(",").Where(x => x?.HasValueString() == true).Select(x => new PropertyValueSelectModel(x.Trim())).ToList();
+        Values = propertyValue?.Split(",").Select(x => x.Trim()).Where(x => x?.HasValueString() == true).Distinct().ToList();
+        if (Values?.Count > 0)
+            ValueModel = Values.Select(x => new PropertyValueSelectModel(x)).ToList();
     }
 }

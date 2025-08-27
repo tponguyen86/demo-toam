@@ -8,6 +8,8 @@ namespace web_client.Models.Htmls.Base
         public string? Key { get; set; }
         //key ex: Size
         public string? Label { get; set; }
+        //Is this attribute is featured, show on product list
+        public bool? Featured { get; set; }
         //Title is value ex: 12px
         public BaseAttributeItemModel() { }
         public BaseAttributeItemModel(string label, string title) { Label = label; Title = title; }

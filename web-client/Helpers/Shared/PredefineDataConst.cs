@@ -37,7 +37,7 @@ public class PredefineDataConst
         public class Key
         {
             public const string News = "6cd4cf5d-d265-41cf-ba35-f2bd6c6d48d3";
-            public const string Service = "a245a6e7-c072-4123-b57d-22edadeb657e";
+            public const string Service = "86285029-10be-45c4-94fe-1b457cc560d3";
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿@model ProductTitleMediaComponent
 @if (Model != null)
 {
+    var attributes = Model.Attributes?.Where(x => x.Featured == true);
     <div class="card bg-color-grey border-0">
         <div class="card-body p-1">
             <div class="product mb-0">
@@ -16,7 +17,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between p-2">
-                    <div>
+                    <div style="min-height:50px">
                         @if (Model.Group != null && Model.Group?.Title?.HasValueString() == true)
                         {
                             <a href="@Model.Group.Href" class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1 ellipsis ellipsis-line-clamp-1">@Model.Group.Title</a>
@@ -34,10 +35,10 @@
                         <span class="amount">@Html.DisplayFor(m => Model.Price)</span>
                     </p>
                 }
-                @if (Model.Attributes?.Any() == true)
+                @if (attributes?.Any() == true)
                 {
                     <ul class="list list-icons list-icons-sm mb-0">
-                        @foreach (var item in Model.Attributes)
+                        @foreach (var item in attributes)
                         {
                             <li><i class="fas fa-caret-right"></i><span class="text-2 text-color-grey">@item.Label : @item.Title</span></li>
                         }

@@ -15,7 +15,7 @@
                 <div class="col-sm-6 col-lg-4 mb-2">
                     @await Html.PartialAsync("~/Views/Shared/Components/Common/ProductTitleMedia.cshtml", new ProductTitleMediaComponent()
    {
-       Id = Guid.NewGuid(),
+       Id = item.Id,
        Title = item.Title,
        Price = item.Price,
        Sale = item.Sale,
@@ -27,7 +27,10 @@
        DisplayContact = item.DisplayContact,
        DisplayPrice = item.DisplayPrice,
        DisplaySale = item.DisplaySale,
-       Attributes = item.Attributes
+       Attributes = item.Attributes,
+       CreatedBy = item.CreatedBy,
+       ShortDescription = item.ShortDescription,
+       Target = item.Target
    })
                 </div>
             }

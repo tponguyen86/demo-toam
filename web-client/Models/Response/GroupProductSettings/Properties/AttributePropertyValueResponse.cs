@@ -11,10 +11,8 @@ public class AttributePropertyValueResponse : BaseAttributePropertyValue
     //branch : key of propeties Code= "hang-san-xuat" Label = "Hãng sản xuất"
     public PropertySelectModel PropertiesModelKey { get; set; }
 
-    //value  of branch :  omron, nvidia
-    //public PropertyValueSelectModel? ValueModel { get; set; }
-
     public AttributePropertyValueResponse() { }
+
     //public AttributePropertyValueResponse(string propertyKey, BaseAttributePropertyValue baseValue)
     //{
     //    if (propertyKey.HasValueString() == true)
@@ -29,7 +27,8 @@ public class AttributePropertyValueResponse : BaseAttributePropertyValue
     //        }
     //        Type = baseValue?.Type;
     //    }
-    //} 
+    //}
+
     public AttributePropertyValueResponse(string propertyKey, BaseAttributePropertyValue baseValue)
     {
         if (propertyKey.HasValueString() == true && baseValue?.Value?.HasValueString() == true)
@@ -37,6 +36,7 @@ public class AttributePropertyValueResponse : BaseAttributePropertyValue
             PropertiesModelKey = new PropertySelectModel(propertyKey, baseValue.Value);
             Value = baseValue.Value;
             Type = baseValue?.Type;
+            Featured = baseValue?.Featured;
         }
     }
 }
