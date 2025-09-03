@@ -238,7 +238,7 @@
                                                     {
                                                         var hasChild = menuItem.ChildModel?.Child?.Any() == true;
                                                         <li class="@(hasChild?"dropdown":"")">
-                                                            <a class="dropdown-item dropdown-toggle" href="#">
+                                                            <a class="dropdown-item dropdown-toggle" href="/@menuItem.PageKeyName">
                                                                 @menuItem.Name
                                                             </a>
                                                             @if (hasChild)
@@ -247,7 +247,7 @@
                                                                     @foreach (var childItem in menuItem?.ChildModel?.Child)
                                                                     {
                                                                         <li>
-                                                                            <a href="#" class="dropdown-item">
+                                                                            <a href="/@menuItem.PageKeyName/@childItem.GetDataSelectModel()?.PageKeyName" class="dropdown-item">
                                                                                 @childItem.Label
                                                                             </a>
                                                                         </li>
