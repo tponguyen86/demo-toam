@@ -29,11 +29,12 @@ namespace web_client.Controllers
             _layoutService = layoutService;
         }
 
-        public async Task<IActionResult> Index(CancellationToken cancellationToken)
+        public IActionResult Index(CancellationToken cancellationToken)
         {
             //var products = await _dbContext.Products.ToListAsync(cancellationToken);
             return View();
         }
+
         [Route("danh-muc")]
         public async Task<IActionResult> ProductCategory([FromServices] IProductCategoryAppService services, CancellationToken cancellationToken)
         {
@@ -67,14 +68,14 @@ namespace web_client.Controllers
 
         [Route("san-pham/{seoKeyCategory?}")]
         public async Task<IActionResult> Product(
-            [FromServices] IProductAppService services, 
-            [FromServices] IProductCategoryAppService categoryServices, 
-            ProductPagingRequest request, 
-            string? seoKeyCategory, 
+            [FromServices] IProductAppService services,
+            [FromServices] IProductCategoryAppService categoryServices,
+            ProductPagingRequest request,
+            string? seoKeyCategory,
             CancellationToken cancellationToken)
         {
             request.SetCategoryKey(seoKeyCategory);
-            
+
             request.Attributes = Request.Query.Where(x => x.Key.StartsWith("p-"));
             var pageModel = new PageModel() { Title = "Sản phẩm", Description = "Danh sách sản phẩm", BodyClassName = "p-product", MainClassName = "shop", Keywords = "danh sách sản phẩm, sản phẩm, sản phẩm mới, sản phẩm nổi bật" };
 
@@ -114,8 +115,8 @@ namespace web_client.Controllers
                 return PartialView("Components/_ProductListPartial", response);
             }
             return View(response);
-        } 
-        
+        }
+
         [Route("san-pham/{seoKey}/chi-tiet")]
         public async Task<IActionResult> ProductDetail([FromServices] IProductAppService services, string seoKey, CancellationToken cancellationToken)
         {
@@ -176,7 +177,12 @@ namespace web_client.Controllers
         }
 
         [Route("tin-tuc/{seoKeyCategory?}")]
-        public async Task<IActionResult> Blog([FromServices] INewsAppService services, [FromServices] INewsCategoryAppService categoryServices, NewsPagingRequest request, string? seoKeyCategory, CancellationToken cancellationToken)
+        public async Task<IActionResult> Blog(
+            [FromServices] INewsAppService services,
+            [FromServices] INewsCategoryAppService categoryServices,
+            NewsPagingRequest request,
+            string? seoKeyCategory,
+            CancellationToken cancellationToken)
         {
             var pageModel = new PageModel() { Title = "Tin tức", Description = "Mô ta seo tin tức", BodyClassName = "p-blog", MainClassName = "shop" };
 
@@ -259,10 +265,12 @@ namespace web_client.Controllers
             return View(response);
         }
 
+        [Route("lien-he")]
         public IActionResult Contact()
         {
             return View();
         }
+        [Route("loi-xay-ra")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

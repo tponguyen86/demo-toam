@@ -24,7 +24,12 @@ public class CategoryService : ICategoryService
 
     public async Task<BaseProcess<List<CategoryItemResponse>>> GetAllAsync(BaseGetCategoryAllRequest request, CancellationToken cancellationToken)
     {
-        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active).OrderByDescending(x => x.Sort).ThenBy(x => x.ParentId).AsQueryable();
+        var query = _context.Categories
+            .AsNoTracking()
+            .Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active && x.Discriminator == "Category")
+            .OrderByDescending(x => x.Sort)
+            .ThenBy(x => x.ParentId)
+            .AsQueryable();
 
         if (request.GetTopLevel() == true)
         {
@@ -77,7 +82,7 @@ public class CategoryService : ICategoryService
 
     public async Task<BaseProcess<GetCategoryAllIdResponse>> GetAllIdAsync(GetCategoryAllIdRequest request, CancellationToken cancellationToken)
     {
-        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.Status.Key.Active && (x.PageKeyName == request.Code || x.Id == request.Id)).AsQueryable();
+        var query = _context.Categories.Where(x => x.Status != PredefineDataConst.SystemStatus.Key.Delete && x.Status == PredefineDataConst.BaseStatus.Key.Active && (x.PageKeyName == request.Code || x.Id == request.Id)).AsQueryable();
 
         if (request?.DiscriminatorHasValue() == true)
         {
