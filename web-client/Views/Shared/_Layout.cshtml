@@ -5,28 +5,26 @@
     var page = ViewData["Page"] as PageModel;
     var layoutData = await _layout.GetSystemConfigurationsAsync(new GetAllSystemConfigurationRequest());
 
-    var slogan = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Slogan, "Khuyến mãi 30% tất cả các sản phẩm nhân dịp 27/7");
-    var slogan2 = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Slogan2, "Học đi đôi với hành động");
-    var phoneNumber = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.PhoneNumber, "0987654321");
-    var email = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Email, "support@gmail.com");
+    var slogan = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Slogan, "");
+    var slogan2 = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Slogan2, "");
+    var phoneNumber = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.PhoneNumber, "");
+    var email = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Email, "");
 
-    var instagram = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Instagram, "https://www.instagram.com");
-    var facebook = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Facebook, "https://www.facebook.com");
-    var twitter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Twitter, "http://www.twitter.com");
+    var instagram = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Instagram, "");
+    var facebook = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Facebook, "");
+    var twitter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Twitter, "");
 
-    var footerDescription = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.FooterDescription, "Mô tả Chân Trang");
-    var phoneNumberFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.PhoneNumberFooter, "0987654321");
-    var emailFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.EmailFooter, "support@gmail.com");
-    var copyrightFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.CopyrightFooter, "© 2024 tên công ty All rights reserved. Mã số thuế: 2104509916 do Sở Kế Hoạch & Đầu Tư Hà Nội cấp lần đầu ngày 14/10/2010");
-    var address = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Address, "234 Street Name, City Name");
+    var footerDescription = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.FooterDescription, "");
+    var phoneNumberFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.PhoneNumberFooter, "");
+    var emailFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.EmailFooter, "");
+    var copyrightFooter = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.CopyrightFooter, "");
+    var address = _layout.GetSystemConfigurationValueLocal(layoutData?.Data, SystemConfigurationKeys.Key.Address, "");
 
     var menu = await _layout.GetMenuTopAsync();
     var menuData = menu?.Data;
 }
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@(page?.Title)</title>
 
     <!-- Basic -->
@@ -38,7 +36,7 @@
     <meta name="author" content="okler.net">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 
     <!-- Mobile Metas -->
@@ -73,12 +71,6 @@
 <body data-plugin-page-transition class="@(page?.BodyClassName)">
     <div class="body">
         <div class="notice-top-bar bg-primary" data-sticky-start-at="180">
-            @*  <button class="hamburguer-btn hamburguer-btn-light notice-top-bar-close m-0 active" data-set-active="false">
-                <span class="close">
-                    <span></span>
-                    <span></span>
-                </span>
-            </button> *@
             <div class="container">
                 <div class="row justify-content-center py-2">
                     <div class="col-9 col-md-12 text-center">
@@ -237,7 +229,7 @@
                                                     @foreach (var menuItem in menu?.Data)
                                                     {
                                                         var hasChild = menuItem.ChildModel?.Child?.Any() == true;
-                                                        <li class="@(hasChild?"dropdown":"")">
+                                                        <li class="@(hasChild ? "dropdown" : "")">
                                                             <a class="dropdown-item dropdown-toggle" href="/@menuItem.PageKeyName">
                                                                 @menuItem.Name
                                                             </a>

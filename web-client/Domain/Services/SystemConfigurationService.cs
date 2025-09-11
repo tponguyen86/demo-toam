@@ -21,27 +21,10 @@ public class SystemConfigurationService : ISystemConfigurationService
     public async Task<BaseProcess<List<SystemConfigurationItemResponse>>> GetAllAsync(GetAllSystemConfigurationRequest request, CancellationToken cancellationToken)
     {
         var query = _context.SystemConfigurations.AsQueryable();
-
-        //if (request?.HasStatus() == true)
-        //{
-        //    query = query.Where(x => x.Status == request.Status);
-        //}
-
         var result = await query.OrderByDescending(x => x.CreatedAt).ToListAsync(cancellationToken);
         var response = result.Select(x => new SystemConfigurationItemResponse(x)).ToList();
         if (response?.Any() != true)
             return BaseProcess<List<SystemConfigurationItemResponse>>.Success(response);
-
-        //set look up
-        //var selectModels = new List<BaseSelectModel>();
-        //foreach (var item in response)
-        //{
-        //    if (item.TypeModel != null)
-        //        selectModels.Add(item.TypeModel);
-        //}
-        //if (selectModels?.Any() == true)
-        //    await _lookup.GetLookUpAsync(selectModels, cancellationToken);
-
         return BaseProcess<List<SystemConfigurationItemResponse>>.Success(response);
     }
 
